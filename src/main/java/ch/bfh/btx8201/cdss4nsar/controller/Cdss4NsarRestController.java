@@ -1,19 +1,21 @@
 package ch.bfh.btx8201.cdss4nsar.controller;
 
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
-import domain.Message;
+import domain.CdssRequest;
+import domain.CdssResult;
 
 @RestController
 public class Cdss4NsarRestController {
-
-	@RequestMapping("/hello/{user}")
-	public Message message(@PathVariable String user) {
-
-		Message msg = new Message(user, "Hello " + user);
-		return msg;
+	
+	@RequestMapping(value="/cdss", method = RequestMethod.POST)
+	public CdssResult workCdssRequest(CdssRequest req, UriComponentsBuilder ucBuilder) {
+		
+		System.out.println(req.getId());
+		CdssResult cr = new CdssResult(req.getId(), Integer.toString(req.getBloodPressure()) + " " + Integer.toString(req.getHeartRate()));
+		return cr;
 	}
-
 }

@@ -7,6 +7,7 @@
 <title>HelloWorld page</title>
 </head>
 <body>
-    Greeting : ${greeting}
+    Greeting : ${greeting} , ${cdss}
+    <a href="${cdss}">CDSS 4 NSAR</a>
 </body>
 </html>
