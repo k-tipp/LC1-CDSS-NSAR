@@ -5,17 +5,17 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import javax.annotation.Resources;
 import javax.xml.bind.JAXBException;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.oxm.Marshaller;
 import org.springframework.oxm.Unmarshaller;
 
 public class ConfigLoader {
-	private static final String FILE_NAME = "webapp/WEB-INF/config/config.xml";
-	private ConfigurationModel settings = new ConfigurationModel();
+	private static final String FILE_NAME = "cdss4nsar/config.xml";
+	private Settings settings = new Settings();
 
 	private Marshaller marshaller;
 	
@@ -32,6 +32,7 @@ public class ConfigLoader {
 	public void saveSettings() throws IOException, JAXBException {
 		FileOutputStream os = null;
 		try {
+			
 			os = new FileOutputStream(FILE_NAME);
 			this.marshaller.marshal(settings, new StreamResult(os));
 		} finally {
@@ -42,13 +43,10 @@ public class ConfigLoader {
 	}
 
 	public void loadSettings() throws IOException, JAXBException {
-		File f = new File(FILE_NAME);
-
-		System.out.println(f.getAbsolutePath());
 		FileInputStream is = null;
 		try {
 			is = new FileInputStream(FILE_NAME);
-			this.settings = (ConfigurationModel) this.unmarshaller.unmarshal(new StreamSource(is));
+			this.settings = (Settings) this.unmarshaller.unmarshal(new StreamSource(is));
 		} finally {
 			if (is != null) {
 				is.close();
@@ -56,11 +54,11 @@ public class ConfigLoader {
 		}
 	}
 
-	public ConfigurationModel getSettings() {
+	public Settings getSettings() {
 		return settings;
 	}
 
-	public void setSettings(ConfigurationModel settings) {
+	public void setSettings(Settings settings) {
 		this.settings = settings;
 	}
 	

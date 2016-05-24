@@ -11,7 +11,7 @@ public class Cdss4NsarInitializer extends AbstractAnnotationConfigDispatcherServ
   
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return null;
+    	return new Class[] {WebConfiguration.class};
     }
   
     @Override

@@ -6,17 +6,20 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement
-public class ConfigurationModel {
+
+@XmlRootElement(name="settings")
+public class Settings {
 	
 	@XmlElementWrapper(name = "validators")
 	@XmlElement(name = "validator")
 	private List<String> validators;
 
+	@XmlElement(name = "validator")
 	public List<String> getValidators() {
 		return validators;
 	}
 
+	@XmlElement(name = "validator")
 	public void setValidators(List<String> validators) {
 		this.validators = validators;
 	}	
