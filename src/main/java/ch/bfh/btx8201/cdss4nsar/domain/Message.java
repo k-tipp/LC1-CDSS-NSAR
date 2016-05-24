@@ -1,4 +1,4 @@
-package domain;
+package ch.bfh.btx8201.cdss4nsar.domain;
 
 public class Message {
 	 
