@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-modules id="moduleCoreId" project-version="1.5.0">
-	<wb-module deploy-name="LC1-CDSS-NSAR">
+	<wb-module deploy-name="service">
+		<wb-resource deploy-path="/" source-path="/WebContent"
+			tag="defaultRootSource" />
 		<wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java" />
 		<wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources" />
+		<wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources" />
+		<wb-resource deploy-path="/" source-path="/src/main/webapp" />
+		<property name="java-output-path" value="/service/target/classes" />
 		<property name="context-root" value="cdss4nsar" />
-		<property name="java-output-path" value="/LC1-CDSS-NSAR/target/classes" />
 	</wb-module>
 </project-modules>
