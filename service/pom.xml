@@ -6,13 +6,18 @@
 		<artifactId>cdss4nsar</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>service</artifactId>
+	<artifactId>cdss4nsar.service</artifactId>
 	<packaging>war</packaging>
 	<properties>
 		<springframework.version>4.2.6.RELEASE</springframework.version>
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>ch.bfh.btx8201</groupId>
+			<artifactId>cdss4nsar.spi</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
@@ -97,8 +102,8 @@
 						<server>Apache_Tomcat_9_x64</server>
 						<url>http://localhost:8080/manager/text</url>
 						<path>/cdss4nsar</path>
-						<username>root</username>
-						<password>root</password>
+						<!-- <username>root</username> -->
+						<!-- <password>root</password> -->
 						<update>true</update>
 					</configuration>
 				</plugin>

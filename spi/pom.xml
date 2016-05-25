@@ -5,5 +5,18 @@
     <artifactId>cdss4nsar</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>spi</artifactId>
+  <artifactId>cdss4nsar.spi</artifactId>
+  
+  <dependencies>
+  		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>4.2.6.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>4.2.6.RELEASE</version>
+		</dependency>
+  </dependencies>
 </project>
