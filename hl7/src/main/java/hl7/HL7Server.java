@@ -14,7 +14,7 @@ public class HL7Server {
 	private ReceivingApplication handler = new HL7ReceivingApplication();
 	
 	
-	public HL7Server(int port, boolean useTls)
+	public HL7Server(int port, boolean useTls) throws Exception
 	{
 		ctx.setValidationRuleBuilder(new NoValidationBuilder());
 		server = ctx.newServer(port, useTls);
