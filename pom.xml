@@ -9,6 +9,6 @@
 		<module>service</module>
 		<module>spi</module>
 		<module>validators</module>
-		<module>lab</module>
+		<module>hl7</module>
 	</modules>
 </project>
