@@ -19,7 +19,7 @@ public class WebConfiguration  extends WebMvcConfigurerAdapter {
 	
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("resources/**").addResourceLocations("cdss4nsar/");
+		registry.addResourceHandler("/resources/**").addResourceLocations("cdss4nsar/");
 	}
 	
     @Override
