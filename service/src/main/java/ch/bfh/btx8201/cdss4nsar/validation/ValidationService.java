@@ -5,16 +5,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ServiceConfigurationError;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarValidator;
 
-@Service
 public class ValidationService {
 
-	@Autowired
-	public List<Cdss4NsarValidator> cdss4NsarValidators;
+	private static List<Cdss4NsarValidator> cdss4NsarValidators;
 	
 	private static ValidationService service;
 
@@ -30,13 +25,18 @@ public class ValidationService {
 
 
     public String getDefinition(String word) {
+    	System.out.println("get book0");
         String definition = null;
 
         try {
             Iterator<Cdss4NsarValidator> validators = this.cdss4NsarValidators.iterator();
+            System.out.println("get book1");
             while (definition == null && validators.hasNext()) {
+            	System.out.println("get book2");
             	Cdss4NsarValidator d = validators.next();
+            	System.out.println("get book3");
                 definition = d.getDefinition(word);
+                System.out.println("definition");
             }
         } catch (ServiceConfigurationError serviceError) {
             definition = null;

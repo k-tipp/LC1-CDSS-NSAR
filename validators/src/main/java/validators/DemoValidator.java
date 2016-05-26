@@ -3,17 +3,15 @@ package validators;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import org.springframework.stereotype.Service;
-
 import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarValidator;
 
-@Service
 public class DemoValidator implements Cdss4NsarValidator {
 
 
     private SortedMap<String, String> map;
     
     public DemoValidator() {
+    /*	System.out.println("get demo validator instance");
         map = new TreeMap<String, String>();
         map.put(
             "book",
@@ -21,10 +19,11 @@ public class DemoValidator implements Cdss4NsarValidator {
                 "a protective cover");
         map.put(
             "editor",
-            "a person who edits");
+            "a person who edits");*/
     }
 
     public String getDefinition(String word) {
+    	System.out.println("get book");
         return map.get(word);
     }
 
