@@ -19,8 +19,8 @@
 	<input class="form-control" type="text" value="100" name="bp_dia" />
 	<button class="btn btn-default" type="submit">Send request</button>
 </div>
-</div>
 </form>
+</div>
 </div>
 </body>
 </html>
