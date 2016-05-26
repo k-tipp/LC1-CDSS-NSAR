@@ -1,15 +1,26 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>HelloWorld page</title>
+<title>CDSS4NSAR</title>
 </head>
 <body>
-	<form method="POST" enctype="application/json" name="CdssRequest">
-		<input type="hidden" value="1" name="id" /> <input type="hidden"
-			value="125" name="heartRate" /> <input type="hidden" value="100"
-			name="bloodPressure" />
-		<button type="submit">Send request</button>
-	</form>
+<div class="row">
+<div class="col-sm-4"></div>
+<div class="col-sm-4">
+<form role="form" method="POST" enctype="application/json" name="CdssRequest">
+<div class="form-group">
+	<label for="heartrate">Puls</label>
+	<input class="form-control" type="text" value="90" name="heartrate" />
+	<label for="heartrate">systolischer Blutdruck</label>
+	<input class="form-control" type="text" value="125" name="bp_sys" /> 
+	<label for="heartrate">diastolischer Blutdruck</label>
+	<input class="form-control" type="text" value="100" name="bp_dia" />
+	<button class="btn btn-default" type="submit">Send request</button>
+</div>
+</div>
+</form>
+</div>
 </body>
 </html>
