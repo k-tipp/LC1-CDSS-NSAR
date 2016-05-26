@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.net.JarURLConnection;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -68,7 +67,11 @@ public class Cdss4NsarConfiguration {
 		    }
 		  }
 		  System.out.println("asdfsadfasdfsadfsadf2");
-		URLClassLoader cl = URLClassLoader.newInstance(jarFiles.toArray(new URL[jarFiles.size()]));
+		  this.getClass().getClassLoader();
+		  
+		  
+		URLClassLoader cl = URLClassLoader.newInstance(jarFiles.toArray(new URL[jarFiles.size()]), this.getClass().getClassLoader());
+		
 		System.out.println(jarFiles.get(0).getProtocol());
 		JarURLConnection uc = 
 				(JarURLConnection) new URL(jarFiles.get(0).toString()).openConnection();
@@ -82,19 +85,19 @@ public class Cdss4NsarConfiguration {
 //		System.out.println("asdf3");
 //		
 		List<Cdss4NsarValidator> validators = new ArrayList<Cdss4NsarValidator>();
-//		System.out.println("asdf4");
-//		for(String name : getSettings().getValidators()) {
-//			System.out.println("name: " + name);
-//			this.getClass().getClassLoader();
-//			Class<?> c = cl.loadClass("validators.DemoValidator");
-//			System.out.println(c.getClass().getInterfaces()[0].getName());
-//			if(c != null) {
-//				System.out.println("add validator");
-//				validators.add((Cdss4NsarValidator) c.newInstance());
-//			}
-//		}
-//		
-//		cl.close();
+		System.out.println("asdf4");
+		for(String name : getSettings().getValidators()) {
+			System.out.println("name: " + name);
+			this.getClass().getClassLoader();
+			Class<?> c = cl.loadClass("validators.DemoValidator");
+			System.out.println(c.getClass().getInterfaces()[0].getName());
+			if(c != null) {
+				System.out.println("add validator");
+				validators.add((Cdss4NsarValidator) c.newInstance());
+			}
+		}
+		
+		cl.close();
 		
 		ValidationService service = ValidationService.getInstance();
 		service.setCdss4NsarValidators(validators);
