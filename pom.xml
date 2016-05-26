@@ -10,5 +10,6 @@
 		<module>spi</module>
 		<module>validators</module>
 		<module>hl7</module>
+		<module>DemoClinicalInfoSys</module>
 	</modules>
 </project>
