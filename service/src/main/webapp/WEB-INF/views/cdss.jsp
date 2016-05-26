@@ -2,6 +2,7 @@
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="resources/bootstrap/css/bootstrap.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>CDSS4NSAR</title>
 </head>
@@ -11,6 +12,7 @@
 <div class="col-sm-4">
 <form role="form" method="POST" enctype="application/json" name="CdssRequest">
 <div id="Metadaten" class="form-group">
+	<h3>Patientendaten</h3>
 	<label for="sex">Geschlecht</label>
 	<fieldset>
 	<input type="radio" name="Sex" id="male" value="male" /><label style="margin-left:15px;" for="sex">männlich</label>
@@ -45,19 +47,6 @@
     	<td>0.6-1.36 mg/dl</td>
     	<td><input class="form-control" type="text" name="kreatinin_serum" /></td>
     	<td>mg/dl</td>
-    </tr>
-    <tr>
-    	<td>Kreatinin Urin</td>
-    	<td>155-250 mg/dl</td>
-    	<td><input class="form-control" type="text" name="kreatinin_urin" /></td>
-    	<td>mg/dl</td>
-    </tr>
-        <tr>
-    	<td>Kreatininclearance</td>
-    	<td>Frau: 98-156 ml/min<br>Mann: 95-160 ml/min
-		</td>
-    	<td><input class="form-control" type="text" name="kreatininclearance" /></td>
-    	<td>ml/min</td>
     </tr>
   </thead>
   </table>
