@@ -2,10 +2,12 @@ package ch.bfh.btx8201.cdss4nsar.democis.configuration;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import javax.annotation.PreDestroy;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import javax.xml.bind.JAXBException;
@@ -17,7 +19,6 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.orm.jpa.vendor.HibernateJpaDialect;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.stereotype.Component;
@@ -30,12 +31,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableJpaRepositories("ch.bfh.btx8201.cdss4nsar.democis.data")
 @EnableTransactionManagement
 public class DemoCisConfiguration {
-	
-//	@Autowired
-//	public LabResultDao labResultDao;
-//	
-//	@Autowired
-//	public PatientDao patientDao;
 
 	@Bean
 	public Jaxb2Marshaller getJAXBMarshaller() {
@@ -65,7 +60,7 @@ public class DemoCisConfiguration {
 		return configLoader.getSettings();
 	}
 
-	@Bean(destroyMethod = "close")
+	@Bean
 	@Primary
 	public DataSource dataSource() throws IOException, JAXBException, SQLException {
 		Settings settings = getSettings();
@@ -82,10 +77,9 @@ public class DemoCisConfiguration {
 
 		LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
 		factory.setJpaVendorAdapter(vendorAdapter);
-		factory.setJpaDialect(new HibernateJpaDialect());
+		factory.setDataSource(dataSource());
 		factory.setJpaProperties(getAdditionalProperties());
 		factory.setPackagesToScan("ch.bfh.btx8201.cdss4nsar.democis.data");
-		factory.setDataSource(dataSource());
 		factory.afterPropertiesSet();
 
 		return factory.getObject();
@@ -102,9 +96,36 @@ public class DemoCisConfiguration {
 	@Bean
 	public Properties getAdditionalProperties() {
 		Properties properties = new Properties();
-		properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
+		properties.setProperty("hibernate.hbm2ddl.auto", "update");
 		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
 		return properties;
+	}
+
+	/*
+	 * https://techblog.ralph-schuster.eu/2014/07/09/solution-to-tomcat-cant-
+	 * stop-an-abandoned-connection-cleanup-thread/
+	 */
+	@PreDestroy
+	public void cleanUpJDBCConnections() {
+		System.out.println("asdfasdf");
+		try {
+			com.mysql.jdbc.AbandonedConnectionCleanupThread.shutdown();
+		} catch (Throwable t) {
+		}
+		// This manually deregisters JDBC driver, which prevents Tomcat 7 from
+		// complaining about memory leaks
+		Enumeration<java.sql.Driver> drivers = java.sql.DriverManager.getDrivers();
+		while (drivers.hasMoreElements()) {
+			java.sql.Driver driver = drivers.nextElement();
+			try {
+				java.sql.DriverManager.deregisterDriver(driver);
+			} catch (Throwable t) {
+			}
+		}
+		try {
+			Thread.sleep(2000L);
+		} catch (Exception e) {
+		}
 	}
 
 }
