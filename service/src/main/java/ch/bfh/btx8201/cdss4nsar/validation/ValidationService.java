@@ -29,7 +29,7 @@ public class ValidationService {
         String definition = null;
 
         try {
-            Iterator<Cdss4NsarValidator> validators = this.cdss4NsarValidators.iterator();
+            Iterator<Cdss4NsarValidator> validators = ValidationService.cdss4NsarValidators.iterator();
             System.out.println("get book1");
             while (definition == null && validators.hasNext()) {
             	System.out.println("get book2");
@@ -51,7 +51,7 @@ public class ValidationService {
 	}
 
 	public void setCdss4NsarValidators(List<Cdss4NsarValidator> cdss4NsarValidators) {
-		this.cdss4NsarValidators = cdss4NsarValidators;
+		ValidationService.cdss4NsarValidators = cdss4NsarValidators;
 	}
     
     
