@@ -85,15 +85,14 @@ public class Cdss4NsarConfiguration {
 //		System.out.println("asdf3");
 //		
 		List<Cdss4NsarValidator> validators = new ArrayList<Cdss4NsarValidator>();
-		System.out.println("asdf4");
-		for(String name : getSettings().getValidators()) {
-			System.out.println("name: " + name);
+		Settings settings = getSettings();
+		for(String name : settings.getValidators()) {
 			this.getClass().getClassLoader();
-			Class<?> c = cl.loadClass("validators.DemoValidator");
-			System.out.println(c.getClass().getInterfaces()[0].getName());
+			Class<?> c = cl.loadClass(name);
+			
 			if(c != null) {
-				System.out.println("add validator");
 				validators.add((Cdss4NsarValidator) c.newInstance());
+				System.out.println("Added validator: " + name + "\r\n");
 			}
 		}
 		
@@ -101,8 +100,8 @@ public class Cdss4NsarConfiguration {
 		
 		ValidationService service = ValidationService.getInstance();
 		service.setCdss4NsarValidators(validators);
+		service.setDrugList(settings.getDrugs());
 		
 		return service;
-		
 	} 
 }
