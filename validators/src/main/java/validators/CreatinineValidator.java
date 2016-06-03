@@ -35,7 +35,7 @@ public class CreatinineValidator implements Cdss4NsarValidator {
 				warning.setDescription("Sehr wahrscheinliches Nierenversagen. NSAR sollten nicht verschrieben werden, Kreatinin Clearance < 30")
 					.setMeasurementValue(Integer.toString(cdssRequest.getCreatinineClearance()))
 					.setFailedTest("Kreatinin Clearance < 30 ml/min");
-			} else if (cdssRequest.getCreatinineClearance() < 95) {
+			} else if (cdssRequest.getCreatinineClearance() < 60) {
 				warning = warningClearance;
 				warning.setDescription("Mögliches Nierenversagen, Kreatinin Clearance < 95")
 					.setMeasurementValue(Integer.toString(cdssRequest.getCreatinineClearance()))

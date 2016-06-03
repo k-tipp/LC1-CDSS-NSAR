@@ -103,6 +103,4 @@ public class Cdss4NsarRequest {
 	public String getRequestId() {
 		return requestId;
 	}
-	
-	
 }

@@ -23,5 +23,4 @@ public class PregnancyValidator implements Cdss4NsarValidator {
 		}
 		return warning;
 	}
-
 }
