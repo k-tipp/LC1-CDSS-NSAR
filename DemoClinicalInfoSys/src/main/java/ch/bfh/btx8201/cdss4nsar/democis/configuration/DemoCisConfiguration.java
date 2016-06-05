@@ -96,7 +96,7 @@ public class DemoCisConfiguration {
 	@Bean
 	public Properties getAdditionalProperties() {
 		Properties properties = new Properties();
-		properties.setProperty("hibernate.hbm2ddl.auto", "update");
+		properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
 		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
 		return properties;
 	}
@@ -107,7 +107,6 @@ public class DemoCisConfiguration {
 	 */
 	@PreDestroy
 	public void cleanUpJDBCConnections() {
-		System.out.println("asdfasdf");
 		try {
 			com.mysql.jdbc.AbandonedConnectionCleanupThread.shutdown();
 		} catch (Throwable t) {

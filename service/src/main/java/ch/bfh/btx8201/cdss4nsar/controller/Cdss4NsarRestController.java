@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import ch.bfh.btx8201.cdss4nsar.validation.ValidationService;
+import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarDrug;
 import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarRequest;
 import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarResponse;
 
@@ -17,6 +18,18 @@ public class Cdss4NsarRestController {
 	public Cdss4NsarResponse doCdssRequest(Cdss4NsarRequest req) throws MalformedURLException {
 		ValidationService s = ValidationService.getInstance();
 		Cdss4NsarResponse response = new Cdss4NsarResponse(req.getId(), s.validateRequest(req));
+		return response;
+	}
+	
+	@RequestMapping(value="cdss/drugs", method = RequestMethod.GET)
+	public String test() throws MalformedURLException {
+		ValidationService s = ValidationService.getInstance();
+		
+		String response = "<ul>";
+		for(Cdss4NsarDrug drug : s.getDrugList()) {
+			response += "<li>" + drug.getName() + "</li>";
+		}
+		response += "</ul>";
 		return response;
 	}
 }

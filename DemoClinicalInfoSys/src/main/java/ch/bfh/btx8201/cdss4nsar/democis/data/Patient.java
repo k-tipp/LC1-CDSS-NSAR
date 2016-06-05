@@ -26,6 +26,9 @@ public class Patient {
 
 	@OneToMany(mappedBy = "patient")
 	private List<LabResult> labResults;
+	
+	@OneToMany(mappedBy = "patient")
+	private List<Medication> medications;
 
 	public Patient() {
 
@@ -69,5 +72,13 @@ public class Patient {
 
 	public void setLabResults(List<LabResult> labResults) {
 		this.labResults = labResults;
+	}
+
+	public List<Medication> getMedications() {
+		return medications;
+	}
+
+	public void setMedications(List<Medication> medications) {
+		this.medications = medications;
 	}
 }

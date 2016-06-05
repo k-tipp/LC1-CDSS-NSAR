@@ -86,7 +86,7 @@
 								<configuration>
 									<classifier>DemoValidator</classifier>
 									<includes>
-										<include>validators.DemoValidator</include>
+										<include>DemoValidator</include>
 									</includes>
 								</configuration>
 							</execution>

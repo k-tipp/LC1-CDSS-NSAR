@@ -3,29 +3,22 @@ package ch.bfh.btx8201.cdss4nsar.validation.spi;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "drug")
-public class Cdss4NsarDrug {
-	private String name;
-	private boolean isNsar;
+
+public interface Cdss4NsarDrug {
 	
-	public Cdss4NsarDrug(String name, boolean isNsar) {
-		super();
-		this.name = name;
-		this.isNsar = isNsar;
-	}
+	public String getName();
 	
-	public String getName() {
-		return name;
-	}
+	public void setName(String name);
 	
-	public void setName(String name) {
-		this.name = name;
-	}
+	public boolean isNsar();
 	
-	public boolean isNsar() {
-		return isNsar;
-	}
+	public void setNsar(boolean isNsar);
 	
-	public void setNsar(boolean isNsar) {
-		this.isNsar = isNsar;
-	}
+	public boolean isStereoidal();
+	
+	public void setIsStereoidal(boolean isStereoidal);
+	
+	public boolean isPPI();
+	
+	public void setIsPPI(boolean isPPI);
 }
