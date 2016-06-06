@@ -78,7 +78,7 @@
 					</c:when>
 					<c:otherwise>
 						<form role="form" method="POST" enctype="application/json"
-							name="CdssRequest" id="cdssRequest">
+							name="CdssRequest" id="cdssRequest" action="/demoCIS/patient/${patient.patientId}">
 							<input type="hidden" name="patientId"
 								value="${activePatient.patientId}" />
 							<div class="row">
@@ -109,7 +109,7 @@
 							<div class="row">
 								<div class="col-xs-5 col-md-5">
 									<button class="btn btn-info btn-lg" id="sendCdssRequest"
-										type="button">Check Medication</button>
+										type=button>Check Medication</button>
 									<h2>Current medication:</h2>
 									<c:forEach items="${activePatient.medications}"
 										var="medication" varStatus="status">
@@ -158,14 +158,13 @@
 												<tbody>
 													<c:forEach items="${activePatient.labResults}" var="result">
 														<tr>
+														<input
+                                                                type="hidden" name="labResults[]"
+                                                                value="${result}" />
 															<td>${result.labResultId}</td>
-															<td id="labType">${result.type}<input type="hidden"
-																name="labType[]" value="${result.type}" /></td>
-															<td id="labValue">${result.value}<input
-																type="hidden" name="labValue[]" value="${result.value}" /></td>
-															<td id="labSize">${result.measuringSize}<input
-																type="hidden" name="labSize[]"
-																value="${result.measuringSize}" /></td>
+															<td id="labType">${result.type}</td>
+															<td id="labValue">${result.value}</td>
+															<td id="labSize">${result.measuringSize}</td>
 														</tr>
 													</c:forEach>
 												</tbody>

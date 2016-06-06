@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import ch.bfh.btx8201.cdss4nsar.democis.data.DrugDao;
 import ch.bfh.btx8201.cdss4nsar.democis.data.Patient;
 import ch.bfh.btx8201.cdss4nsar.democis.data.PatientDao;
+import ch.bfh.btx8201.cdss4nsar.democis.domain.CdssRequestForm;
 
 @Controller
 public class PatientController {
@@ -40,5 +41,12 @@ public class PatientController {
 		model.addAttribute("drugs", drugDao.findAll());
 		
         return "patient";
+	}
+	
+	@RequestMapping(path="/patient/{patientId}", method = RequestMethod.POST)
+	public String postPatient(@PathVariable long patientId, CdssRequestForm cdssRequestForm) {
+		System.out.println(cdssRequestForm.getPatSex());
+		
+		return "patient";
 	}
 }
