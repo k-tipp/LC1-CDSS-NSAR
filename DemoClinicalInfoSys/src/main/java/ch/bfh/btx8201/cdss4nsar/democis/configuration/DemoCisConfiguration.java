@@ -1,7 +1,6 @@
 package ch.bfh.btx8201.cdss4nsar.democis.configuration;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +12,7 @@ import javax.sql.DataSource;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
-import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
+import org.apache.tomcat.jdbc.pool.DataSourceFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -60,16 +59,27 @@ public class DemoCisConfiguration {
 		return configLoader.getSettings();
 	}
 
-	@Bean
+	@Bean(destroyMethod = "close")
 	@Primary
-	public DataSource dataSource() throws IOException, JAXBException, SQLException {
+	public DataSource dataSource() throws Exception {
 		Settings settings = getSettings();
-		return DataSourceBuilder.create().username(settings.getUser()).password(settings.getPassword())
-				.url(settings.getDbUrl()).driverClassName(settings.getDriverClassName()).build();
+		Properties p = new Properties();
+		p.setProperty("username", settings.getUser());
+		p.setProperty("password", settings.getPassword());
+		p.setProperty("url", settings.getDbUrl());
+		p.setProperty("driverClassName", settings.getDriverClassName());
+		p.setProperty("removeAbandoned", "true");
+		p.setProperty("removeAbandonedTimeout", "60");
+		
+		DataSourceFactory s = new DataSourceFactory();
+		return s.createDataSource(p);
+		
+//		return DataSourceBuilder.create().username(settings.getUser()).password(settings.getPassword())
+//				.url(settings.getDbUrl()).driverClassName(settings.getDriverClassName()).build();
 	};
 
 	@Bean(destroyMethod = "close")
-	public EntityManagerFactory entityManagerFactory() throws IOException, JAXBException, SQLException {
+	public EntityManagerFactory entityManagerFactory() throws Exception {
 
 		HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
 		vendorAdapter.setGenerateDdl(true);
@@ -86,7 +96,7 @@ public class DemoCisConfiguration {
 	}
 
 	@Bean
-	public PlatformTransactionManager transactionManager() throws IOException, JAXBException, SQLException {
+	public PlatformTransactionManager transactionManager() throws Exception {
 
 		JpaTransactionManager txManager = new JpaTransactionManager();
 		txManager.setEntityManagerFactory(entityManagerFactory());
@@ -96,7 +106,7 @@ public class DemoCisConfiguration {
 	@Bean
 	public Properties getAdditionalProperties() {
 		Properties properties = new Properties();
-		properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
+		properties.setProperty("hibernate.hbm2ddl.auto", "update");//create-drop
 		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
 		return properties;
 	}

@@ -1,8 +1,10 @@
 package ch.bfh.btx8201.cdss4nsar.democis.data;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,22 +26,24 @@ public class Patient {
 	@NotNull
 	private String firstname;
 
-	@OneToMany(mappedBy = "patient")
-	private List<LabResult> labResults;
+	@OneToMany(mappedBy = "patient", fetch = FetchType.EAGER)
+	private Set<LabResult> labResults;
 	
-	@OneToMany(mappedBy = "patient")
-	private List<Medication> medications;
+	@OneToMany(mappedBy = "patient", fetch = FetchType.EAGER)
+	private Set<Medication> medications;
 
 	public Patient() {
 
 	}
 
-	public Patient(long patientId, String lastname, String firstname, List<LabResult> labResults) {
+	public Patient(long patientId, String lastname, String firstname, Set<LabResult> labResults,
+			Set<Medication> medications) {
 		super();
 		this.patientId = patientId;
 		this.lastname = lastname;
 		this.firstname = firstname;
 		this.labResults = labResults;
+		this.medications = medications;
 	}
 
 	public long getPatientId() {
@@ -66,19 +70,19 @@ public class Patient {
 		this.firstname = firstname;
 	}
 
-	public List<LabResult> getLabResults() {
+	public Set<LabResult> getLabResults() {
 		return labResults;
 	}
 
-	public void setLabResults(List<LabResult> labResults) {
+	public void setLabResults(Set<LabResult> labResults) {
 		this.labResults = labResults;
 	}
 
-	public List<Medication> getMedications() {
+	public Set<Medication> getMedications() {
 		return medications;
 	}
 
-	public void setMedications(List<Medication> medications) {
+	public void setMedications(Set<Medication> medications) {
 		this.medications = medications;
 	}
 }

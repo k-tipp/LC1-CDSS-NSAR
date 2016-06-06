@@ -1,9 +1,8 @@
 package ch.bfh.btx8201.cdss4nsar.democis.data;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,23 +18,23 @@ public class Drug implements Cdss4NsarDrug {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long drugId;
-	
+
 	private String name;
-	
+
 	private boolean isNsar;
-	
+
 	private boolean isStereoidal;
-	
+
 	private boolean isPPI;
 	
-	@ManyToMany(mappedBy="drugList",fetch=FetchType.EAGER)
-    private List<Medication> medicationList;
+	@ManyToMany(mappedBy = "drugList")
+	private Set<Medication> medicationList;
 
 	public Drug() {
 
 	}
 
-	public Drug(long drugId, String name, boolean isNsar, List<Medication> medicationList) {
+	public Drug(long drugId, String name, boolean isNsar, Set<Medication> medicationList) {
 		super();
 		this.drugId = drugId;
 		this.name = name;
@@ -63,11 +62,11 @@ public class Drug implements Cdss4NsarDrug {
 		this.name = name;
 	}
 
-	public List<Medication> getMedicationList() {
+	public Set<Medication> getMedicationList() {
 		return medicationList;
 	}
 
-	public void setMedicationList(List<Medication> medicationList) {
+	public void setMedicationList(Set<Medication> medicationList) {
 		this.medicationList = medicationList;
 	}
 
@@ -87,11 +86,13 @@ public class Drug implements Cdss4NsarDrug {
 		return isPPI;
 	}
 
+	@Override
 	public void setIsStereoidal(boolean isStereoidal) {
 		this.isStereoidal = isStereoidal;
-		
+
 	}
 
+	@Override
 	public void setIsPPI(boolean isPPI) {
 		this.isPPI = isPPI;
 	}

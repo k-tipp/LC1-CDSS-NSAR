@@ -1,6 +1,7 @@
 package ch.bfh.btx8201.cdss4nsar.democis.data;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -31,11 +32,13 @@ public class Medication {
       inverseJoinColumns=
             @JoinColumn(name="drugId", referencedColumnName="drugId")
     )
-	private List<Drug> drugList;
+	private Set<Drug> drugList;
+    
+    private String medicationDescription;
 
 	public Medication() {}
 	
-	public Medication(long medicationId, Patient patient, List<Drug> drugList) {
+	public Medication(long medicationId, Patient patient, Set<Drug> drugList) {
 		super();
 		this.medicationId = medicationId;
 		this.patient = patient;
@@ -58,15 +61,19 @@ public class Medication {
 		this.patient = patient;
 	}
 
-	public List<Drug> getDrugList() {
+	public Set<Drug> getDrugList() {
 		return drugList;
 	}
 
-	public void setDrugList(List<Drug> drugList) {
+	public void setDrugList(Set<Drug> drugList) {
 		this.drugList = drugList;
 	}
-	
-	
 
-	
+	public String getMedicationDescription() {
+		return medicationDescription;
+	}
+
+	public void setMedicationDescription(String medicationDescription) {
+		this.medicationDescription = medicationDescription;
+	}
 }

@@ -1,0 +1,17 @@
+#sign-filter {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.patient-form {
+	margin-bottom: 20px;
+}
+
+#patAge {
+	max-width: 80px;
+	width: 80px;
+}
+
+#patAllergics {
+	min-width: 200px;
+}

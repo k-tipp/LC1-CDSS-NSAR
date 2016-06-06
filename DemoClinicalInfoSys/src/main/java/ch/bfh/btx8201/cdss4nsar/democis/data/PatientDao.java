@@ -10,4 +10,5 @@ public interface PatientDao extends CrudRepository<Patient, Long> {
 
 	public List<Patient> findByLastname(String lastname);
 	public List<Patient> findByFirstname(String firstname);
+	public List<Patient> findAll();
 }

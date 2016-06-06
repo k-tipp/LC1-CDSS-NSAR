@@ -1,9 +1,5 @@
 package ch.bfh.btx8201.cdss4nsar.validation.spi;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
-@XmlRootElement(name = "drug")
-
 public interface Cdss4NsarDrug {
 	
 	public String getName();

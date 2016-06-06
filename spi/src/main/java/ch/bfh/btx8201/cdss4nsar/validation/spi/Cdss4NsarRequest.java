@@ -1,5 +1,7 @@
 package ch.bfh.btx8201.cdss4nsar.validation.spi;
 
+import java.util.List;
+
 public class Cdss4NsarRequest {
 	
 	final String requestId;
@@ -18,6 +20,8 @@ public class Cdss4NsarRequest {
 	
 	//Procedures
 	private String procedure;
+	
+	private List<Cdss4NsarDrug> drugs;
 	
 	
 	public Cdss4NsarRequest(){
@@ -102,5 +106,13 @@ public class Cdss4NsarRequest {
 
 	public String getRequestId() {
 		return requestId;
+	}
+
+	public List<Cdss4NsarDrug> getDrugs() {
+		return drugs;
+	}
+
+	public void setDrugs(List<Cdss4NsarDrug> drugs) {
+		this.drugs = drugs;
 	}
 }
