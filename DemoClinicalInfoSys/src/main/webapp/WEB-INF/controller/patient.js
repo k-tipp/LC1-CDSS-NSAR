@@ -1,21 +1,24 @@
 $(document).ready(function() {
 	$("#sendCdssRequest").click(function() {
-		var frm = $("#cdssRequest");
-		var test = frm.serialize();
+		$("#cdssRequest").trigger('submit');
+	 });
+
+	$("#cdssRequest").submit(function (ev) {
+		ev.preventDefault();
+		var test = $("#cdssRequest").serialize();
 		alert(test);
-	    frm.submit(function (ev) {
-	        $.ajax({
-	            type: frm.attr('method'),
-	            url: frm.attr('action'),
-	            enctype: frm.attr('enctype'),
-	            data: frm.serialize(),
-	            success: function (data) {
-	                alert('ok');
-	            }
+	    $.ajax({
+	    	dataType: 'json',
+	        type: $("#cdssRequest").attr('method'),
+	        url: $("#cdssRequest").attr('action'),
+	        enctype: $("#cdssRequest").attr('enctype'),
+	        data: test
+	    }).success(function (data) {
+	            alert('ok');
+	        }).done(function(data) {
+	        	alert('done');
+	        }).fail(function(data) {
+	        	alert('fail');
 	        });
-
-	        ev.preventDefault();
-	    });
 	});
-
 });

@@ -1,67 +1,20 @@
 package ch.bfh.btx8201.cdss4nsar.validation.spi;
 
 import java.util.List;
+import java.util.Set;
 
 public class Cdss4NsarRequest {
-	
-	final String requestId;
-	
-	// Labor
-	private int bloodPlateValue = -1;
-	private double creatinineSerum = 0.00;
-	private int creatinineClearance = -1;
-	private double inr = 0.00;
 	
 	//Person
 	private char sex = 'u';
 	private boolean pregnant = false;
-	private boolean onStereoids = false;
 	private int age = -1;
-	
-	//Procedures
-	private String procedure;
-	
-	private List<Cdss4NsarDrug> drugs;
+	private List<String> allergies;
+	private Set<Cdss4NsarDrug> drugs;
+	private Set<Cdss4NsarLabor> labResults;
 	
 	
 	public Cdss4NsarRequest(){
-		requestId = "";
-	}
-
-	public String getId() {
-		return requestId;
-	}
-
-	public int getBloodPlateValue() {
-		return bloodPlateValue;
-	}
-
-	public void setBloodPlateValue(int bloodPlateValue) {
-		this.bloodPlateValue = bloodPlateValue;
-	}
-
-	public double getCreatinineSerum() {
-		return creatinineSerum;
-	}
-
-	public void setCreatinineSerum(double creatinineSerum) {
-		this.creatinineSerum = creatinineSerum;
-	}
-
-	public int getCreatinineClearance() {
-		return creatinineClearance;
-	}
-
-	public void setCreatinineClearance(int creatinineClearance) {
-		this.creatinineClearance = creatinineClearance;
-	}
-
-	public double getInr() {
-		return inr;
-	}
-
-	public void setInr(double inr) {
-		this.inr = inr;
 	}
 
 	public char getSex() {
@@ -80,14 +33,6 @@ public class Cdss4NsarRequest {
 		this.pregnant = pregnant;
 	}
 
-	public boolean isOnStereoids() {
-		return onStereoids;
-	}
-
-	public void isOnStereoids(boolean onStereoids) {
-		this.onStereoids = onStereoids;
-	}
-
 	public int getAge() {
 		return age;
 	}
@@ -96,23 +41,28 @@ public class Cdss4NsarRequest {
 		this.age = age;
 	}
 
-	public String getProcedure() {
-		return procedure;
-	}
-
-	public void setProcedure(String procedure) {
-		this.procedure = procedure;
-	}
-
-	public String getRequestId() {
-		return requestId;
-	}
-
-	public List<Cdss4NsarDrug> getDrugs() {
+	public Set<Cdss4NsarDrug> getDrugs() {
 		return drugs;
 	}
 
-	public void setDrugs(List<Cdss4NsarDrug> drugs) {
-		this.drugs = drugs;
+	public void setDrugs(Set<Cdss4NsarDrug> patDrugs) {
+		this.drugs = patDrugs;
 	}
+
+	public List<String> getAllergies() {
+		return allergies;
+	}
+
+	public void setAllergies(List<String> allergies) {
+		this.allergies = allergies;
+	}
+
+	public Set<Cdss4NsarLabor> getLabResults() {
+		return labResults;
+	}
+
+	public void setLabResults(Set<Cdss4NsarLabor> labResults) {
+		this.labResults = labResults;
+	}
+
 }

@@ -17,7 +17,7 @@ public class Cdss4NsarRestController {
 	@RequestMapping(value="cdss", method = RequestMethod.POST)
 	public Cdss4NsarResponse doCdssRequest(Cdss4NsarRequest req) throws MalformedURLException {
 		ValidationService s = ValidationService.getInstance();
-		Cdss4NsarResponse response = new Cdss4NsarResponse(req.getId(), s.validateRequest(req));
+		Cdss4NsarResponse response = new Cdss4NsarResponse(s.validateRequest(req));
 		return response;
 	}
 	

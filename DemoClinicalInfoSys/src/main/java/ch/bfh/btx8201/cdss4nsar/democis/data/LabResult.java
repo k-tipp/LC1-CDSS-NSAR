@@ -8,9 +8,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarLabor;
+
 @Entity
 @Table(name = "labresult")
-public class LabResult {
+public class LabResult implements Cdss4NsarLabor {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

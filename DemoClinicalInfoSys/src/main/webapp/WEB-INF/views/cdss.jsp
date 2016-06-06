@@ -2,9 +2,9 @@
 <html>
 <head>
 <link rel="stylesheet" type="text/css"
-	href="resources/bootstrap/css/bootstrap.css">
-<script src="resources/jquery/jquery-1.12.4.js"></script>
-<script src="resources/bootstrap/bootstrap.js"></script>
+	href="/demoCIS/resources/bootstrap/css/bootstrap.css">
+<script src="/demoCIS/resources/jquery/jquery-1.12.4.js"></script>
+<script src="/demoCIS/resources/bootstrap/bootstrap.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>CDSS4NSAR</title>
 </head>

@@ -1,28 +1,25 @@
 package ch.bfh.btx8201.cdss4nsar.democis.domain;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import ch.bfh.btx8201.cdss4nsar.democis.data.LabResult;
 
 public class CdssRequestForm {
 
-	int patientId;
-	int patAge;
-	String patSex;
-	boolean isPregnant;
-	List<String> patAllergics;
-	List<String> patDrug;
-	List<LabResult> labResults;
-	public CdssRequestForm(int patientId, int patAge, String patSex, boolean isPregnant, List<String> patAllergics,
-			List<String> patDrug, List<LabResult> labResults) {
+	private int patientId;
+	private int patAge;
+	private String patSex = "";
+	private String isPregnant = "";
+	private List<String> allergies = new ArrayList<String>();
+	
+	public CdssRequestForm() {}
+	
+	public CdssRequestForm(int patientId, int patAge, String patSex, String isPregnant, List<String> allergies) {
 		super();
 		this.patientId = patientId;
 		this.patAge = patAge;
 		this.patSex = patSex;
 		this.isPregnant = isPregnant;
-		this.patAllergics = patAllergics;
-		this.patDrug = patDrug;
-		this.labResults = labResults;
+		this.allergies = allergies;
 	}
 	public int getPatientId() {
 		return patientId;
@@ -42,30 +39,20 @@ public class CdssRequestForm {
 	public void setPatSex(String patSex) {
 		this.patSex = patSex;
 	}
-	public boolean isPregnant() {
+	public String isPregnant() {
 		return isPregnant;
 	}
-	public void setPregnant(boolean isPregnant) {
+	public void setPregnant(String isPregnant) {
 		this.isPregnant = isPregnant;
 	}
-	public List<String> getPatAllergics() {
-		return patAllergics;
+	public List<String> getAllergies() {
+		return allergies;
 	}
-	public void setPatAllergics(List<String> patAllergics) {
-		this.patAllergics = patAllergics;
+	public void setAllergies(List<String> allergies) {
+		this.allergies = allergies;
 	}
-	public List<String> getPatDrug() {
-		return patDrug;
-	}
-	public void setPatDrug(List<String> patDrug) {
-		this.patDrug = patDrug;
-	}
-	public List<LabResult> getLabResults() {
-		return labResults;
-	}
-	public void setLabResults(List<LabResult> labResults) {
-		this.labResults = labResults;
-	}
+
+	
 	
 	
 }

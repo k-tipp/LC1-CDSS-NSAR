@@ -39,14 +39,6 @@
 								Patient: ${activePatient.firstname} ${activePatient.lastname}</a></li>
 					</c:if>
 				</ul>
-				<!-- 				<div class="navbar-right"> -->
-				<!-- 					<ul class="nav navbar-nav"> -->
-				<!-- 						<li><a href="../server/logout.php"> <span -->
-				<!-- 								class="glyphicon glyphicon-log-out" aria-hidden="true"></span> -->
-				<!-- 								Logout -->
-				<!-- 						</a></li> -->
-				<!-- 					</ul> -->
-				<!-- 				</div> -->
 			</div>
 			<!--/.nav-collapse -->
 		</div>
@@ -77,75 +69,47 @@
 						<h1>&lt;-- Choose a patient</h1>
 					</c:when>
 					<c:otherwise>
-						<form role="form" method="POST" enctype="application/json"
-							name="CdssRequest" id="cdssRequest" action="/demoCIS/patient/${patient.patientId}">
-							<input type="hidden" name="patientId"
-								value="${activePatient.patientId}" />
-							<div class="row">
-								<div class="col-xs-8 col-md-9">
-									<h1 id="page-title">Patient: ${activePatient.firstname}
+					    <div class="row">
+						    <div class="col-xs-8 col-md-9">
+							    <h1 id="page-title">Patient: ${activePatient.firstname}
 										${activePatient.lastname}</h1>
-									<div class="patient-form form-inline">
-										<lable><b>Sex: </b></label>
-										<select class="form-control">
-										  <option>male</option>
-										  <option>female</option>
-										  <option>unknown</option>
+								<form class="form-inline" role="form" method="POST" enctype="application/json"
+									name="CdssRequest" id="cdssRequest"
+									action="/demoCIS/patient/${activePatient.patientId}">
+									<input type="hidden" name="patientId"
+										value="${activePatient.patientId}" />
+									<div class="patient-form">
+										<label><b>Sex: </b></label> <select name="patSex" class="form-control">
+											<option>male</option>
+											<option>female</option>
+											<option>unknown</option>
 										</select>
-										<label> &nbsp;&nbsp;Age: </label>
-										 <input type="number" name="patAge" id="patAge" class="form-control" />
-										 <label class="checkbox-inline">
-										  <input type="checkbox" name="isPregnant" value="isPregnant"><b>is pregnant &nbsp;&nbsp;</b>
+										<label> &nbsp;&nbsp;Age: </label> <input type="number"
+											name="patAge" id="patAge" class="form-control" value="50"/> <label
+											class="checkbox-inline"> <input type="checkbox"
+											name="isPregnant" value="isPregnant"><b>is
+												pregnant &nbsp;&nbsp;</b>
 										</label>
-										<label>Allergics: </label>
-										<select multiple class="form-control" id="patAllergics">
-					                       <c:forEach items="${drugs}" var="drug">
-									           <option value="${drug.name}">${drug.name}</option>
-									       </c:forEach>
-									      </select>
+										<label>Allergies: </label> <select multiple
+											class="form-control" id="patAllergies" name="allergies">
+											<c:forEach items="${drugs}" var="drug">
+												<option value="${drug.name}">${drug.name}</option>
+											</c:forEach>
+										</select>
 									</div>
-								</div>
+								</form>
 							</div>
-							<div class="row">
-								<div class="col-xs-5 col-md-5">
-									<button class="btn btn-info btn-lg" id="sendCdssRequest"
-										type=button>Check Medication</button>
-									<h2>Current medication:</h2>
-									<c:forEach items="${activePatient.medications}"
-										var="medication" varStatus="status">
-										<div class="panel panel-info">
-											<div class="panel-heading">
-												<h3 class="panel-title">${medication.medicationDescription}</h3>
-											</div>
-											<div class="panel-body">
-												<table class="table table-condensed table-hover">
-													<thead>
-														<tr>
-															<th>ID</th>
-															<th>Name</th>
-														</tr>
-													</thead>
-													<tbody>
-														<c:forEach items="${medication.drugList}" var="drug">
-															<tr>
-																<td>${drug.drugId}</td>
-																<td>${drug.name}<input type="hidden"
-																	name="patDrug[]" value="${drug.name}" /></td>
-															</tr>
-														</c:forEach>
-													</tbody>
-												</table>
-											</div>
-										</div>
-									</c:forEach>
-								</div>
-								<div class="col-xs-4 col-md-5">
-									<button class="btn btn-info btn-lg" id="newMedication"
-										type="button">New Medication</button>
-									<h2>Laboratory Results:</h2>
+						</div>
+						<div class="row">
+							<div class="col-xs-5 col-md-5">
+								<button class="btn btn-info btn-lg" id="sendCdssRequest" type=button>Check
+									Medication</button>
+								<h2>Current medication:</h2>
+								<c:forEach items="${activePatient.medications}" var="medication"
+									varStatus="status">
 									<div class="panel panel-info">
 										<div class="panel-heading">
-											<h3 class="panel-title">Laboratory Results</h3>
+											<h3 class="panel-title">${medication.medicationDescription}</h3>
 										</div>
 										<div class="panel-body">
 											<table class="table table-condensed table-hover">
@@ -156,24 +120,51 @@
 													</tr>
 												</thead>
 												<tbody>
-													<c:forEach items="${activePatient.labResults}" var="result">
+													<c:forEach items="${medication.drugList}" var="drug">
 														<tr>
-														<input
-                                                                type="hidden" name="labResults[]"
-                                                                value="${result}" />
-															<td>${result.labResultId}</td>
-															<td id="labType">${result.type}</td>
-															<td id="labValue">${result.value}</td>
-															<td id="labSize">${result.measuringSize}</td>
+															<td>${drug.drugId}</td>
+															<td>${drug.name}</td>
 														</tr>
 													</c:forEach>
 												</tbody>
 											</table>
 										</div>
 									</div>
+								</c:forEach>
+							</div>
+							<div class="col-xs-4 col-md-5">
+								<button class="btn btn-info btn-lg" id="newMedication" type="button">New
+									Medication</button>
+								<h2>Laboratory Results:</h2>
+								<div class="panel panel-info">
+									<div class="panel-heading">
+										<h3 class="panel-title">Laboratory Results</h3>
+									</div>
+									<div class="panel-body">
+										<table class="table table-condensed table-hover">
+											<thead>
+												<tr>
+													<th>ID</th>
+													<th>Name</th>
+													<th>Value</th>
+													<th>Measuring size</th>
+												</tr>
+											</thead>
+											<tbody>
+												<c:forEach items="${activePatient.labResults}" var="result">
+													<tr>
+														<td>${result.labResultId}</td>
+														<td>${result.type}</td>
+														<td>${result.value}</td>
+														<td>${result.measuringSize}</td>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
+									</div>
 								</div>
 							</div>
-						</form>
+						</div>
 					</c:otherwise>
 				</c:choose>
 			</div>
