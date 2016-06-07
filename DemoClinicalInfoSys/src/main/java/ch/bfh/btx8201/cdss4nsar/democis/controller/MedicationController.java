@@ -97,7 +97,6 @@ public class MedicationController {
 			System.out.println(w.getName() + "|" + w.getDescription() + "|" + w.getConflictObjOne() + "|" + w.getConflictObjTwo() + "|" + w.getAlertLevel());
 		}
 		
-		
 		return response;
 	}
 
