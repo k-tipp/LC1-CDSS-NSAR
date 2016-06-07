@@ -11,6 +11,8 @@
 		<module>validators</module>
 		<module>hl7</module>
 		<module>DemoClinicalInfoSys</module>
+		<module>HL7</module>
+		<module>LaborInformationSystem</module>
 	</modules>
 
 	<dependencies>
