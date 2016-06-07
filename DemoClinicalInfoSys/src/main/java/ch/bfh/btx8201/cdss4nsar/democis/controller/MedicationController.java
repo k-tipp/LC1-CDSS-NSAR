@@ -25,9 +25,9 @@ import ch.bfh.btx8201.cdss4nsar.democis.data.Medication;
 import ch.bfh.btx8201.cdss4nsar.democis.data.Patient;
 import ch.bfh.btx8201.cdss4nsar.democis.data.PatientDao;
 import ch.bfh.btx8201.cdss4nsar.democis.domain.CdssRequestForm;
+import ch.bfh.btx8201.cdss4nsar.validation.spi.ICdss4NsarDrug;
 import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarDrug;
-import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarDrugImpl;
-import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarLaborImpl;
+import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarLabor;
 import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarRequest;
 import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarResponse;
 import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarWarning;
@@ -47,7 +47,7 @@ public class MedicationController {
 	public String getDrugList(ModelMap modal) throws JsonProcessingException {
 		ObjectMapper mapper = new ObjectMapper();
 		Iterable<Drug> drugIterable = drugDao.findAll();
-		List<Cdss4NsarDrug> drugList = new ArrayList<Cdss4NsarDrug>();
+		List<ICdss4NsarDrug> drugList = new ArrayList<ICdss4NsarDrug>();
 		drugIterable.forEach(drug -> drugList.add(drug));
 		return mapper.writeValueAsString(drugList);
 	}
@@ -66,16 +66,16 @@ public class MedicationController {
 	public Cdss4NsarResponse postPatient(@PathVariable long patientId, @ModelAttribute CdssRequestForm cdssRequestForm) {
 
 		Patient patient = patientDao.findOne(patientId);
-		Set<Cdss4NsarDrugImpl> patDrugs = new HashSet<Cdss4NsarDrugImpl>();
+		Set<Cdss4NsarDrug> patDrugs = new HashSet<Cdss4NsarDrug>();
 		for (Medication medication : patient.getMedications()) {
 			for(Drug drug : medication.getDrugList()) {
-				patDrugs.add(new Cdss4NsarDrugImpl(drug.getName(), drug.isNsar(), drug.isStereoidal(), drug.isPPI()));
+				patDrugs.add(new Cdss4NsarDrug(drug.getName(), drug.isNsar(), drug.isStereoidal(), drug.isPPI()));
 			}
 		}
 
-		Set<Cdss4NsarLaborImpl> patLabor = new HashSet<Cdss4NsarLaborImpl>();
+		Set<Cdss4NsarLabor> patLabor = new HashSet<Cdss4NsarLabor>();
 		for(LabResult lab : patient.getLabResults()) {
-			patLabor.add(new Cdss4NsarLaborImpl(lab.getType(), lab.getValue(), lab.getMeasuringSize()));
+			patLabor.add(new Cdss4NsarLabor(lab.getType(), lab.getValue(), lab.getMeasuringSize()));
 		}
 		
 

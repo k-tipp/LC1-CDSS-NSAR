@@ -2,7 +2,7 @@ package ch.bfh.btx8201.cdss4nsar.validation.spi;
 
 import java.util.Set;
 
-public class Cdss4NsarResponse {
+public class Cdss4NsarResponse implements ICdss4NsarResponse{
 	
 	Set<Cdss4NsarWarning> warnings;
 	
@@ -13,7 +13,13 @@ public class Cdss4NsarResponse {
 		this.warnings = warnings;
 	}
 
+	@Override
 	public Set<Cdss4NsarWarning> getWarnings() {
+		return warnings;
+	}
+	
+	@Override
+	public Set<Cdss4NsarWarning> setWarnings() {
 		return warnings;
 	}
 }

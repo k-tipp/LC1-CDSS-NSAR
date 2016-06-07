@@ -3,19 +3,19 @@ package validators;
 import java.util.HashSet;
 import java.util.Set;
 
-import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarDrug;
+import ch.bfh.btx8201.cdss4nsar.validation.spi.ICdss4NsarDrug;
 import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarRequest;
-import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarValidator;
+import ch.bfh.btx8201.cdss4nsar.validation.spi.ICdss4NsarValidator;
 import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarWarning;
 
-public class AgeValidator implements Cdss4NsarValidator {
+public class AgeValidator implements ICdss4NsarValidator {
 
 	@Override
 	public Set<Cdss4NsarWarning> validate(Cdss4NsarRequest cdssRequest) {
 		Set<Cdss4NsarWarning> warnings = new HashSet<Cdss4NsarWarning>();
 		if(cdssRequest.getAge() != -1) {
 			if(cdssRequest.getAge() < 12) {
-				for(Cdss4NsarDrug drug : cdssRequest.getDrugs()) {
+				for(ICdss4NsarDrug drug : cdssRequest.getDrugs()) {
 					if(drug.getName().toLowerCase().contains("naproxen")) {			
 						warnings.add(Cdss4NsarWarning.create()
 								.setName("Warnung Patient zu jung")
@@ -31,7 +31,7 @@ public class AgeValidator implements Cdss4NsarValidator {
 				}
 			}
 			if(cdssRequest.getAge() < 6) {
-				for(Cdss4NsarDrug drug : cdssRequest.getDrugs()) {
+				for(ICdss4NsarDrug drug : cdssRequest.getDrugs()) {
 					if(drug.getName().toLowerCase().contains("irfen")) {			
 						warnings.add(Cdss4NsarWarning.create()
 								.setName("Warnung Patient zu jung")

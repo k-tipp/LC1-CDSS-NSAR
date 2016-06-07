@@ -5,20 +5,31 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
+import javax.annotation.PreDestroy;
+import javax.persistence.EntityManagerFactory;
+import javax.sql.DataSource;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
+import org.apache.tomcat.jdbc.pool.DataSourceFactory;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import ch.bfh.btx8201.cdss4nsar.validation.ValidationService;
-import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarValidator;
+import ch.bfh.btx8201.cdss4nsar.validation.spi.ICdss4NsarValidator;
 
 //@Configuration
 //@ComponentScan(basePackages = {"ch.bfh.btx8201.cdss4nsar", "validators", "ch.bfh.btx8201.cdss4nsar.validation.spi"})
@@ -79,14 +90,14 @@ public class Cdss4NsarConfiguration {
 		// URL myJarFile = new URL("jar","","file:"+jarPath);
 		// System.out.println("asdf3");
 		//
-		List<Cdss4NsarValidator> validators = new ArrayList<Cdss4NsarValidator>();
+		List<ICdss4NsarValidator> validators = new ArrayList<ICdss4NsarValidator>();
 		Settings settings = getSettings();
 		for (String name : settings.getValidators()) {
 			this.getClass().getClassLoader();
 			Class<?> c = cl.loadClass(name);
 
 			if (c != null) {
-				validators.add((Cdss4NsarValidator) c.newInstance());
+				validators.add((ICdss4NsarValidator) c.newInstance());
 				System.out.println("Added validator: " + name + "\r\n");
 			}
 		}
@@ -106,4 +117,83 @@ public class Cdss4NsarConfiguration {
 //		String drugList = restTemplate.getForObject("http://localhost:8080/demoCIS/druglist", String.class);
 //		return mapper.readValue(drugList, new TypeReference<List<Drug>>(){});
 //	}
+	
+	@Bean(destroyMethod = "close")
+	@Primary
+	public DataSource dataSource() throws Exception {
+		Settings settings = getSettings();
+		Properties p = new Properties();
+		p.setProperty("username", settings.getUser());
+		p.setProperty("password", settings.getPassword());
+		p.setProperty("url", settings.getDbUrl());
+		p.setProperty("driverClassName", settings.getDriverClassName());
+		p.setProperty("removeAbandoned", "true");
+		p.setProperty("removeAbandonedTimeout", "60");
+		
+		DataSourceFactory s = new DataSourceFactory();
+		return s.createDataSource(p);
+		
+//		return DataSourceBuilder.create().username(settings.getUser()).password(settings.getPassword())
+//				.url(settings.getDbUrl()).driverClassName(settings.getDriverClassName()).build();
+	};
+
+	@Bean(destroyMethod = "close")
+	public EntityManagerFactory entityManagerFactory() throws Exception {
+
+		HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+		vendorAdapter.setGenerateDdl(true);
+		vendorAdapter.setShowSql(false);
+
+		LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
+		factory.setJpaVendorAdapter(vendorAdapter);
+		factory.setDataSource(dataSource());
+		factory.setJpaProperties(getAdditionalProperties());
+		factory.setPackagesToScan("ch.bfh.btx8201.cdss4nsar.democis.data");
+		factory.afterPropertiesSet();
+
+		return factory.getObject();
+	}
+
+	@Bean
+	public PlatformTransactionManager transactionManager() throws Exception {
+
+		JpaTransactionManager txManager = new JpaTransactionManager();
+		txManager.setEntityManagerFactory(entityManagerFactory());
+		return txManager;
+	}
+
+	@Bean
+	public Properties getAdditionalProperties() {
+		Properties properties = new Properties();
+		properties.setProperty("hibernate.hbm2ddl.auto", "update");//create-drop
+		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
+		properties.setProperty("hibernate.show_sql", "false");
+		return properties;
+	}
+
+	/*
+	 * https://techblog.ralph-schuster.eu/2014/07/09/solution-to-tomcat-cant-
+	 * stop-an-abandoned-connection-cleanup-thread/
+	 */
+	@PreDestroy
+	public void cleanUpJDBCConnections() {
+		try {
+			com.mysql.jdbc.AbandonedConnectionCleanupThread.shutdown();
+		} catch (Throwable t) {
+		}
+		// This manually deregisters JDBC driver, which prevents Tomcat 7 from
+		// complaining about memory leaks
+		Enumeration<java.sql.Driver> drivers = java.sql.DriverManager.getDrivers();
+		while (drivers.hasMoreElements()) {
+			java.sql.Driver driver = drivers.nextElement();
+			try {
+				java.sql.DriverManager.deregisterDriver(driver);
+			} catch (Throwable t) {
+			}
+		}
+		try {
+			Thread.sleep(2000L);
+		} catch (Exception e) {
+		}
+	}
 }

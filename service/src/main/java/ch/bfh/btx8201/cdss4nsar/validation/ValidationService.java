@@ -8,12 +8,12 @@ import java.util.ServiceConfigurationError;
 import java.util.Set;
 
 import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarRequest;
-import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarValidator;
+import ch.bfh.btx8201.cdss4nsar.validation.spi.ICdss4NsarValidator;
 import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarWarning;
 
 public class ValidationService {
 
-	private static List<Cdss4NsarValidator> cdss4NsarValidators;
+	private static List<ICdss4NsarValidator> cdss4NsarValidators;
 	
 	private static ValidationService service;
 
@@ -32,11 +32,11 @@ public class ValidationService {
     	Set<Cdss4NsarWarning> warnings = new HashSet<Cdss4NsarWarning>();
 
         try {
-            Iterator<Cdss4NsarValidator> validators = ValidationService.cdss4NsarValidators.iterator();
+            Iterator<ICdss4NsarValidator> validators = ValidationService.cdss4NsarValidators.iterator();
             System.out.println("get book1");
             while (validators.hasNext()) {
             	System.out.println("--------------------dfsgdsfg-------------");
-            	Cdss4NsarValidator validator = validators.next();
+            	ICdss4NsarValidator validator = validators.next();
             	System.out.println("--------" + validator.toString());
             	Set<Cdss4NsarWarning> result = validator.validate(request);
             	if(result != null) {
@@ -55,11 +55,11 @@ public class ValidationService {
 //        return null;
     }
 
-	public List<Cdss4NsarValidator> getCdss4NsarValidators() {
+	public List<ICdss4NsarValidator> getCdss4NsarValidators() {
 		return cdss4NsarValidators;
 	}
 
-	public void setCdss4NsarValidators(List<Cdss4NsarValidator> cdss4NsarValidators) {
+	public void setCdss4NsarValidators(List<ICdss4NsarValidator> cdss4NsarValidators) {
 		ValidationService.cdss4NsarValidators = cdss4NsarValidators;
 	}    
 }

@@ -10,8 +10,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name="settings")
 public class Settings {
 	
+	private String driverClassName;
+	
+	private String dbUrl;
+	
+	private String user;
+	
+	private String password;
+	
 	private List<String> validators;
-//	private List<Cdss4NsarDrug> drugs;
 
 	@XmlElementWrapper(name = "validators")
 	@XmlElement(name="validator", type=String.class)
@@ -23,15 +30,41 @@ public class Settings {
 		this.validators = validators;
 	}
 
-	/*@XmlElementWrapper(name = "drugs")
-	@XmlElement(name="drug", type=Cdss4NsarDrug.class)
-	public List<Cdss4NsarDrug> getDrugs() {
-		return drugs;
+	@XmlElement(name="dbdriverclassname")
+	public String getDriverClassName() {
+		return driverClassName;
 	}
-
-	public void setDrugs(List<Cdss4NsarDrug> drugs) {
-		this.drugs = drugs;
-	}*/
+	
+	public void setDriverClassName(String driverClassName) {
+		this.driverClassName = driverClassName;
+	}
+	
+	@XmlElement(name="dburl")
+	public String getDbUrl() {
+		return dbUrl;
+	}
+	
+	public void setDbUrl(String dbUrl) {
+		this.dbUrl = dbUrl;
+	}
+	
+	@XmlElement(name="dbuser")
+	public String getUser() {
+		return user;
+	}
+	
+	public void setUser(String user) {
+		this.user = user;
+	}
+	
+	@XmlElement(name="dbpassword")
+	public String getPassword() {
+		return password;
+	}
+	
+	public void setPassword(String password) {
+		this.password = password;
+	}	
 	
 	
 	

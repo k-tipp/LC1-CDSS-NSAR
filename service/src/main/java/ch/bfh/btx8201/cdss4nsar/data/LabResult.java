@@ -1,4 +1,4 @@
-package ch.bfh.btx8201.cdss4nsar.democis.data;
+package ch.bfh.btx8201.cdss4nsar.data;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,7 +22,7 @@ public class LabResult implements ICdss4NsarLabor {
 	
 	@ManyToOne
 	@JsonBackReference
-	private Patient patient;
+	private Request request;
 
 	@NotNull
 	private String type;
@@ -37,10 +37,10 @@ public class LabResult implements ICdss4NsarLabor {
 
 	}
 
-	public LabResult(long labResultId, Patient patient, String type, String value, String measuringSize) {
+	public LabResult(long labResultId, Request request, String type, String value, String measuringSize) {
 		super();
 		this.labResultId = labResultId;
-		this.patient = patient;
+		this.request = request;
 		this.type = type;
 		this.value = value;
 		this.measuringSize = measuringSize;
@@ -54,14 +54,14 @@ public class LabResult implements ICdss4NsarLabor {
 		this.labResultId = labResultId;
 	}
 
-	public Patient getPatient() {
-		return patient;
+	public Request getRequest() {
+		return request;
 	}
 
-	public void setPatient(Patient patient) {
-		this.patient = patient;
+	public void setRequest(Request request) {
+		this.request = request;
 	}
-	
+
 	public String getType() {
 		return type;
 	}
@@ -85,4 +85,6 @@ public class LabResult implements ICdss4NsarLabor {
 	public void setMeasuringSize(String measuringSize) {
 		this.measuringSize = measuringSize;
 	}
+
+	
 }

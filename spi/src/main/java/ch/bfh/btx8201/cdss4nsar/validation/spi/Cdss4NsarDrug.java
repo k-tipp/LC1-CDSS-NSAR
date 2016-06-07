@@ -1,23 +1,59 @@
 package ch.bfh.btx8201.cdss4nsar.validation.spi;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
+public class Cdss4NsarDrug implements ICdss4NsarDrug {
 
-@JsonTypeInfo(use = JsonTypeInfo.Id.MINIMAL_CLASS, include = JsonTypeInfo.As.PROPERTY, property = "type")
-public interface Cdss4NsarDrug {
+	private String name;
+	private boolean isNsar;
+	private boolean isStereoidal;
+	private boolean isPPI;
 	
-	public String getName();
+	public Cdss4NsarDrug() {}
 	
-	public void setName(String name);
+	public Cdss4NsarDrug(String name, boolean isNsar, boolean isStereoidal, boolean isPPI) {
+		super();
+		this.name = name;
+		this.isNsar = isNsar;
+		this.isStereoidal = isStereoidal;
+		this.isPPI = isPPI;
+	}
 	
-	public boolean isNsar();
+	@Override
+	public String getName() {
+		return name;
+	}
 	
-	public void setIsNsar(boolean isNsar);
+	@Override
+	public void setName(String name) {
+		this.name = name;
+	}
 	
-	public boolean isStereoidal();
+	@Override
+	public boolean isNsar() {
+		return isNsar;
+	}
 	
-	public void setIsStereoidal(boolean isStereoidal);
+	@Override
+	public void setIsNsar(boolean isNsar) {
+		this.isNsar = isNsar;
+	}
 	
-	public boolean isPPI();
+	@Override
+	public boolean isStereoidal() {
+		return isStereoidal;
+	}
 	
-	public void setIsPPI(boolean isPPI);
+	@Override
+	public void setIsStereoidal(boolean isStereoidal) {
+		this.isStereoidal = isStereoidal;
+	}
+	
+	@Override
+	public boolean isPPI() {
+		return isPPI;
+	}
+	
+	@Override
+	public void setIsPPI(boolean isPPI) {
+		this.isPPI = isPPI;
+	}
 }

@@ -3,13 +3,13 @@ package validators;
 import java.util.HashSet;
 import java.util.Set;
 
-import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarDrug;
-import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarLaborImpl;
+import ch.bfh.btx8201.cdss4nsar.validation.spi.ICdss4NsarDrug;
+import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarLabor;
 import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarRequest;
-import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarValidator;
+import ch.bfh.btx8201.cdss4nsar.validation.spi.ICdss4NsarValidator;
 import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarWarning;
 
-public class CreatinineValidator implements Cdss4NsarValidator {
+public class CreatinineValidator implements ICdss4NsarValidator {
 
 	Cdss4NsarWarning warningSerum;
 	Cdss4NsarWarning warningClearance;
@@ -20,10 +20,10 @@ public class CreatinineValidator implements Cdss4NsarValidator {
 	@Override
 	public Set<Cdss4NsarWarning> validate(Cdss4NsarRequest cdssRequest) {
 		Set<Cdss4NsarWarning> warnings = new HashSet<Cdss4NsarWarning>();
-		for(Cdss4NsarLaborImpl labor : cdssRequest.getLabResults()) {
+		for(Cdss4NsarLabor labor : cdssRequest.getLabResults()) {
 			if(labor.getType().equalsIgnoreCase("Creatinin Clearance")) {
 				if (Integer.parseInt(labor.getValue()) < 30) {
-					for(Cdss4NsarDrug drug : cdssRequest.getDrugs()) {
+					for(ICdss4NsarDrug drug : cdssRequest.getDrugs()) {
 						if(drug.isNsar()) {
 							warnings.add(Cdss4NsarWarning.create()
 									.setName("Warnung Kreatinin Clearance")
@@ -38,7 +38,7 @@ public class CreatinineValidator implements Cdss4NsarValidator {
 						}
 					}	
 				} else if (Integer.parseInt(labor.getValue()) <= 60) {
-					for(Cdss4NsarDrug drug : cdssRequest.getDrugs()) {
+					for(ICdss4NsarDrug drug : cdssRequest.getDrugs()) {
 						if(drug.isNsar()) {
 							warnings.add(Cdss4NsarWarning.create()
 									.setName("Warnung Kreatinin Clearance")

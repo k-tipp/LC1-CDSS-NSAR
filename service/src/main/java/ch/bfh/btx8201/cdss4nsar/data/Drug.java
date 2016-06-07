@@ -1,13 +1,10 @@
-package ch.bfh.btx8201.cdss4nsar.democis.data;
-
-import java.util.Set;
+package ch.bfh.btx8201.cdss4nsar.data;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -30,44 +27,22 @@ public class Drug implements ICdss4NsarDrug {
 
 	private boolean isPPI;
 	
-	@ManyToMany(mappedBy = "drugList", fetch = FetchType.EAGER)
+	@ManyToOne
 	@JsonBackReference
-	private Set<Medication> medicationList;
+	private Request request;
 
 	public Drug() {
 
 	}
 
-	public Drug(long drugId, String name, boolean isNsar, Set<Medication> medicationList) {
+	public Drug(long drugId, String name, boolean isNsar, boolean isStereoidal, boolean isPPI, Request request) {
 		super();
 		this.drugId = drugId;
 		this.name = name;
 		this.isNsar = isNsar;
-		this.medicationList = medicationList;
-	}
-
-	public boolean isNsar() {
-		return isNsar;
-	}
-
-	public void setIsNsar(boolean isNsar) {
-		this.isNsar = isNsar;
-	}
-
-	public String getName() {
-		return this.name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Set<Medication> getMedicationList() {
-		return medicationList;
-	}
-
-	public void setMedicationList(Set<Medication> medicationList) {
-		this.medicationList = medicationList;
+		this.isStereoidal = isStereoidal;
+		this.isPPI = isPPI;
+		this.request = request;
 	}
 
 	public long getDrugId() {
@@ -78,20 +53,43 @@ public class Drug implements ICdss4NsarDrug {
 		this.drugId = drugId;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public boolean isNsar() {
+		return isNsar;
+	}
+
+	public void setIsNsar(boolean isNsar) {
+		this.isNsar = isNsar;
+	}
+
 	public boolean isStereoidal() {
 		return isStereoidal;
+	}
+
+	public void setIsStereoidal(boolean isStereoidal) {
+		this.isStereoidal = isStereoidal;
 	}
 
 	public boolean isPPI() {
 		return isPPI;
 	}
 
-	public void setIsStereoidal(boolean isStereoidal) {
-		this.isStereoidal = isStereoidal;
-
-	}
-
 	public void setIsPPI(boolean isPPI) {
 		this.isPPI = isPPI;
 	}
+
+	public Request getRequest() {
+		return request;
+	}
+
+	public void setRequest(Request request) {
+		this.request = request;
+	}	
 }

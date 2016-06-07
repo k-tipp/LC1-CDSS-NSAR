@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <settings>
+    <dbdriverclassname>com.mysql.jdbc.Driver</dbdriverclassname>
+    <dburl>jdbc:mysql://localhost/cdss</dburl>
+    <dbuser>cis_user</dbuser>
+    <dbpassword>password</dbpassword>
     <validators>
         <validator>validators.AgeValidator</validator>
         <validator>validators.BloodPlateValidator</validator>

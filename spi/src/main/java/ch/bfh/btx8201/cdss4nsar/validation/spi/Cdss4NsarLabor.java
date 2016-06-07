@@ -1,15 +1,52 @@
 package ch.bfh.btx8201.cdss4nsar.validation.spi;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
+public class Cdss4NsarLabor implements ICdss4NsarLabor {
 
-@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "type")
-public interface Cdss4NsarLabor {
-	public String getType();
-	public void setType(String type);
+	private String type;
+
+	private String value;
+
+	private String measuringSize;
+
+
+	public Cdss4NsarLabor() {
+		super();
+	}
+
+	public Cdss4NsarLabor(String type, String value, String measuringSize) {
+		super();
+		this.type = type;
+		this.value = value;
+		this.measuringSize = measuringSize;
+	}
+
+	@Override
+	public String getType() {
+		return type;
+	}
+
+	@Override
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	@Override
+	public String getValue() {
+		return value;
+	}
 	
-	public String getValue();
-	public void setValue(String value);
-	
-	public String getMeasuringSize();
-	public void setMeasuringSize(String measuringSize);	
+	@Override
+	public void setValue(String value) {
+		this.value = value;
+	}
+
+	@Override
+	public String getMeasuringSize() {
+		return measuringSize;
+	}
+
+	@Override
+	public void setMeasuringSize(String measuringSize) {
+		this.measuringSize = measuringSize;
+	}
 }
