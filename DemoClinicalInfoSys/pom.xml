@@ -122,10 +122,7 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
         </dependency>
-
 	</dependencies>
-
-
 	<build>
 		<pluginManagement>
 			<plugins>
@@ -156,8 +153,8 @@
 						<server>Apache_Tomcat_9_x64</server>
 						<url>http://localhost:8080/manager/text</url>
 						<path>/demoCIS</path>
-						<username>root</username>
-						<password>root</password>
+<!-- 						<username>root</username> -->
+<!-- 						<password>root</password> -->
 						<update>true</update>
 					</configuration>
 				</plugin>
