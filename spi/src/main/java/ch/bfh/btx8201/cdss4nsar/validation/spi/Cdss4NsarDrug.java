@@ -1,5 +1,8 @@
 package ch.bfh.btx8201.cdss4nsar.validation.spi;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
+@JsonTypeInfo(use = JsonTypeInfo.Id.MINIMAL_CLASS, include = JsonTypeInfo.As.PROPERTY, property = "type")
 public interface Cdss4NsarDrug {
 	
 	public String getName();
@@ -8,7 +11,7 @@ public interface Cdss4NsarDrug {
 	
 	public boolean isNsar();
 	
-	public void setNsar(boolean isNsar);
+	public void setIsNsar(boolean isNsar);
 	
 	public boolean isStereoidal();
 	
