@@ -1,12 +1,12 @@
 package ch.bfh.btx8201.cdss4nsar.validation;
 
 import java.net.MalformedURLException;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ServiceConfigurationError;
+import java.util.Set;
 
-import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarDrug;
 import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarRequest;
 import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarValidator;
 import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarWarning;
@@ -14,8 +14,6 @@ import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarWarning;
 public class ValidationService {
 
 	private static List<Cdss4NsarValidator> cdss4NsarValidators;
-	
-	private static List<Cdss4NsarDrug> drugList;
 	
 	private static ValidationService service;
 
@@ -30,27 +28,31 @@ public class ValidationService {
     }
 
 
-    public List<Cdss4NsarWarning> validateRequest(Cdss4NsarRequest request) {
-        List<Cdss4NsarWarning> warnings = new ArrayList<Cdss4NsarWarning>();
+    public Set<Cdss4NsarWarning> validateRequest(Cdss4NsarRequest request) {
+    	Set<Cdss4NsarWarning> warnings = new HashSet<Cdss4NsarWarning>();
 
         try {
             Iterator<Cdss4NsarValidator> validators = ValidationService.cdss4NsarValidators.iterator();
             System.out.println("get book1");
             while (validators.hasNext()) {
+            	System.out.println("--------------------dfsgdsfg-------------");
             	Cdss4NsarValidator validator = validators.next();
-            	Cdss4NsarWarning result = validator.validate(request, drugList);
+            	System.out.println("--------" + validator.toString());
+            	Set<Cdss4NsarWarning> result = validator.validate(request);
             	if(result != null) {
-            		warnings.add(result);
+            		warnings.addAll(result);
             	}
+            	
             }
         } catch (ServiceConfigurationError serviceError) {
             serviceError.printStackTrace();
-        } finally {
-        	if(warnings.size() == 0) {
+        } 
+//        finally {
+//        	if(warnings.size() == 0) {
         		return warnings;
-        	}
-        }
-        return null;
+//        	}
+//        }
+//        return null;
     }
 
 	public List<Cdss4NsarValidator> getCdss4NsarValidators() {
@@ -59,17 +61,5 @@ public class ValidationService {
 
 	public void setCdss4NsarValidators(List<Cdss4NsarValidator> cdss4NsarValidators) {
 		ValidationService.cdss4NsarValidators = cdss4NsarValidators;
-	}
-
-	public List<Cdss4NsarDrug> getDrugList() {
-		return drugList;
-	}
-
-	public void setDrugList(List<Cdss4NsarDrug> drugList) {
-		ValidationService.drugList = drugList;
-	}
-	
-	
-    
-    
+	}    
 }

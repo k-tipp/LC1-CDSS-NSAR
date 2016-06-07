@@ -8,11 +8,14 @@ public class Cdss4NsarWarning {
 	private String measurementType;
 	private String measurementUnit;
 	private String failedTest;
+	private String conflictObjOne;
+	private String conflictObjTwo;
+	private String alertLevel;
 	
 	public Cdss4NsarWarning() {}
-
+	
 	public Cdss4NsarWarning(String name, String description, String measurementValue, String measurementType,
-			String measurementUnit, String failedTest) {
+			String measurementUnit, String failedTest, String conflictObjOne, String conflictObjTwo, String alertLevel) {
 		super();
 		this.name = name;
 		this.description = description;
@@ -20,8 +23,13 @@ public class Cdss4NsarWarning {
 		this.measurementType = measurementType;
 		this.measurementUnit = measurementUnit;
 		this.failedTest = failedTest;
+		this.conflictObjOne = conflictObjOne;
+		this.conflictObjTwo = conflictObjTwo;
+		this.alertLevel = alertLevel;
 	}
-	
+
+
+
 	public static Cdss4NsarWarning create() {
 		return new Cdss4NsarWarning();
 	}
@@ -77,6 +85,33 @@ public class Cdss4NsarWarning {
 
 	public Cdss4NsarWarning setFailedTest(String failedTest) {
 		this.failedTest = failedTest;
+		return this;
+	}
+
+	public String getConflictObjOne() {
+		return conflictObjOne;
+	}
+
+	public Cdss4NsarWarning setConflictObjOne(String conflictObjOne) {
+		this.conflictObjOne = conflictObjOne;
+		return this;
+	}
+
+	public String getConflictObjTwo() {
+		return conflictObjTwo;
+	}
+
+	public Cdss4NsarWarning setConflictObjTwo(String conflictObjTwo) {
+		this.conflictObjTwo = conflictObjTwo;
+		return this;
+	}
+
+	public String getAlertLevel() {
+		return alertLevel;
+	}
+
+	public Cdss4NsarWarning setAlertLevel(String alertLevel) {
+		this.alertLevel = alertLevel;
 		return this;
 	}
 }

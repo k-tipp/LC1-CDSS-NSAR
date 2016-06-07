@@ -11,6 +11,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "patient")
 public class Patient {
@@ -26,9 +28,11 @@ public class Patient {
 	private String firstname;
 
 	@OneToMany(mappedBy = "patient", fetch = FetchType.EAGER)
+	@JsonManagedReference
 	private Set<LabResult> labResults;
 	
 	@OneToMany(mappedBy = "patient", fetch = FetchType.EAGER)
+	@JsonManagedReference
 	private Set<Medication> medications;
 
 	public Patient() {

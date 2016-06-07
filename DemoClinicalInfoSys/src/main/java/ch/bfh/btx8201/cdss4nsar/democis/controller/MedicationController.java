@@ -20,14 +20,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ch.bfh.btx8201.cdss4nsar.democis.data.Drug;
 import ch.bfh.btx8201.cdss4nsar.democis.data.DrugDao;
+import ch.bfh.btx8201.cdss4nsar.democis.data.LabResult;
 import ch.bfh.btx8201.cdss4nsar.democis.data.Medication;
 import ch.bfh.btx8201.cdss4nsar.democis.data.Patient;
 import ch.bfh.btx8201.cdss4nsar.democis.data.PatientDao;
 import ch.bfh.btx8201.cdss4nsar.democis.domain.CdssRequestForm;
 import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarDrug;
-import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarLabor;
+import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarDrugImpl;
+import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarLaborImpl;
 import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarRequest;
 import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarResponse;
+import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarWarning;
 
 @RestController
 @RequestMapping("/")
@@ -63,13 +66,18 @@ public class MedicationController {
 	public Cdss4NsarResponse postPatient(@PathVariable long patientId, @ModelAttribute CdssRequestForm cdssRequestForm) {
 
 		Patient patient = patientDao.findOne(patientId);
-		Set<Cdss4NsarDrug> patDrugs = new HashSet<Cdss4NsarDrug>();
+		Set<Cdss4NsarDrugImpl> patDrugs = new HashSet<Cdss4NsarDrugImpl>();
 		for (Medication medication : patient.getMedications()) {
-			patDrugs.addAll(medication.getDrugList());
+			for(Drug drug : medication.getDrugList()) {
+				patDrugs.add(new Cdss4NsarDrugImpl(drug.getName(), drug.isNsar(), drug.isStereoidal(), drug.isPPI()));
+			}
 		}
 
-		Set<Cdss4NsarLabor> patLabor = new HashSet<Cdss4NsarLabor>();
-		patLabor.addAll(patient.getLabResults());
+		Set<Cdss4NsarLaborImpl> patLabor = new HashSet<Cdss4NsarLaborImpl>();
+		for(LabResult lab : patient.getLabResults()) {
+			patLabor.add(new Cdss4NsarLaborImpl(lab.getType(), lab.getValue(), lab.getMeasuringSize()));
+		}
+		
 
 		Cdss4NsarRequest request = new Cdss4NsarRequest();
 		request.setAge(cdssRequestForm.getPatAge());
@@ -79,15 +87,15 @@ public class MedicationController {
 		request.setDrugs(patDrugs);
 		request.setLabResults(patLabor);
 		
+		System.out.println("-------------- Sending request----------");
+		System.out.println(request.getAge() + "|" + request.getSex() + "|" + request.getLabResults().size() + "|" + request.getAllergies().size() + "|" + request.getDrugs().size());
+		
 		RestTemplate restTemplate = new RestTemplate();
 		Cdss4NsarResponse response = restTemplate.postForObject("http://localhost:8080/cdss4nsar/cdss", request, Cdss4NsarResponse.class);
-<<<<<<< HEAD
 		System.out.println("-------------- Got Response----------");
 		for(Cdss4NsarWarning w : response.getWarnings()) {
 			System.out.println(w.getName() + "|" + w.getDescription() + "|" + w.getConflictObjOne() + "|" + w.getConflictObjTwo() + "|" + w.getAlertLevel());
 		}
-=======
->>>>>>> parent of a1b0b83... asdfghjk
 		
 		return response;
 	}

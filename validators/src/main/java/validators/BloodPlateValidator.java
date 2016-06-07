@@ -1,8 +1,10 @@
 package validators;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarDrug;
+import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarLaborImpl;
 import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarRequest;
 import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarValidator;
 import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarWarning;
@@ -10,18 +12,28 @@ import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarWarning;
 public class BloodPlateValidator implements Cdss4NsarValidator {
 
 	@Override
-	public Cdss4NsarWarning validate(Cdss4NsarRequest cdssRequest, List<Cdss4NsarDrug> drugs) {
-		Cdss4NsarWarning warning = null;
-		if(cdssRequest.getBloodPlateValue() < 150 && cdssRequest.getBloodPlateValue() != -1) {
-			
-			warning = Cdss4NsarWarning.create().setName("Warnung Thrombozytenwert")
-				.setDescription("Thrombozytopenie liegt vor, es dürfen keine NSAR verordnet werden")
-				.setMeasurementType("Anzahl / µl Blut")
-				.setMeasurementUnit("Anzahl")
-				.setMeasurementValue(Integer.toString(cdssRequest.getBloodPlateValue() * 1000))
-				.setFailedTest("Thrombozytenwert < 150 000 / µl Blut");
+	public Set<Cdss4NsarWarning> validate(Cdss4NsarRequest cdssRequest) {
+		Set<Cdss4NsarWarning> warnings = new HashSet<Cdss4NsarWarning>();
+		for(Cdss4NsarLaborImpl labor : cdssRequest.getLabResults()) {
+			if(labor.getType().equalsIgnoreCase("Thrombozyten")) {
+				if(Integer.parseInt(labor.getValue()) < 150) {
+					for(Cdss4NsarDrug drug : cdssRequest.getDrugs()) {
+						if(drug.isNsar()) {
+							warnings.add(Cdss4NsarWarning.create().setName("Warnung Thrombozytenwert")
+									.setDescription("Das Blutungsrisiko ist bei Gabe von NSAR ist erhöht, Nutzen/Risiko abwägen.")
+									.setMeasurementType("G/l")
+									.setMeasurementUnit("Anzahl")
+									.setMeasurementValue(labor.getValue())
+									.setFailedTest("Thrombozytenwert < 150 G/l")
+									.setConflictObjOne("Patient")
+									.setConflictObjTwo(drug.getName())
+									.setAlertLevel("warning"));
+						}
+					}
+				}
+			}
 		}
-		return warning;
+		return warnings;
 	}
 
 }

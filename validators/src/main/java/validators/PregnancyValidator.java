@@ -1,6 +1,7 @@
 package validators;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarDrug;
 import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarRequest;
@@ -10,17 +11,24 @@ import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarWarning;
 public class PregnancyValidator implements Cdss4NsarValidator {
 
 	@Override
-	public Cdss4NsarWarning validate(Cdss4NsarRequest cdssRequest, List<Cdss4NsarDrug> drugs) {
-		Cdss4NsarWarning warning = null;
+	public Set<Cdss4NsarWarning> validate(Cdss4NsarRequest cdssRequest) {
+		Set<Cdss4NsarWarning> warnings = new HashSet<Cdss4NsarWarning>();
 		if(cdssRequest.isPregnant()) {
-			
-			warning = Cdss4NsarWarning.create().setName("Warnung Schwangerschaft")
-				.setDescription("Die Patientin ist Schwanger, es dürfen keine NSAR verordnet werden")
-				.setMeasurementType("Schwangerschaft")
-				.setMeasurementUnit("Ja/Nein")
-				.setMeasurementValue("Ja")
-				.setFailedTest("Patientin ist schwanger");
+			for(Cdss4NsarDrug drug : cdssRequest.getDrugs()) {
+				if(drug.isNsar()) {			
+					warnings.add(Cdss4NsarWarning.create()
+							.setName("Warnung Schwangerschaft")
+							.setDescription("Die Patientin ist Schwanger, NSAR sind kontraindiziert")
+							.setMeasurementType("Schwangerschaft")
+							.setMeasurementUnit("Ja/Nein")
+							.setMeasurementValue("Ja")
+							.setFailedTest("Patientin ist schwanger")
+							.setConflictObjOne("Patient")
+							.setConflictObjTwo(drug.getName())
+							.setAlertLevel("danger"));
+				}
+			}
 		}
-		return warning;
+		return warnings;
 	}
 }

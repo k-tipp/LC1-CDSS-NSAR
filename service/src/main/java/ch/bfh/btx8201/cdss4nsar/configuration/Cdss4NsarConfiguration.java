@@ -16,14 +16,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import ch.bfh.btx8201.cdss4nsar.domain.Drug;
 import ch.bfh.btx8201.cdss4nsar.validation.ValidationService;
-import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarDrug;
 import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarValidator;
 
 //@Configuration
@@ -101,16 +95,15 @@ public class Cdss4NsarConfiguration {
 
 		ValidationService service = ValidationService.getInstance();
 		service.setCdss4NsarValidators(validators);
-		service.setDrugList(getDrugList());
 
 		return service;
 	}
 
-	@Bean
-	public List<Cdss4NsarDrug> getDrugList() throws IOException, JAXBException {
-		ObjectMapper mapper = new ObjectMapper();
-		RestTemplate restTemplate = new RestTemplate();
-		String drugList = restTemplate.getForObject("http://localhost:8080/demoCIS/druglist", String.class);
-		return mapper.readValue(drugList, new TypeReference<List<Drug>>(){});
-	}
+//	@Bean
+//	public List<Cdss4NsarDrug> getDrugList() throws IOException, JAXBException {
+//		ObjectMapper mapper = new ObjectMapper();
+//		RestTemplate restTemplate = new RestTemplate();
+//		String drugList = restTemplate.getForObject("http://localhost:8080/demoCIS/druglist", String.class);
+//		return mapper.readValue(drugList, new TypeReference<List<Drug>>(){});
+//	}
 }
