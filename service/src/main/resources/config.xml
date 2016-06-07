@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <settings>
     <validators>
-        <validator>validators.AgeValidator</validator>
-        <validator>validators.BloodPlateValidator</validator>
-        <validator>validators.CreatinineValidator</validator>
-        <validator>validators.INRValidator</validator>
-        <validator>validators.PregnancyValidator</validator>
+        <validator>validators.DemoValidator</validator>
     </validators>
 </settings>
