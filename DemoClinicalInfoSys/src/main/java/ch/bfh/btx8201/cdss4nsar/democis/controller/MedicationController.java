@@ -1,5 +1,7 @@
 package ch.bfh.btx8201.cdss4nsar.democis.controller;
 
+import java.net.MalformedURLException;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -25,12 +27,12 @@ import ch.bfh.btx8201.cdss4nsar.democis.data.Medication;
 import ch.bfh.btx8201.cdss4nsar.democis.data.Patient;
 import ch.bfh.btx8201.cdss4nsar.democis.data.PatientDao;
 import ch.bfh.btx8201.cdss4nsar.democis.domain.CdssRequestForm;
-import ch.bfh.btx8201.cdss4nsar.validation.spi.ICdss4NsarDrug;
 import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarDrug;
 import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarLabor;
 import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarRequest;
 import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarResponse;
 import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarWarning;
+import ch.bfh.btx8201.cdss4nsar.validation.spi.ICdss4NsarDrug;
 
 @RestController
 @RequestMapping("/")
@@ -63,7 +65,7 @@ public class MedicationController {
 	}
 
 	@RequestMapping(path = "/patient/{patientId}", method = RequestMethod.POST)
-	public Cdss4NsarResponse postPatient(@PathVariable long patientId, @ModelAttribute CdssRequestForm cdssRequestForm) {
+	public String postPatient4CdssRequest(@PathVariable long patientId, @ModelAttribute CdssRequestForm cdssRequestForm) throws MalformedURLException {
 
 		Patient patient = patientDao.findOne(patientId);
 		Set<Cdss4NsarDrug> patDrugs = new HashSet<Cdss4NsarDrug>();
@@ -91,13 +93,15 @@ public class MedicationController {
 		System.out.println(request.getAge() + "|" + request.getSex() + "|" + request.getLabResults().size() + "|" + request.getAllergies().size() + "|" + request.getDrugs().size());
 		
 		RestTemplate restTemplate = new RestTemplate();
-		Cdss4NsarResponse response = restTemplate.postForObject("http://localhost:8080/cdss4nsar/cdss", request, Cdss4NsarResponse.class);
-		System.out.println("-------------- Got Response----------");
-		for(Cdss4NsarWarning w : response.getWarnings()) {
-			System.out.println(w.getName() + "|" + w.getDescription() + "|" + w.getConflictObjOne() + "|" + w.getConflictObjTwo() + "|" + w.getAlertLevel());
-		}
+//		Cdss4NsarResponse response = restTemplate.postForObject("http://localhost:8080/cdss4nsar/cdss", request, Cdss4NsarResponse.class);
 		
-		return response;
+		URI uri = restTemplate.postForLocation("http://localhost:8080/cdss4nsar/cdss", request);
+		System.out.println("-------------- Got Response----------");
+//		for(Cdss4NsarWarning w : response.getWarnings()) {
+//			System.out.println(w.getName() + "|" + w.getDescription() + "|" + w.getConflictObjOne() + "|" + w.getConflictObjTwo() + "|" + w.getAlertLevel());
+//		}
+		
+		return uri.toURL().toString();
 	}
 
 }

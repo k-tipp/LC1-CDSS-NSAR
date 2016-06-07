@@ -15,6 +15,7 @@ import javax.xml.bind.Marshaller;
 import org.apache.tomcat.jdbc.pool.DataSourceFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Scope;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -79,6 +80,7 @@ public class DemoCisConfiguration {
 	};
 
 	@Bean(destroyMethod = "close")
+	@Scope("singleton")
 	public EntityManagerFactory entityManagerFactory() throws Exception {
 
 		HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();

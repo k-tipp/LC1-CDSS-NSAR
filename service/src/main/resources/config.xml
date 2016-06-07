@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <settings>
+	<serverip>localhost</serverip>
+	<serverport>localhost</serverport>
     <dbdriverclassname>com.mysql.jdbc.Driver</dbdriverclassname>
     <dburl>jdbc:mysql://localhost/cdss</dburl>
     <dbuser>cis_user</dbuser>

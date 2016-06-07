@@ -1,6 +1,5 @@
 package ch.bfh.btx8201.cdss4nsar.data;
 
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -13,13 +12,9 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarDrug;
-import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarLabor;
-import ch.bfh.btx8201.cdss4nsar.validation.spi.ICdss4NsarRequest;
-
 @Entity
 @Table(name = "request")
-public class Request implements ICdss4NsarRequest {
+public class Request {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,16 +27,26 @@ public class Request implements ICdss4NsarRequest {
 	@OneToMany(mappedBy = "request", fetch = FetchType.EAGER)
 	@JsonManagedReference
 	private Set<Drug> drugs;
+	
+	@OneToMany(mappedBy = "request", fetch = FetchType.EAGER)
+	@JsonManagedReference
+	private Set<Warning> warnings;
+	
+	private int age;
+	
+	private char sex;
 
 	public Request() {
 		super();
 	}
 
-	public Request(long requestId, Set<LabResult> labResults, Set<Drug> drugs) {
+	public Request(Set<LabResult> labResults, Set<Drug> drugs, Set<Warning> warnings, int age, char sex) {
 		super();
-		this.requestId = requestId;
 		this.labResults = labResults;
 		this.drugs = drugs;
+		this.age = age;
+		this.sex = sex;
+		this.warnings = warnings;
 	}
 
 	public long getRequestId() {
@@ -68,65 +73,27 @@ public class Request implements ICdss4NsarRequest {
 		this.drugs = drugs;
 	}
 
-	@Override
-	public char getSex() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void setSex(char sex) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public boolean isPregnant() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void isPregnant(boolean pregnant) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public int getAge() {
-		// TODO Auto-generated method stub
-		return 0;
+		return age;
 	}
 
-	@Override
 	public void setAge(int age) {
-		// TODO Auto-generated method stub
-		
+		this.age = age;
 	}
 
-	@Override
-	public void setDrugs(Set<Cdss4NsarDrug> patDrugs) {
-		// TODO Auto-generated method stub
-		
+	public char getSex() {
+		return sex;
 	}
 
-	@Override
-	public List<String> getAllergies() {
-		// TODO Auto-generated method stub
-		return null;
+	public void setSex(char sex) {
+		this.sex = sex;
 	}
 
-	@Override
-	public void setAllergies(List<String> allergies) {
-		// TODO Auto-generated method stub
-		
+	public Set<Warning> getWarnings() {
+		return warnings;
 	}
 
-	@Override
-	public void setLabResults(Set<Cdss4NsarLabor> patLabor) {
-		// TODO Auto-generated method stub
-		
+	public void setWarnings(Set<Warning> warnings) {
+		this.warnings = warnings;
 	}
-	
-	
 }

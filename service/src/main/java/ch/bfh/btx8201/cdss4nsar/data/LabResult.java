@@ -37,9 +37,8 @@ public class LabResult implements ICdss4NsarLabor {
 
 	}
 
-	public LabResult(long labResultId, Request request, String type, String value, String measuringSize) {
+	public LabResult(Request request, String type, String value, String measuringSize) {
 		super();
-		this.labResultId = labResultId;
 		this.request = request;
 		this.type = type;
 		this.value = value;

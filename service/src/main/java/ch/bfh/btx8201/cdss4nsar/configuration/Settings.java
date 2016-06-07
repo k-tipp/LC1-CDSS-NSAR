@@ -10,6 +10,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name="settings")
 public class Settings {
 	
+	private String serverIp;
+	
+	private String serverPort;
+	
 	private String driverClassName;
 	
 	private String dbUrl;
@@ -64,6 +68,24 @@ public class Settings {
 	
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	@XmlElement(name="serverip", type=String.class)
+	public String getServerIp() {
+		return serverIp;
+	}
+
+	public void setServerIp(String serverIp) {
+		this.serverIp = serverIp;
+	}
+
+	@XmlElement(name="serverport", type=String.class)
+	public String getServerPort() {
+		return serverPort;
+	}
+
+	public void setServerPort(String serverPort) {
+		this.serverPort = serverPort;
 	}	
 	
 	

@@ -20,6 +20,7 @@ import javax.xml.bind.Marshaller;
 import org.apache.tomcat.jdbc.pool.DataSourceFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Scope;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -57,6 +58,7 @@ public class Cdss4NsarConfiguration {
 	}
 
 	@Bean
+	@Scope("singleton")
 	public Settings getSettings() throws IOException, JAXBException {
 		ConfigLoader configLoader = getConfigLoader();
 		configLoader.loadSettings();
@@ -138,6 +140,7 @@ public class Cdss4NsarConfiguration {
 	};
 
 	@Bean(destroyMethod = "close")
+	@Scope("singleton")
 	public EntityManagerFactory entityManagerFactory() throws Exception {
 
 		HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
@@ -148,7 +151,7 @@ public class Cdss4NsarConfiguration {
 		factory.setJpaVendorAdapter(vendorAdapter);
 		factory.setDataSource(dataSource());
 		factory.setJpaProperties(getAdditionalProperties());
-		factory.setPackagesToScan("ch.bfh.btx8201.cdss4nsar.democis.data");
+		factory.setPackagesToScan("ch.bfh.btx8201.cdss4nsar.data");
 		factory.afterPropertiesSet();
 
 		return factory.getObject();

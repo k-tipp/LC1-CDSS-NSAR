@@ -2,6 +2,7 @@ package ch.bfh.btx8201.cdss4nsar.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
  
@@ -25,6 +26,12 @@ public class Cdss4NsarController {
     
 	@RequestMapping(value = "/cdss", method = RequestMethod.GET)
 	public String getCdssPage(ModelMap model) {
+		
+		return "cdss";
+	}
+	
+	@RequestMapping(value = "/result/{Token}", method = RequestMethod.GET)
+	public String getCdssResult(@PathVariable String token, ModelMap model) {
 		
 		return "cdss";
 	}

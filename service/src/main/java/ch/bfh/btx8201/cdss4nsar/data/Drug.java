@@ -35,9 +35,8 @@ public class Drug implements ICdss4NsarDrug {
 
 	}
 
-	public Drug(long drugId, String name, boolean isNsar, boolean isStereoidal, boolean isPPI, Request request) {
+	public Drug(String name, boolean isNsar, boolean isStereoidal, boolean isPPI, Request request) {
 		super();
-		this.drugId = drugId;
 		this.name = name;
 		this.isNsar = isNsar;
 		this.isStereoidal = isStereoidal;
@@ -91,5 +90,7 @@ public class Drug implements ICdss4NsarDrug {
 
 	public void setRequest(Request request) {
 		this.request = request;
-	}	
+	}
+	
+	
 }
