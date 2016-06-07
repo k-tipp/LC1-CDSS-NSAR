@@ -38,6 +38,7 @@ public class DemoCisConfiguration {
 		properties.put(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 		jaxb2Marshaller.setMarshallerProperties(properties);
 		jaxb2Marshaller.setClassesToBeBound(Settings.class);
+
 		return jaxb2Marshaller;
 	}
 

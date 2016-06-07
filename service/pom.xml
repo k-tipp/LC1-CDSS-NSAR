@@ -69,12 +69,6 @@
 			<artifactId>xercesImpl</artifactId>
 			<version>2.8.1</version>
 		</dependency>
-		<!-- http://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
-		<dependency>
-		    <groupId>org.slf4j</groupId>
-		    <artifactId>slf4j-api</artifactId>
-		    <version>1.7.21</version>
-		</dependency>
 
 	</dependencies>
 
@@ -109,8 +103,8 @@
 						<server>Apache_Tomcat_9_x64</server>
 						<url>http://localhost:8080/manager/text</url>
 						<path>/cdss4nsar</path>
-<!-- 						<username>root</username> -->
-<!-- 						<password>root</password> -->
+						<username>root</username>
+						<password>root</password>
 						<update>true</update>
 					</configuration>
 				</plugin>

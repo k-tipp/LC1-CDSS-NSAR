@@ -2,6 +2,7 @@ package ch.bfh.btx8201.cdss4nsar.controller;
 
 import java.net.MalformedURLException;
 
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +19,7 @@ import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarWarning;
 public class Cdss4NsarRestController {
 	
 	@RequestMapping(value="/cdss", method = RequestMethod.POST, headers="Accept=application/json")
-	public String doCdssRequest(Cdss4NsarRequest req) throws MalformedURLException, JsonProcessingException {
+	public String doCdssRequest(@RequestBody Cdss4NsarRequest req) throws MalformedURLException, JsonProcessingException {
 		ValidationService s = ValidationService.getInstance();
 		System.out.println("Age: " + req.getAge());
 		System.out.println(req.getAge() + "|" + req.getSex() + "|" + req.getLabResults().size() + "|" + req.getAllergies().size() + "|" + req.getDrugs().size());
