@@ -8,8 +8,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarLabor;
 
 @Entity
@@ -21,7 +19,6 @@ public class LabResult implements Cdss4NsarLabor {
 	private long labResultId;
 	
 	@ManyToOne
-	@JsonBackReference
 	private Patient patient;
 
 	@NotNull

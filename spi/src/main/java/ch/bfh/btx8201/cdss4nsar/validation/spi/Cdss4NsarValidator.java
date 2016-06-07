@@ -1,7 +1,7 @@
 package ch.bfh.btx8201.cdss4nsar.validation.spi;
 
-import java.util.Set;
+import java.util.List;
 
 public interface Cdss4NsarValidator {
-	public Set<Cdss4NsarWarning> validate(Cdss4NsarRequest cdssRequest);
+	public Cdss4NsarWarning validate(Cdss4NsarRequest cdssRequest, List<Cdss4NsarDrug> drugs);
 }

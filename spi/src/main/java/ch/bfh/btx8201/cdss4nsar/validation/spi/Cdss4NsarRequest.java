@@ -10,8 +10,8 @@ public class Cdss4NsarRequest {
 	private boolean pregnant = false;
 	private int age = -1;
 	private List<String> allergies;
-	private Set<Cdss4NsarDrugImpl> drugs;
-	private Set<Cdss4NsarLaborImpl> labResults;
+	private Set<Cdss4NsarDrug> drugs;
+	private Set<Cdss4NsarLabor> labResults;
 	
 	
 	public Cdss4NsarRequest(){
@@ -41,11 +41,11 @@ public class Cdss4NsarRequest {
 		this.age = age;
 	}
 
-	public Set<Cdss4NsarDrugImpl> getDrugs() {
+	public Set<Cdss4NsarDrug> getDrugs() {
 		return drugs;
 	}
 
-	public void setDrugs(Set<Cdss4NsarDrugImpl> patDrugs) {
+	public void setDrugs(Set<Cdss4NsarDrug> patDrugs) {
 		this.drugs = patDrugs;
 	}
 
@@ -57,12 +57,12 @@ public class Cdss4NsarRequest {
 		this.allergies = allergies;
 	}
 
-	public Set<Cdss4NsarLaborImpl> getLabResults() {
+	public Set<Cdss4NsarLabor> getLabResults() {
 		return labResults;
 	}
 
-	public void setLabResults(Set<Cdss4NsarLaborImpl> patLabor) {
-		this.labResults = patLabor;
+	public void setLabResults(Set<Cdss4NsarLabor> labResults) {
+		this.labResults = labResults;
 	}
 
 }

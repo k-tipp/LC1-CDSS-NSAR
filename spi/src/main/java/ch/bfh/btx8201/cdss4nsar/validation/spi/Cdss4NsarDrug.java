@@ -8,7 +8,7 @@ public interface Cdss4NsarDrug {
 	
 	public boolean isNsar();
 	
-	public void setIsNsar(boolean isNsar);
+	public void setNsar(boolean isNsar);
 	
 	public boolean isStereoidal();
 	

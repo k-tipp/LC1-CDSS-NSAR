@@ -1,5 +1,6 @@
 package ch.bfh.btx8201.cdss4nsar.democis.data;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -13,9 +14,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 @Entity
 @Table(name = "medication")
 public class Medication {
@@ -25,7 +23,6 @@ public class Medication {
 	private long medicationId;
 	
 	@ManyToOne
-	@JsonBackReference
 	private Patient patient;
 
     @ManyToMany(fetch=FetchType.EAGER)
@@ -35,7 +32,6 @@ public class Medication {
       inverseJoinColumns=
             @JoinColumn(name="drugId", referencedColumnName="drugId")
     )
-    @JsonManagedReference
 	private Set<Drug> drugList;
     
     private String medicationDescription;

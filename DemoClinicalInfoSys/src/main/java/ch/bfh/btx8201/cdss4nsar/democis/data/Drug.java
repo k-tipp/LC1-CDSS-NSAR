@@ -3,14 +3,11 @@ package ch.bfh.btx8201.cdss4nsar.democis.data;
 import java.util.Set;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarDrug;
 
@@ -30,8 +27,7 @@ public class Drug implements Cdss4NsarDrug {
 
 	private boolean isPPI;
 	
-	@ManyToMany(mappedBy = "drugList", fetch = FetchType.EAGER)
-	@JsonBackReference
+	@ManyToMany(mappedBy = "drugList")
 	private Set<Medication> medicationList;
 
 	public Drug() {
@@ -46,18 +42,22 @@ public class Drug implements Cdss4NsarDrug {
 		this.medicationList = medicationList;
 	}
 
+	@Override
 	public boolean isNsar() {
 		return isNsar;
 	}
 
-	public void setIsNsar(boolean isNsar) {
+	@Override
+	public void setNsar(boolean isNsar) {
 		this.isNsar = isNsar;
 	}
 
+	@Override
 	public String getName() {
 		return this.name;
 	}
 
+	@Override
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -86,11 +86,13 @@ public class Drug implements Cdss4NsarDrug {
 		return isPPI;
 	}
 
+	@Override
 	public void setIsStereoidal(boolean isStereoidal) {
 		this.isStereoidal = isStereoidal;
 
 	}
 
+	@Override
 	public void setIsPPI(boolean isPPI) {
 		this.isPPI = isPPI;
 	}
