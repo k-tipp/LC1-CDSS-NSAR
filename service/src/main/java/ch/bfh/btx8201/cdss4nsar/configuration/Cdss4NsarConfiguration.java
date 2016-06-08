@@ -125,35 +125,9 @@ public class Cdss4NsarConfiguration {
 	@Bean(destroyMethod = "close")
 	@Primary
 	public DataSource dataSource() throws Exception {
-//		Settings settings = getSettings();
-//		Properties p = new Properties();
-//		p.setProperty("username", settings.getUser());
-//		p.setProperty("password", settings.getPassword());
-//		p.setProperty("url", settings.getDbUrl());
-//		p.setProperty("driverClassName", settings.getDriverClassName());
-//		p.setProperty("removeAbandoned", "true");
-//		p.setProperty("removeAbandonedTimeout", "60");
-//		p.setProperty("testWhileIdle", "true");
-//		p.setProperty("validationQuery", "SELECT 1");
-//		p.setProperty("timeBetweenEvictionRunsMillis", "35000");
-//		p.setProperty("minEvictableIdleTimeMillis", "55000");
-//		p.setProperty("logAbandoned", "true");
-//		p.setProperty("validationInterval", "3600");
-//		p.setProperty("maxWait", "5000");
-//		p.setProperty("removeAbandonedOnBorrow", "true");
-//		p.setProperty("removeAbandonedOnMaintenance", "true");
-//		p.setProperty("closeMethod", "close");
-//		
-//		DataSourceFactory s = new DataSourceFactory();
-//		
-//		return s.createDataSource(p);
-		
 		  JndiDataSourceLookup dataSourceLookup = new JndiDataSourceLookup();
 		  DataSource dataSource = dataSourceLookup.getDataSource("jdbc/CDSS");
 		  return dataSource;
-		
-//		return DataSourceBuilder.create().username(settings.getUser()).password(settings.getPassword())
-//				.url(settings.getDbUrl()).driverClassName(settings.getDriverClassName()).build();
 	};
 
 	@Bean(destroyMethod = "close")
@@ -202,25 +176,25 @@ public class Cdss4NsarConfiguration {
 	 * https://techblog.ralph-schuster.eu/2014/07/09/solution-to-tomcat-cant-
 	 * stop-an-abandoned-connection-cleanup-thread/
 	 */
-	@PreDestroy
-	public void cleanUpJDBCConnections() {
-		try {
-			com.mysql.jdbc.AbandonedConnectionCleanupThread.shutdown();
-		} catch (Throwable t) {
-		}
-		// This manually deregisters JDBC driver, which prevents Tomcat 7 from
-		// complaining about memory leaks
-		Enumeration<java.sql.Driver> drivers = java.sql.DriverManager.getDrivers();
-		while (drivers.hasMoreElements()) {
-			java.sql.Driver driver = drivers.nextElement();
-			try {
-				java.sql.DriverManager.deregisterDriver(driver);
-			} catch (Throwable t) {
-			}
-		}
-		try {
-			Thread.sleep(2000L);
-		} catch (Exception e) {
-		}
-	}
+//	@PreDestroy
+//	public void cleanUpJDBCConnections() {
+//		try {
+//			com.mysql.jdbc.AbandonedConnectionCleanupThread.shutdown();
+//		} catch (Throwable t) {
+//		}
+//		// This manually deregisters JDBC driver, which prevents Tomcat 7 from
+//		// complaining about memory leaks
+//		Enumeration<java.sql.Driver> drivers = java.sql.DriverManager.getDrivers();
+//		while (drivers.hasMoreElements()) {
+//			java.sql.Driver driver = drivers.nextElement();
+//			try {
+//				java.sql.DriverManager.deregisterDriver(driver);
+//			} catch (Throwable t) {
+//			}
+//		}
+//		try {
+//			Thread.sleep(2000L);
+//		} catch (Exception e) {
+//		}
+//	}
 }
