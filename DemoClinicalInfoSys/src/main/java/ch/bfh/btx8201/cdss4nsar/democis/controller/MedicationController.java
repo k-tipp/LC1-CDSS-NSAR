@@ -27,6 +27,9 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import ca.uhn.hl7v2.DefaultHapiContext;
 import ca.uhn.hl7v2.HL7Exception;
 import ca.uhn.hl7v2.HapiContext;
+import ca.uhn.hl7v2.hoh.api.DecodeException;
+import ca.uhn.hl7v2.hoh.api.EncodeException;
+import ca.uhn.hl7v2.hoh.hapi.api.MessageSendable;
 import ca.uhn.hl7v2.model.Message;
 import ca.uhn.hl7v2.parser.Parser;
 import ca.uhn.hl7v2.validation.builder.support.NoValidationBuilder;
@@ -41,6 +44,7 @@ import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarDrug;
 import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarLabor;
 import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarRequest;
 import ch.bfh.btx8201.cdss4nsar.validation.spi.ICdss4NsarDrug;
+import wyslu1.hl7.Sender;
 
 @RestController
 @RequestMapping("/")
@@ -73,42 +77,28 @@ public class MedicationController {
 	}
 
 	@RequestMapping(value = "/hl7", method = RequestMethod.POST)
-	public String getHL7(@RequestBody String s) throws JsonProcessingException {
+	public void getHL7(@RequestBody String s) throws HL7Exception, IOException, DecodeException, EncodeException {
 
-//		try {
-//			Sender sender = new Sender("localhost", 9999, "/HL7/incoming");
-//		} catch (HL7Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		;
-//		Receiver receiver = new Receiver();
-//		ReceiverServer receiverServer = new ReceiverServer(9999, "HL7", "incoming", receiver);
-
-		
-// K�nnte schon schon funktionieren (tippk1)	
 		HapiContext ctx = new DefaultHapiContext();
 		ctx.setValidationRuleBuilder(new NoValidationBuilder());
 		Parser parser = ctx.getGenericParser();
-
+//		Parser parser = new PipeParser();
 
 		Message message = null;
 		Message ack = null;
 		String response = null;
 		
-			try {
-				message = parser.parse(s);
-				ack = message.generateACK();
-				response = ack.encode();
-			} catch (HL7Exception | IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 
-		return response;
+		message = parser.parse(s);
+		ack = message.generateACK();
+		response = ack.encode();
+		MessageSendable ms = new MessageSendable(ack); 
+		System.out.println("ACHTUNG HIER IST DIE RESPONSE: +++ "+response+" +++ ");
+		
+		Sender sender = new Sender("localhost", 8070, "/hl7/incoming");
+		sender.send(ms);
+		sender = null;
+
 	}
 
 	@RequestMapping(path = "/patient/{patientId}", method = RequestMethod.POST)

@@ -8,10 +8,9 @@ import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarRequest;
 import ch.bfh.btx8201.cdss4nsar.validation.spi.ICdss4NsarValidator;
 import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarWarning;
 
-public class AllergyValidator {
-	implements ICdss4NsarValidator
-	{
-
+public class AllergyValidator implements ICdss4NsarValidator {
+	
+	
 	@Override
 	public Set<Cdss4NsarWarning> validate(Cdss4NsarRequest cdssRequest) {
 		Set<Cdss4NsarWarning> warnings = new HashSet<Cdss4NsarWarning>();
@@ -35,3 +34,4 @@ public class AllergyValidator {
 			
 			
 	}
+			}}}
