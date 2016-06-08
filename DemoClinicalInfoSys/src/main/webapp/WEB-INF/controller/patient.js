@@ -16,15 +16,14 @@ $(document).ready(function() {
 	        enctype: $("#cdssRequest").attr('enctype'),
 	        data: test
 	    }).success(function (data) {
-	            alert('ok');
+        	$('#cdssResultView').attr("src", data.responseJSON.resultViewUrl);
+        	$('#cdssResultView').css("width", "100%");
+        	$('#cdssResultView').css("height", $('#cdssResultModal').height());
+        	$('#cdssResultModal').modal('show');
 	        }).done(function(data) {
 	        	alert('done');
 	        }).fail(function(data) {
-	        	alert('fail ' + data);
-	        	$('#cdssResultView').attr("src", "http://localhost:8080/cdss4nsar/result/1");
-	        	$('#cdssResultView').css("width", "100%");
-	        	$('#cdssResultView').css("height", $('#cdssResultModal').height());
-	        	$('#cdssResultModal').modal('show');
+	        	alert('fail ');
 	        });
 	};
 	

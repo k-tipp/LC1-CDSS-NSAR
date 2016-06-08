@@ -2,7 +2,6 @@ package ch.bfh.btx8201.cdss4nsar.democis.controller;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -23,11 +22,11 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import ca.uhn.hl7v2.DefaultHapiContext;
 import ca.uhn.hl7v2.HL7Exception;
 import ca.uhn.hl7v2.HapiContext;
-import ca.uhn.hl7v2.hoh.raw.api.RawSendable;
 import ca.uhn.hl7v2.model.Message;
 import ca.uhn.hl7v2.parser.Parser;
 import ca.uhn.hl7v2.validation.builder.support.NoValidationBuilder;
@@ -42,9 +41,6 @@ import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarDrug;
 import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarLabor;
 import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarRequest;
 import ch.bfh.btx8201.cdss4nsar.validation.spi.ICdss4NsarDrug;
-import wyslu1.hl7.Receiver;
-import wyslu1.hl7.ReceiverServer;
-import wyslu1.hl7.Sender;
 
 @RestController
 @RequestMapping("/")
@@ -93,7 +89,7 @@ public class MedicationController {
 //		ReceiverServer receiverServer = new ReceiverServer(9999, "HL7", "incoming", receiver);
 
 		
-// Könnte schon schon funktionieren (tippk1)	
+// Kï¿½nnte schon schon funktionieren (tippk1)	
 		HapiContext ctx = new DefaultHapiContext();
 		ctx.setValidationRuleBuilder(new NoValidationBuilder());
 		Parser parser = ctx.getGenericParser();
@@ -117,7 +113,7 @@ public class MedicationController {
 
 	@RequestMapping(path = "/patient/{patientId}", method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.OK)
-	public @ResponseBody String postPatient4CdssRequest(@PathVariable long patientId, @ModelAttribute CdssRequestForm cdssRequestForm)
+	public @ResponseBody ObjectNode postPatient4CdssRequest(@PathVariable long patientId, @ModelAttribute CdssRequestForm cdssRequestForm)
 			throws MalformedURLException {
 
 		Patient patient = patientDao.findOne(patientId);
@@ -157,8 +153,11 @@ public class MedicationController {
 		// w.getConflictObjOne() + "|" + w.getConflictObjTwo() + "|" +
 		// w.getAlertLevel());
 		// }
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode objectNode1 = mapper.createObjectNode();
+        objectNode1.put("resultViewUrl", resultViewUrl);
 		System.out.println(resultViewUrl);
-		return resultViewUrl;
+		return objectNode1;
 	}
 
 
