@@ -21,6 +21,7 @@ import org.apache.tomcat.jdbc.pool.DataSourceFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Scope;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -28,14 +29,15 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import ch.bfh.btx8201.cdss4nsar.validation.ValidationService;
 import ch.bfh.btx8201.cdss4nsar.validation.spi.ICdss4NsarValidator;
 
-//@Configuration
-//@ComponentScan(basePackages = {"ch.bfh.btx8201.cdss4nsar", "validators", "ch.bfh.btx8201.cdss4nsar.validation.spi"})
 @Component
 @Service
+@EnableJpaRepositories("ch.bfh.btx8201.cdss4nsar.data")
+@EnableTransactionManagement
 public class Cdss4NsarConfiguration {
 
 	@Bean
@@ -131,6 +133,16 @@ public class Cdss4NsarConfiguration {
 		p.setProperty("driverClassName", settings.getDriverClassName());
 		p.setProperty("removeAbandoned", "true");
 		p.setProperty("removeAbandonedTimeout", "60");
+		p.setProperty("testWhileIdle", "true");
+		p.setProperty("validationQuery", "SELECT 1");
+		p.setProperty("timeBetweenEvictionRunsMillis", "35000");
+		p.setProperty("minEvictableIdleTimeMillis", "55000");
+		p.setProperty("logAbandoned", "true");
+		p.setProperty("validationInterval", "3600");
+		p.setProperty("maxWait", "5000");
+		p.setProperty("removeAbandonedOnBorrow", "true");
+		p.setProperty("removeAbandonedOnMaintenance", "true");
+		p.setProperty("closeMethod", "close");
 		
 		DataSourceFactory s = new DataSourceFactory();
 		return s.createDataSource(p);

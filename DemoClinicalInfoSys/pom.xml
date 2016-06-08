@@ -123,7 +123,7 @@
             <artifactId>hibernate-validator</artifactId>
         </dependency>
         <dependency>
-            <groupId>wyslu1</groupId>
+            <groupId>ch.bfh.btx8201</groupId>
             <artifactId>HL7Server</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>

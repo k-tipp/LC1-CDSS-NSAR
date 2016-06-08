@@ -9,6 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 public interface WarningDao extends CrudRepository<Warning, Long> {
 
 	public List<Warning> findByName(String name);
-	public List<Warning> findByIsNsar(boolean isNsar);
+	public List<Warning> findByAlertLevel(String alertLevel);
 	public List<Warning> findAll();
 }

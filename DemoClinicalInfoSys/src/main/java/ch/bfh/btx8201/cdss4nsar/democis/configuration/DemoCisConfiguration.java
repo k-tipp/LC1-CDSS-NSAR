@@ -61,7 +61,6 @@ public class DemoCisConfiguration {
 	}
 
 	@Bean(destroyMethod = "close")
-	@Primary
 	public DataSource dataSource() throws Exception {
 		Settings settings = getSettings();
 		Properties p = new Properties();
@@ -71,6 +70,16 @@ public class DemoCisConfiguration {
 		p.setProperty("driverClassName", settings.getDriverClassName());
 		p.setProperty("removeAbandoned", "true");
 		p.setProperty("removeAbandonedTimeout", "60");
+		p.setProperty("testWhileIdle", "true");
+		p.setProperty("validationQuery", "SELECT 1");
+		p.setProperty("timeBetweenEvictionRunsMillis", "35000");
+		p.setProperty("minEvictableIdleTimeMillis", "55000");
+		p.setProperty("logAbandoned", "true");
+		p.setProperty("validationInterval", "3600");
+		p.setProperty("maxWait", "5000");
+		p.setProperty("removeAbandonedOnBorrow", "true");
+		p.setProperty("removeAbandonedOnMaintenance", "true");
+		p.setProperty("closeMethod", "close");
 		
 		DataSourceFactory s = new DataSourceFactory();
 		return s.createDataSource(p);
@@ -98,6 +107,7 @@ public class DemoCisConfiguration {
 	}
 
 	@Bean
+	@Scope("singleton")
 	public PlatformTransactionManager transactionManager() throws Exception {
 
 		JpaTransactionManager txManager = new JpaTransactionManager();

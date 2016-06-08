@@ -1,17 +1,17 @@
 package ch.bfh.btx8201.cdss4nsar.controller;
 
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.Base64;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -38,7 +38,7 @@ public class Cdss4NsarRestController {
 	Settings settings;
 
 	@RequestMapping(value = "/cdss", method = RequestMethod.POST, headers = "Accept=application/json")
-	public URI doCdssRequest(@RequestBody Cdss4NsarRequest httpRequest)
+	public @ResponseBody String doCdssRequest(@RequestBody Cdss4NsarRequest httpRequest)
 			throws MalformedURLException, JsonProcessingException, URISyntaxException {
 
 		ValidationService service = ValidationService.getInstance();
@@ -61,13 +61,9 @@ public class Cdss4NsarRestController {
 		}
 
 		Request savedRequest = requestDao.save(parseRequest(httpRequest));
+		String token = MD5(Long.toString(savedRequest.getRequestId()));
 
-		String str = Long.toString(savedRequest.getRequestId());
-		String token = Base64.getEncoder().encodeToString(str.getBytes());
-
-		return new URL(
-				"http://" + settings.getServerIp() + ":" + settings.getServerPort() + "/cdss4nsar/result/" + token)
-						.toURI();
+		return "http://" + settings.getServerIp() + ":" + settings.getServerPort() + "/cdss4nsar/result/" + token;
 	}
 
 	private Request parseRequest(Cdss4NsarRequest req) {
@@ -86,6 +82,20 @@ public class Cdss4NsarRestController {
 		request.setSex(req.getSex());
 
 		return request;
+	}
+
+	private String MD5(String md5) {
+		try {
+			java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
+			byte[] array = md.digest(md5.getBytes());
+			StringBuffer sb = new StringBuffer();
+			for (int i = 0; i < array.length; ++i) {
+				sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1, 3));
+			}
+			return sb.toString();
+		} catch (java.security.NoSuchAlgorithmException e) {
+		}
+		return null;
 	}
 
 	// @RequestMapping(value="cdss/drugs", method = RequestMethod.GET)
