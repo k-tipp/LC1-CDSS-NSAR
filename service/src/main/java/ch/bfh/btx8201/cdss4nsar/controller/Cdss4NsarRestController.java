@@ -54,13 +54,15 @@ public class Cdss4NsarRestController {
 					warn.getConflictObjOne(), warn.getConflictObjTwo(), warn.getAlertLevel(), request);
 			warnings.add(tmpWarn);
 		}
-		if (warnings.size() != 0) {
-			request.setWarnings(warnings);
-		}
+		
+		request.setWarnings(warnings);
 
 		System.out.println(request.toString());
 		Request savedRequest = requestDao.save(request);
-		System.out.println("SAVED" + savedRequest.toString());
+		System.out.println("SAVED " + savedRequest.toString());
+		for(Drug d: savedRequest.getDrugs()) {
+			System.out.println(d.toString());
+		}
 		String token = Long.toString(savedRequest.getRequestId());
 
 		return "http://" + settings.getServerIp() + ":" + settings.getServerPort() + "/cdss4nsar/result/" + token;

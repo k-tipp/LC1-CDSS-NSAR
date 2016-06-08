@@ -91,6 +91,11 @@ public class Drug implements ICdss4NsarDrug {
 	public void setRequest(Request request) {
 		this.request = request;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Drug [drugId=" + drugId + ", name=" + name + ", isNsar=" + isNsar + ", isStereoidal=" + isStereoidal
+				+ ", isPPI=" + isPPI + ", request=]";
+	}
 	
 }
