@@ -174,13 +174,20 @@ public class Cdss4NsarConfiguration {
 		return factory.getObject();
 	}
 
-	@Bean
-	public PlatformTransactionManager transactionManager() throws Exception {
-
-		JpaTransactionManager txManager = new JpaTransactionManager();
-		txManager.setEntityManagerFactory(entityManagerFactory());
-		return txManager;
-	}
+//	@Bean
+//	public PlatformTransactionManager transactionManager() throws Exception {
+//
+//		JpaTransactionManager txManager = new JpaTransactionManager();
+//		txManager.setEntityManagerFactory(entityManagerFactory());
+//		return txManager;
+//	}
+	
+    @Bean
+    public JpaTransactionManager transactionManager(final EntityManagerFactory emf) {
+        final JpaTransactionManager transactionManager = new JpaTransactionManager();
+        transactionManager.setEntityManagerFactory(emf);
+        return transactionManager;
+    }
 
 	@Bean
 	public Properties getAdditionalProperties() {

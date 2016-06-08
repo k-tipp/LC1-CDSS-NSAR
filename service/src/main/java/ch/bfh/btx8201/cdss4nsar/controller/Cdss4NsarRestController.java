@@ -78,6 +78,8 @@ public class Cdss4NsarRestController {
 			labs.add(new LabResult(request, l.getType(), l.getValue(), l.getMeasuringSize()));
 		}
 
+		request.setDrugs(drugs);
+		request.setLabResults(labs);
 		request.setAge(req.getAge());
 		request.setSex(req.getSex());
 

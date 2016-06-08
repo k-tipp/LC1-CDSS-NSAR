@@ -27,10 +27,10 @@ public class DoubleValidator implements ICdss4NsarValidator {
 						.setDescription("Es wurden mehrere NSAR verschrieben")
 						.setMeasurementType("Doppelmedikation")
 						.setMeasurementUnit("Anzahl")
-						.setMeasurementValue(integer.toString(i))
+						.setMeasurementValue(Integer.toString(i))
 						.setFailedTest("Doppelmedikation")
 						.setConflictObjOne("Patient")
-						.setConflictObjTwo(drug.getName())
+						.setConflictObjTwo("Change me in doubleVAlitator")
 						.setAlertLevel("danger"));
 			}
 

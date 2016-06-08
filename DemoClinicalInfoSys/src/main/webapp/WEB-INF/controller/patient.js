@@ -1,22 +1,22 @@
 $(document).ready(function() {
 	var additionalMeds;
 	var checkMedication = function() {
-		var test = $("#cdssRequest").serialize();
+		var request = $("#cdssRequest").serialize();
 		// something like
 		if(additionalMeds != null) {
-			test.add(additionalMeds);
+			request.add(additionalMeds);
 		}
 		
-		alert(test);
+		alert(request);
 	    $.ajax({
 	    	crossDomain:true,  
 	    	dataType: 'json',
 	        type: $("#cdssRequest").attr('method'),
 	        url: $("#cdssRequest").attr('action'),
 	        enctype: $("#cdssRequest").attr('enctype'),
-	        data: test
+	        data: request
 	    }).success(function (data) {
-        	$('#cdssResultView').attr("src", data.responseJSON.resultViewUrl);
+        	$('#cdssResultView').attr("src", data.resultViewUrl);
         	$('#cdssResultView').css("width", "100%");
         	$('#cdssResultView').css("height", $('#cdssResultModal').height());
         	$('#cdssResultModal').modal('show');
