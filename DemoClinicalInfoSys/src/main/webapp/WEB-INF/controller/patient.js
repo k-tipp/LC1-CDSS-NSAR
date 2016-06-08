@@ -1,4 +1,6 @@
 $(document).ready(function() {
+	var additionalMeds;
+	
 	$("#sendCdssRequest").click(function() {
 		$("#cdssRequest").trigger('submit');
 	 });
@@ -6,6 +8,11 @@ $(document).ready(function() {
 	$("#cdssRequest").submit(function (ev) {
 		ev.preventDefault();
 		var test = $("#cdssRequest").serialize();
+		// something like
+		if(additionalMeds != null) {
+			test.add(additionalMeds);
+		}
+		
 		alert(test);
 	    $.ajax({
 	    	dataType: 'json',
@@ -21,4 +28,15 @@ $(document).ready(function() {
 	        	alert('fail ' + data);
 	        });
 	});
+	
+	$('#newDrugsSave').click(function(e) {
+		additionalMeds = $('#newDrugs').value(); // get selected values.
+	});
+	
+	$('#newDrugsAbort').click(function(e) {
+		additionalMeds = null;
+		$('#newDrugModal').toggle();
+	});
+	
+	
 });

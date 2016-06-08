@@ -69,41 +69,52 @@
 						<h1>&lt;-- Choose a patient</h1>
 					</c:when>
 					<c:otherwise>
-					    <div class="row">
-						    <div class="col-xs-8 col-md-9">
-							    <h1 id="page-title">Patient: ${activePatient.firstname}
-										${activePatient.lastname}</h1>
-								<form class="form-inline" role="form" method="POST" enctype="application/json"
-									name="CdssRequest" id="cdssRequest"
+						<div class="row">
+							<div class="col-xs-8 col-md-9">
+								<h1 id="page-title">Patient: ${activePatient.firstname}
+									${activePatient.lastname}</h1>
+								<form class="form-inline" role="form" method="POST"
+									enctype="application/json" name="CdssRequest" id="cdssRequest"
 									action="/demoCIS/patient/${activePatient.patientId}">
 									<input type="hidden" name="patientId"
 										value="${activePatient.patientId}" />
 									<div class="patient-form">
-										<label><b>Sex: </b></label> <select name="patSex" class="form-control">
+										<label><b>Sex: </b></label> <select name="patSex"
+											class="form-control">
 											<option>male</option>
 											<option>female</option>
 											<option>unknown</option>
-										</select>
-										<label> &nbsp;&nbsp;Age: </label> <input type="number"
-											name="patAge" id="patAge" class="form-control" value="50"/> <label
-											class="checkbox-inline"> <input type="checkbox"
+										</select> <label> &nbsp;&nbsp;Age: </label> <input type="number"
+											name="patAge" id="patAge" class="form-control" value="50" />
+										<label class="checkbox-inline"> <input type="checkbox"
 											name="isPregnant" value="isPregnant"><b>is
 												pregnant &nbsp;&nbsp;</b>
-										</label>
-										<label>Allergies: </label> <select multiple
+										</label> <label>Allergies: </label> <select multiple
 											class="form-control" id="patAllergies" name="allergies">
 											<c:forEach items="${drugs}" var="drug">
 												<option value="${drug.name}">${drug.name}</option>
 											</c:forEach>
 										</select>
 									</div>
+									<div id="newDrugModal" class="modal">
+										<label>Medikamente: </label> <select multiple
+											class="form-control" id="newDrugs" name="newDrugs">
+											<c:forEach items="${drugs}" var="drug">
+												<option value="${drug.name}">${drug.name}</option>
+											</c:forEach>
+										</select>
+										<div class="col-sm-6 col-md-6">
+											<button class="btn btn-info" id="newDrugsSave" type="button">Save</button>
+											<button class="btn btn-info" id="newDrugsAbort" type="button">Save</button>
+										</div>
+									</div>
 								</form>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-xs-5 col-md-5">
-								<button class="btn btn-info btn-lg" id="sendCdssRequest" type=button>Check
-									Medication</button>
+								<button class="btn btn-info btn-lg" id="sendCdssRequest"
+									type=button>Check Medication</button>
 								<h2>Current medication:</h2>
 								<c:forEach items="${activePatient.medications}" var="medication"
 									varStatus="status">
@@ -133,8 +144,8 @@
 								</c:forEach>
 							</div>
 							<div class="col-xs-4 col-md-5">
-								<button class="btn btn-info btn-lg" id="newMedication" type="button">New
-									Medication</button>
+								<button class="btn btn-info btn-lg" id="newMedication"
+									type="button">New Medication</button>
 								<h2>Laboratory Results:</h2>
 								<div class="panel panel-info">
 									<div class="panel-heading">
