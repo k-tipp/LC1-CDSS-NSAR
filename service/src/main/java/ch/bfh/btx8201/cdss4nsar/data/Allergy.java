@@ -30,7 +30,7 @@ public class Allergy implements ICdss4NsarAllergy {
 
 	}
 
-	public Drug(String name, Request request) {
+	public Allergy(String name, Request request) {
 		super();
 		this.name = name;
 		this.request = request;
@@ -41,7 +41,7 @@ public class Allergy implements ICdss4NsarAllergy {
 	}
 
 	public void setAllergyId(long allergyId) {
-		this.drugId = drugId;
+		this.allergyId = allergyId;
 	}
 
 	public String getName() {

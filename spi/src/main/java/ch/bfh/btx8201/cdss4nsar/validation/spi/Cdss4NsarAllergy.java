@@ -4,11 +4,11 @@ public class Cdss4NsarAllergy implements ICdss4NsarAllergy {
 
 	private String name;
 
-	public Cdss4NsarLabor() {
+	public Cdss4NsarAllergy() {
 		super();
 	}
 
-	public Cdss4NsarLabor(String name) {
+	public Cdss4NsarAllergy(String name) {
 		super();
 		this.name = name;
 		

@@ -1,12 +1,10 @@
 package ch.bfh.btx8201.cdss4nsar.democis.configuration;
 
 import java.io.IOException;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import javax.annotation.PreDestroy;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import javax.xml.bind.JAXBException;
@@ -22,8 +20,12 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import ca.uhn.hl7v2.DefaultHapiContext;
+import ca.uhn.hl7v2.HapiContext;
+import ca.uhn.hl7v2.parser.Parser;
+import ca.uhn.hl7v2.validation.builder.support.NoValidationBuilder;
 
 @Component
 @Service
@@ -65,7 +67,7 @@ public class DemoCisConfiguration {
 		  DataSource dataSource = dataSourceLookup.getDataSource("jdbc/CIS");
 		  return dataSource;
 	};
-
+	
 	@Bean(destroyMethod = "close")
 	@Scope("singleton")
 	public EntityManagerFactory entityManagerFactory() throws Exception {
@@ -83,15 +85,6 @@ public class DemoCisConfiguration {
 
 		return factory.getObject();
 	}
-
-//	@Bean
-//	@Scope("singleton")
-//	public PlatformTransactionManager transactionManager() throws Exception {
-//
-//		JpaTransactionManager txManager = new JpaTransactionManager();
-//		txManager.setEntityManagerFactory(entityManagerFactory());
-//		return txManager;
-//	}
 	
     @Bean
     public JpaTransactionManager transactionManager(final EntityManagerFactory emf) {
@@ -108,31 +101,15 @@ public class DemoCisConfiguration {
 		properties.setProperty("hibernate.show_sql", "false");
 		return properties;
 	}
-
-//	/*
-//	 * https://techblog.ralph-schuster.eu/2014/07/09/solution-to-tomcat-cant-
-//	 * stop-an-abandoned-connection-cleanup-thread/
-//	 */
-//	@PreDestroy
-//	public void cleanUpJDBCConnections() {
-//		try {
-//			com.mysql.jdbc.AbandonedConnectionCleanupThread.shutdown();
-//		} catch (Throwable t) {
-//		}
-//		// This manually deregisters JDBC driver, which prevents Tomcat 7 from
-//		// complaining about memory leaks
-//		Enumeration<java.sql.Driver> drivers = java.sql.DriverManager.getDrivers();
-//		while (drivers.hasMoreElements()) {
-//			java.sql.Driver driver = drivers.nextElement();
-//			try {
-//				java.sql.DriverManager.deregisterDriver(driver);
-//			} catch (Throwable t) {
-//			}
-//		}
-//		try {
-//			Thread.sleep(2000L);
-//		} catch (Exception e) {
-//		}
-//	}
-
+	
+	@Bean(destroyMethod = "close")
+	public HapiContext getHapiContext() {
+		return new DefaultHapiContext();
+	}
+	
+	@Bean
+	public Parser getHL7Parser(HapiContext ctx) {
+		ctx.setValidationRuleBuilder(new NoValidationBuilder());
+		return ctx.getGenericParser();
+	}
 }

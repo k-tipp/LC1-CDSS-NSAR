@@ -51,10 +51,13 @@ import wyslu1.hl7.Sender;
 public class MedicationController {
 
 	@Autowired
-	DrugDao drugDao;
+	private DrugDao drugDao;
 
 	@Autowired
 	private PatientDao patientDao;
+	
+	@Autowired
+	private Parser parser;
 
 	@RequestMapping(value = "/druglist", method = RequestMethod.GET)
 	@ResponseBody
@@ -78,11 +81,6 @@ public class MedicationController {
 
 	@RequestMapping(value = "/hl7", method = RequestMethod.POST)
 	public void getHL7(@RequestBody String s) throws HL7Exception, IOException, DecodeException, EncodeException {
-
-		HapiContext ctx = new DefaultHapiContext();
-		ctx.setValidationRuleBuilder(new NoValidationBuilder());
-		Parser parser = ctx.getGenericParser();
-//		Parser parser = new PipeParser();
 
 		Message message = null;
 		Message ack = null;

@@ -1,8 +1,6 @@
 package ch.bfh.btx8201.cdss4nsar.validation.spi;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-
-@JsonTypeInfo(use = JsonTypeInfo.Id.MINIMAL_CLASS, include = JsonTypeInfo.As.PROPERTY, property = "type")
+//@JsonTypeInfo(use = JsonTypeInfo.Id.MINIMAL_CLASS, include = JsonTypeInfo.As.PROPERTY, property = "type")
 public interface ICdss4NsarDrug {
 	
 	public String getName();
