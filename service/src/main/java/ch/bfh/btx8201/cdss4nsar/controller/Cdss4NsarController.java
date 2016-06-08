@@ -37,11 +37,14 @@ public class Cdss4NsarController {
 		return "cdss";
 	}
 	
-	@RequestMapping(value = "/result/{Token}", method = RequestMethod.GET)
-	public String getCdssResult(@PathVariable Long token, ModelMap model) {
-		Request request = requestDao.findOne(token);
-		
-		model.addAttribute("warnings", request.getWarnings());
+	@RequestMapping(value = "/result/{token}", method = RequestMethod.GET)
+	public String getCdssResult(@PathVariable String token, ModelMap model) {
+		Request request = requestDao.findOne(Long.parseLong(token));
+		if(request != null) {
+			model.addAttribute("warnings", request.getWarnings());
+		} else {
+			model.addAttribute("warnings", null);
+		}
 		return "result";
 	}
  

@@ -6,12 +6,13 @@
 
 <head>
 <link rel="stylesheet" type="text/css"
-	href="resources/bootstrap/css/bootstrap.css">
-<script src="resources/jquery/jquery-1.12.4.js"></script>
-<script src="resources/bootstrap/js/bootstrap.js"></script>
-<script src="resources/controller/cdss.js"></script>
-<script type="text/javascript" src="vis/dist/vis.js"></script>
-<link href="dist/vis.css" rel="stylesheet" type="text/css" />
+	href="/cdss4nsar/resources/bootstrap/css/bootstrap.css">
+<script src="/cdss4nsar/resources/jquery/jquery-1.12.4.js"></script>
+<script src="/cdss4nsar/resources/bootstrap/js/bootstrap.js"></script>
+<script src="/cdss4nsar/controller/result.js"></script>
+<script type="text/javascript" src="/cdss4nsar/resources/vis/dist/vis.js"></script>
+<link href="/cdss4nsar/resources/vis/dist/vis.css" rel="stylesheet" type="text/css" />
+<link href="/cdss4nsar/styles/result.css" rel="stylesheet" type="text/css" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>CDSS4NSAR</title>
 </head>

@@ -96,16 +96,35 @@
 											</c:forEach>
 										</select>
 									</div>
-									<div id="newDrugModal" class="modal">
-										<label>Medikamente: </label> <select multiple
-											class="form-control" id="newDrugs" name="newDrugs">
-											<c:forEach items="${drugs}" var="drug">
-												<option value="${drug.name}">${drug.name}</option>
-											</c:forEach>
-										</select>
-										<div class="col-sm-6 col-md-6">
-											<button class="btn btn-info" id="newDrugsSave" type="button">Save</button>
-											<button class="btn btn-info" id="newDrugsAbort" type="button">Save</button>
+									<div class="modal fade" id="newDrugModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+										<div class="modal-dialog modal-md" role="document">
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal"
+														aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
+													<h4 class="modal-title" id="myModalLabel">Neue
+														Medikamente</h4>
+												</div>
+
+												<div class="modal-body">
+													<div class="col-md-offset-3">
+														<select multiple class="form-control" id="newDrugs"
+															name="newDrugs">
+															<c:forEach items="${drugs}" var="drug">
+																<option value="${drug.name}">${drug.name}</option>
+															</c:forEach>
+														</select>
+													</div>
+												</div>
+												<div class="modal-footer">
+													<button class="btn btn-info" id="newDrugsAbort"
+														type="button" data-dismiss="modal">Cancel</button>
+													<button class="btn btn-info" id="newDrugsSave"
+														type="button">Save</button>
+												</div>
+											</div>
 										</div>
 									</div>
 								</form>
@@ -115,6 +134,29 @@
 							<div class="col-xs-5 col-md-5">
 								<button class="btn btn-info btn-lg" id="sendCdssRequest"
 									type=button>Check Medication</button>
+
+								<div class="modal fade" id="cdssResultModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+									<div class="modal-dialog modal-lg" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal"
+													aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+												<h4 class="modal-title" id="myModalLabel">Cdss4Nsar</h4>
+											</div>
+											<div class="modal-body">
+												<iframe class="resultFrame" src="" id="cdssResultView"></iframe>
+											</div>
+											<div class="modal-footer">
+												<button class="btn btn-info" id="newDrugsAbort"
+													type="button" data-dismiss="modal">Close</button>
+											</div>
+										</div>
+									</div>
+								</div>
+
+
 								<h2>Current medication:</h2>
 								<c:forEach items="${activePatient.medications}" var="medication"
 									varStatus="status">
@@ -145,7 +187,8 @@
 							</div>
 							<div class="col-xs-4 col-md-5">
 								<button class="btn btn-info btn-lg" id="newMedication"
-									type="button">New Medication</button>
+									type="button" data-toggle="modal" data-target="#newDrugModal">New
+									Medication</button>
 								<h2>Laboratory Results:</h2>
 								<div class="panel panel-info">
 									<div class="panel-heading">

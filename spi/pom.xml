@@ -7,6 +7,8 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>cdss4nsar.spi</artifactId>
+	<packaging>jar</packaging>
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework</groupId>

@@ -3,6 +3,7 @@ package ch.bfh.btx8201.cdss4nsar.data;
 import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 /*
@@ -10,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
  * http://docs.spring.io/spring-data/data-jpa/docs/current/reference/html/#jpa.query-methods.query-creation
  * 
  */
-@Transactional
+
 public interface LabResultDao extends CrudRepository<LabResult, Long> {
 
 	List<LabResult> findByType(String type);

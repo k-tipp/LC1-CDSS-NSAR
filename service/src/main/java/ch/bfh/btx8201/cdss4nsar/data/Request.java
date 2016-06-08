@@ -96,4 +96,12 @@ public class Request {
 	public void setWarnings(Set<Warning> warnings) {
 		this.warnings = warnings;
 	}
+
+	@Override
+	public String toString() {
+		return "Request [requestId=" + requestId + ", labResults=" + labResults + ", drugs=" + drugs + ", warnings="
+				+ warnings + ", age=" + age + ", sex=" + sex + "]";
+	}
+	
+	
 }

@@ -17,11 +17,11 @@ import javax.sql.DataSource;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
-import org.apache.tomcat.jdbc.pool.DataSourceFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -125,27 +125,32 @@ public class Cdss4NsarConfiguration {
 	@Bean(destroyMethod = "close")
 	@Primary
 	public DataSource dataSource() throws Exception {
-		Settings settings = getSettings();
-		Properties p = new Properties();
-		p.setProperty("username", settings.getUser());
-		p.setProperty("password", settings.getPassword());
-		p.setProperty("url", settings.getDbUrl());
-		p.setProperty("driverClassName", settings.getDriverClassName());
-		p.setProperty("removeAbandoned", "true");
-		p.setProperty("removeAbandonedTimeout", "60");
-		p.setProperty("testWhileIdle", "true");
-		p.setProperty("validationQuery", "SELECT 1");
-		p.setProperty("timeBetweenEvictionRunsMillis", "35000");
-		p.setProperty("minEvictableIdleTimeMillis", "55000");
-		p.setProperty("logAbandoned", "true");
-		p.setProperty("validationInterval", "3600");
-		p.setProperty("maxWait", "5000");
-		p.setProperty("removeAbandonedOnBorrow", "true");
-		p.setProperty("removeAbandonedOnMaintenance", "true");
-		p.setProperty("closeMethod", "close");
+//		Settings settings = getSettings();
+//		Properties p = new Properties();
+//		p.setProperty("username", settings.getUser());
+//		p.setProperty("password", settings.getPassword());
+//		p.setProperty("url", settings.getDbUrl());
+//		p.setProperty("driverClassName", settings.getDriverClassName());
+//		p.setProperty("removeAbandoned", "true");
+//		p.setProperty("removeAbandonedTimeout", "60");
+//		p.setProperty("testWhileIdle", "true");
+//		p.setProperty("validationQuery", "SELECT 1");
+//		p.setProperty("timeBetweenEvictionRunsMillis", "35000");
+//		p.setProperty("minEvictableIdleTimeMillis", "55000");
+//		p.setProperty("logAbandoned", "true");
+//		p.setProperty("validationInterval", "3600");
+//		p.setProperty("maxWait", "5000");
+//		p.setProperty("removeAbandonedOnBorrow", "true");
+//		p.setProperty("removeAbandonedOnMaintenance", "true");
+//		p.setProperty("closeMethod", "close");
+//		
+//		DataSourceFactory s = new DataSourceFactory();
+//		
+//		return s.createDataSource(p);
 		
-		DataSourceFactory s = new DataSourceFactory();
-		return s.createDataSource(p);
+		  JndiDataSourceLookup dataSourceLookup = new JndiDataSourceLookup();
+		  DataSource dataSource = dataSourceLookup.getDataSource("jdbc/CDSS");
+		  return dataSource;
 		
 //		return DataSourceBuilder.create().username(settings.getUser()).password(settings.getPassword())
 //				.url(settings.getDbUrl()).driverClassName(settings.getDriverClassName()).build();

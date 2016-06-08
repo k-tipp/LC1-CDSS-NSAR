@@ -58,7 +58,9 @@ public class Cdss4NsarRestController {
 			request.setWarnings(warnings);
 		}
 
+		System.out.println(request.toString());
 		Request savedRequest = requestDao.save(request);
+		System.out.println("SAVED" + savedRequest.toString());
 		String token = Long.toString(savedRequest.getRequestId());
 
 		return "http://" + settings.getServerIp() + ":" + settings.getServerPort() + "/cdss4nsar/result/" + token;
