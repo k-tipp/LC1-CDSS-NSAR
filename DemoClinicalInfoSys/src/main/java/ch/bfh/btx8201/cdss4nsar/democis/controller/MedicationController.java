@@ -31,6 +31,11 @@ import ca.uhn.hl7v2.hoh.api.DecodeException;
 import ca.uhn.hl7v2.hoh.api.EncodeException;
 import ca.uhn.hl7v2.hoh.hapi.api.MessageSendable;
 import ca.uhn.hl7v2.model.Message;
+import ca.uhn.hl7v2.model.v26.datatype.CWE;
+import ca.uhn.hl7v2.model.v26.datatype.ST;
+import ca.uhn.hl7v2.model.v26.group.ORU_R01_OBSERVATION;
+import ca.uhn.hl7v2.model.v26.group.ORU_R01_PATIENT;
+import ca.uhn.hl7v2.model.v26.message.ORU_R01;
 import ca.uhn.hl7v2.parser.Parser;
 import ca.uhn.hl7v2.validation.builder.support.NoValidationBuilder;
 import ch.bfh.btx8201.cdss4nsar.democis.data.Drug;
@@ -51,13 +56,10 @@ import wyslu1.hl7.Sender;
 public class MedicationController {
 
 	@Autowired
-	private DrugDao drugDao;
+	DrugDao drugDao;
 
 	@Autowired
 	private PatientDao patientDao;
-	
-	@Autowired
-	private Parser parser;
 
 	@RequestMapping(value = "/druglist", method = RequestMethod.GET)
 	@ResponseBody
@@ -82,21 +84,60 @@ public class MedicationController {
 	@RequestMapping(value = "/hl7", method = RequestMethod.POST)
 	public void getHL7(@RequestBody String s) throws HL7Exception, IOException, DecodeException, EncodeException {
 
+		HapiContext ctx = new DefaultHapiContext();
+		ctx.setValidationRuleBuilder(new NoValidationBuilder());
+		Parser parser = ctx.getGenericParser();
+//		Parser parser = new PipeParser();
+
 		Message message = null;
 		Message ack = null;
 		String response = null;
 		
-
 		message = parser.parse(s);
+	
+		ORU_R01 oru = (ORU_R01)message;
 		ack = message.generateACK();
 		response = ack.encode();
 		MessageSendable ms = new MessageSendable(ack); 
-		System.out.println("ACHTUNG HIER IST DIE RESPONSE: +++ "+response+" +++ ");
+		
+		
+		
+		ORU_R01_PATIENT patient = oru.getPATIENT_RESULT().getPATIENT();
+		ORU_R01_OBSERVATION observation = oru.getPATIENT_RESULT().getORDER_OBSERVATION().getOBSERVATION();
+		
+		
+		// ******** DIESE WERTE SIND FÜR DB ********* 
+		String patientID = patient.getPID().getPatientID().getCx1_IDNumber().getValue();
+		String type = observation.getOBX().getObx3_ObservationIdentifier().getCwe2_Text().encode();
+		String value = observation.getOBX().getObx5_ObservationValue()[0].encode();
+		String units = observation.getOBX().getObx6_Units().getCwe1_Identifier().encode();
+		//*******************************************
+		
+		
+		System.out.println(patientID);
+		System.out.println(type);
+		System.out.println(value);
+		System.out.println(units);
+		
+//		XMLParser xp = new DefaultXMLParser();
+//		String xml = xp.encode(message);
+//	
+//		
+//		
+//		File file = new File("hl7_test.txt");
+//		// if file doesnt exists, then create it
+//		if (!file.exists()) {
+//			file.createNewFile();
+//		}
+//
+//		FileWriter fw = new FileWriter(file.getAbsoluteFile());
+//		BufferedWriter bw = new BufferedWriter(fw);
+//		bw.write(xml);
+//		bw.close();
 		
 		Sender sender = new Sender("localhost", 8070, "/hl7/incoming");
 		sender.send(ms);
 		sender = null;
-
 	}
 
 	@RequestMapping(path = "/patient/{patientId}", method = RequestMethod.POST)
