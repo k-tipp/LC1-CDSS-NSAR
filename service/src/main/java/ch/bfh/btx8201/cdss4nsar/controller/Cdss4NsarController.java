@@ -17,12 +17,12 @@ public class Cdss4NsarController {
 	@Autowired
 	RequestDao requestDao;
 	
-//    @RequestMapping(method = RequestMethod.GET)
-//    public String sayHello(ModelMap model) {
-//        model.addAttribute("greeting", "Hello World");
-//        model.addAttribute("cdss", "cdss");
-//        return "welcome";
-//    }
+    @RequestMapping(method = RequestMethod.GET)
+    public String sayHello(ModelMap model) {
+        model.addAttribute("greeting", "Hello World");
+        model.addAttribute("cdss", "cdss");
+        return "welcome";
+    }
 // 
 //    @RequestMapping(value = "/helloagain", method = RequestMethod.GET)
 //    public String sayHelloAgain(ModelMap model) {

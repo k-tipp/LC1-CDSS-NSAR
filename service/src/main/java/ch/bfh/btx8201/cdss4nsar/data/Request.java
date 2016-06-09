@@ -2,6 +2,7 @@ package ch.bfh.btx8201.cdss4nsar.data;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -20,33 +21,43 @@ public class Request {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long requestId;
 
-	@OneToMany(mappedBy = "request", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "request", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JsonManagedReference
 	private Set<LabResult> labResults;
 	
-	@OneToMany(mappedBy = "request", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "request", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JsonManagedReference
 	private Set<Drug> drugs;
 	
-	@OneToMany(mappedBy = "request", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "request", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JsonManagedReference
 	private Set<Warning> warnings;
+	
+	@OneToMany(mappedBy = "request", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JsonManagedReference
+	private Set<Allergy> allergies;
 	
 	private int age;
 	
 	private char sex;
+	
+	private boolean isPregnant;
 
 	public Request() {
 		super();
 	}
 
-	public Request(Set<LabResult> labResults, Set<Drug> drugs, Set<Warning> warnings, int age, char sex) {
+
+	public Request(Set<LabResult> labResults, Set<Drug> drugs, Set<Warning> warnings, Set<Allergy> allergies, int age,
+			char sex, boolean isPregnant) {
 		super();
 		this.labResults = labResults;
 		this.drugs = drugs;
+		this.warnings = warnings;
+		this.allergies = allergies;
 		this.age = age;
 		this.sex = sex;
-		this.warnings = warnings;
+		this.isPregnant = isPregnant;
 	}
 
 	public long getRequestId() {
@@ -96,6 +107,24 @@ public class Request {
 	public void setWarnings(Set<Warning> warnings) {
 		this.warnings = warnings;
 	}
+	
+	public Set<Allergy> getAllergies() {
+		return allergies;
+	}
+
+	public void setAllergies(Set<Allergy> allergies) {
+		this.allergies = allergies;
+	}
+
+	public boolean isPregnant() {
+		return isPregnant;
+	}
+	
+	public void setPregnant(boolean isPregnant) {
+		this.isPregnant = isPregnant;
+	}
+
+
 
 	@Override
 	public String toString() {

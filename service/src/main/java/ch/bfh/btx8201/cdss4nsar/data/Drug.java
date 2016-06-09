@@ -21,11 +21,11 @@ public class Drug implements ICdss4NsarDrug {
 
 	private String name;
 
-	private boolean isNsar;
+	private boolean nsar;
 
-	private boolean isStereoidal;
+	private boolean stereoidal;
 
-	private boolean isPPI;
+	private boolean ppi;
 	
 	@ManyToOne
 	@JsonBackReference
@@ -35,12 +35,12 @@ public class Drug implements ICdss4NsarDrug {
 
 	}
 
-	public Drug(String name, boolean isNsar, boolean isStereoidal, boolean isPPI, Request request) {
+	public Drug(String name, boolean nsar, boolean stereoidal, boolean ppi, Request request) {
 		super();
 		this.name = name;
-		this.isNsar = isNsar;
-		this.isStereoidal = isStereoidal;
-		this.isPPI = isPPI;
+		this.nsar = nsar;
+		this.stereoidal = stereoidal;
+		this.ppi = ppi;
 		this.request = request;
 	}
 
@@ -61,27 +61,27 @@ public class Drug implements ICdss4NsarDrug {
 	}
 
 	public boolean isNsar() {
-		return isNsar;
+		return nsar;
 	}
 
-	public void setIsNsar(boolean isNsar) {
-		this.isNsar = isNsar;
+	public void setNsar(boolean nsar) {
+		this.nsar = nsar;
 	}
 
 	public boolean isStereoidal() {
-		return isStereoidal;
+		return stereoidal;
 	}
 
-	public void setIsStereoidal(boolean isStereoidal) {
-		this.isStereoidal = isStereoidal;
+	public void setStereoidal(boolean stereoidal) {
+		this.stereoidal = stereoidal;
 	}
 
-	public boolean isPPI() {
-		return isPPI;
+	public boolean isPpi() {
+		return ppi;
 	}
 
-	public void setIsPPI(boolean isPPI) {
-		this.isPPI = isPPI;
+	public void setPpi(boolean ppi) {
+		this.ppi = ppi;
 	}
 
 	public Request getRequest() {
@@ -92,10 +92,6 @@ public class Drug implements ICdss4NsarDrug {
 		this.request = request;
 	}
 
-	@Override
-	public String toString() {
-		return "Drug [drugId=" + drugId + ", name=" + name + ", isNsar=" + isNsar + ", isStereoidal=" + isStereoidal
-				+ ", isPPI=" + isPPI + ", request=]";
-	}
+	
 	
 }

@@ -12,5 +12,8 @@
         <validator>validators.CreatinineValidator</validator>
         <validator>validators.INRValidator</validator>
         <validator>validators.PregnancyValidator</validator>
+        <validator>validators.DoubleValidator</validator>
+        <validator>validators.PPIValidator</validator>
+        <validator>validators.AllergyValidator</validator>
     </validators>
 </settings>

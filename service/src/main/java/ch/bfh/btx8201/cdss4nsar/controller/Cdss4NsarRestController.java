@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import ch.bfh.btx8201.cdss4nsar.configuration.Settings;
+import ch.bfh.btx8201.cdss4nsar.data.Allergy;
 import ch.bfh.btx8201.cdss4nsar.data.Drug;
 import ch.bfh.btx8201.cdss4nsar.data.LabResult;
 import ch.bfh.btx8201.cdss4nsar.data.Request;
@@ -39,6 +40,10 @@ public class Cdss4NsarRestController {
 	public @ResponseBody String doCdssRequest(@RequestBody Cdss4NsarRequest httpRequest)
 			throws MalformedURLException, JsonProcessingException, URISyntaxException {
 
+		for(Cdss4NsarDrug d : httpRequest.getDrugs()) {
+			System.out.println("test2 " + d.isNsar() + d.isPpi() + d.isStereoidal());
+		}
+		
 		ValidationService service = ValidationService.getInstance();
 		System.out.println("Age: " + httpRequest.getAge());
 		System.out.println(httpRequest.getAge() + "|" + httpRequest.getSex() + "|" + httpRequest.getLabResults().size()
@@ -46,7 +51,8 @@ public class Cdss4NsarRestController {
 		System.out.println("-------Send response--------");
 
 		Request request = parseRequest(httpRequest);
-
+		System.out.println(httpRequest.isPregnant());
+		System.out.println(request.isPregnant());
 		Set<Warning> warnings = new HashSet<Warning>();
 		for (Cdss4NsarWarning warn : service.validateRequest(httpRequest)) {
 			Warning tmpWarn = new Warning(warn.getName(), warn.getDescription(), warn.getMeasurementValue(),
@@ -72,18 +78,27 @@ public class Cdss4NsarRestController {
 		Request request = new Request();
 		Set<Drug> drugs = new HashSet<Drug>();
 		for (Cdss4NsarDrug d : req.getDrugs()) {
-			drugs.add(new Drug(d.getName(), d.isNsar(), d.isStereoidal(), d.isPPI(), request));
+			
+			drugs.add(new Drug(d.getName(), d.isNsar(), d.isStereoidal(), d.isPpi(), request));
 		}
 
 		Set<LabResult> labs = new HashSet<LabResult>();
 		for (Cdss4NsarLabor l : req.getLabResults()) {
 			labs.add(new LabResult(request, l.getType(), l.getValue(), l.getMeasuringSize()));
 		}
+		
+		Set<Allergy> allergies = new HashSet<Allergy>();
+		for (String s : req.getAllergies()) {
+			allergies.add(new Allergy(request, s));
+		}
 
 		request.setDrugs(drugs);
 		request.setLabResults(labs);
+		request.setAllergies(allergies);
 		request.setAge(req.getAge());
 		request.setSex(req.getSex());
+		System.out.println("qwerwerwerwqerqwer");
+		request.setPregnant(req.isPregnant());
 
 		return request;
 	}

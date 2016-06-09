@@ -13,9 +13,12 @@ public class PregnancyValidator implements ICdss4NsarValidator {
 	@Override
 	public Set<Cdss4NsarWarning> validate(Cdss4NsarRequest cdssRequest) {
 		Set<Cdss4NsarWarning> warnings = new HashSet<Cdss4NsarWarning>();
+		System.out.println("--isPregnant--" + cdssRequest.isPregnant());
 		if(cdssRequest.isPregnant()) {
 			for(ICdss4NsarDrug drug : cdssRequest.getDrugs()) {
-				if(drug.isNsar()) {			
+				System.out.println("--isNsar--" + drug.isNsar());
+				if(drug.isNsar()) {	
+					
 					warnings.add(Cdss4NsarWarning.create()
 							.setName("Warnung Schwangerschaft")
 							.setDescription("Die Patientin ist Schwanger, NSAR sind kontraindiziert")

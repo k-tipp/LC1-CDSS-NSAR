@@ -105,11 +105,9 @@ public class Warning {
 		return this;
 	}
 
-
 	public String getFailedTest() {
 		return failedTest;
 	}
-
 
 	public Warning setFailedTest(String failedTest) {
 		this.failedTest = failedTest;

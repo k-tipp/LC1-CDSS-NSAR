@@ -8,17 +8,17 @@ public class CdssRequestForm {
 	private int patientId;
 	private int patAge;
 	private String patSex = "";
-	private String isPregnant = "";
+	private String pregnant = "";
 	private List<String> allergies = new ArrayList<String>();
 	
 	public CdssRequestForm() {}
 	
-	public CdssRequestForm(int patientId, int patAge, String patSex, String isPregnant, List<String> allergies) {
+	public CdssRequestForm(int patientId, int patAge, String patSex, String pregnant, List<String> allergies) {
 		super();
 		this.patientId = patientId;
 		this.patAge = patAge;
 		this.patSex = patSex;
-		this.isPregnant = isPregnant;
+		this.pregnant = pregnant;
 		this.allergies = allergies;
 	}
 	public int getPatientId() {
@@ -39,11 +39,11 @@ public class CdssRequestForm {
 	public void setPatSex(String patSex) {
 		this.patSex = patSex;
 	}
-	public String isPregnant() {
-		return isPregnant;
+	public String getPregnant() {
+		return pregnant;
 	}
-	public void setPregnant(String isPregnant) {
-		this.isPregnant = isPregnant;
+	public void setPregnant(String pregnant) {
+		this.pregnant = pregnant;
 	}
 	public List<String> getAllergies() {
 		return allergies;

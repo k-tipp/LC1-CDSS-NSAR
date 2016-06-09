@@ -70,7 +70,7 @@
 					</c:when>
 					<c:otherwise>
 						<div class="row">
-							<div class="col-xs-8 col-md-9">
+							<div class="col-xs-12 col-md-12 ">
 								<h1 id="page-title">Patient: ${activePatient.firstname}
 									${activePatient.lastname}</h1>
 								<form class="form-inline" role="form" method="POST"
@@ -79,24 +79,69 @@
 									<input type="hidden" name="patientId"
 										value="${activePatient.patientId}" />
 									<div class="patient-form">
-										<label><b>Sex: </b></label> <select name="patSex"
-											class="form-control">
-											<option>male</option>
-											<option>female</option>
-											<option>unknown</option>
-										</select> <label> &nbsp;&nbsp;Age: </label> <input type="number"
-											name="patAge" id="patAge" class="form-control" value="50" />
-										<label class="checkbox-inline"> <input type="checkbox"
-											name="isPregnant" value="isPregnant"><b>is
-												pregnant &nbsp;&nbsp;</b>
-										</label> <label>Allergies: </label> <select multiple
-											class="form-control" id="patAllergies" name="allergies">
-											<c:forEach items="${drugs}" var="drug">
-												<option value="${drug.name}">${drug.name}</option>
-											</c:forEach>
-										</select>
+										<div class="col-xs-2 col-md-2" style="min-width: 130px;">
+											<div class="form-group">
+												<div class="row">
+													<label><b>Geschlecht:</b></label>
+												</div>
+
+												<div class="row">
+													<select name="patSex" class="form-control">
+														<option>Mann</option>
+														<option>Frau</option>
+														<option>Anderes</option>
+													</select>
+												</div>
+											</div>
+										</div>
+										<div class="col-xs-1 col-md-1" style="min-width: 100px;">
+											<div class="form-group">
+												<div class="row">
+													<label>Alter:</label>
+												</div>
+												<div class="row">
+													<input type="number" name="patAge" id="patAge"
+														class="form-control" value="50" />
+												</div>
+											</div>
+										</div>
+										<div class="col-xs-1 col-md-1" style="min-width: 100px;">
+											<div class="form-group" style="text-align: center;">
+												<div class="row">
+													<label><b>Schwanger:</b></label>
+												</div>
+												<div class="row">
+													<input type="checkbox" name="pregnant" value="pregnant">
+												</div>
+
+											</div>
+										</div>
+										<div class="col-xs-3 col-md-3">
+											<div class="form-group">
+												<div class="row">
+													<label>Allergien: </label>
+												</div>
+												<div class="row">
+													<select multiple class="form-control" id="patAllergies"
+														name="allergies">
+														<option value="KENACORT A 10 Inj Susp 10 mg/ml">Kenacort</option>
+														<option value="PREDNISON Streuli Tabl 1 mg">Prednison</option>
+														<option value="SPIRICORT Filmtabl 20 mg">Spiricort</option>
+														<option value="OLFEN Lactabs 50 mg">Olfen</option>
+														<option value="AULIN Tabl 100 mg">Aulin</option>
+														<option value="IRFEN Lactabs 200 mg">Irfen</option>
+														<option value="PANTOZOL Filmtabl 20 mg">Pantozol</option>
+														<option value="XEFO Filmtabl 4 mg">Xefo</option>
+														<option value="KETESSE Filmtabl 25 mg">Ketesse</option>
+														<option value="MEPHADOLOR Neo Filmtabl 500 mg">Mephadolor
+														</option>
+													</select>
+												</div>
+											</div>
+										</div>
 									</div>
-									<div class="modal fade" id="newDrugModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+									<div class="modal fade" id="newDrugModal" tabindex="-1"
+										role="dialog" aria-labelledby="myModalLabel">
 										<div class="modal-dialog modal-md" role="document">
 											<div class="modal-content">
 												<div class="modal-header">
@@ -120,9 +165,9 @@
 												</div>
 												<div class="modal-footer">
 													<button class="btn btn-info" id="newDrugsAbort"
-														type="button" data-dismiss="modal">Cancel</button>
+														type="button" data-dismiss="modal">Abbrechen</button>
 													<button class="btn btn-info" id="newDrugsSave"
-														type="button">Save</button>
+														type="button">Speichern</button>
 												</div>
 											</div>
 										</div>
@@ -131,11 +176,17 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-xs-5 col-md-5">
+							<div class="col-xs-12 col-md-12">
+								<hr>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-6 col-md-6">
 								<button class="btn btn-info btn-lg" id="sendCdssRequest"
-									type=button>Check Medication</button>
+									type=button>Medikation prüfen</button>
 
-								<div class="modal fade" id="cdssResultModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+								<div class="modal fade" id="cdssResultModal" tabindex="-1"
+									role="dialog" aria-labelledby="myModalLabel">
 									<div class="modal-dialog modal-lg" role="document">
 										<div class="modal-content">
 											<div class="modal-header">
@@ -157,7 +208,7 @@
 								</div>
 
 
-								<h2>Current medication:</h2>
+								<h2>Aktuelle Medikation:</h2>
 								<c:forEach items="${activePatient.medications}" var="medication"
 									varStatus="status">
 									<div class="panel panel-info">
@@ -185,14 +236,14 @@
 									</div>
 								</c:forEach>
 							</div>
-							<div class="col-xs-4 col-md-5">
+							<div class="col-xs-6 col-md-6">
 								<button class="btn btn-info btn-lg" id="newMedication"
-									type="button" data-toggle="modal" data-target="#newDrugModal">New
-									Medication</button>
-								<h2>Laboratory Results:</h2>
+									type="button" data-toggle="modal" data-target="#newDrugModal">Neue
+									Medikation</button>
+								<h2>Laborresultate:</h2>
 								<div class="panel panel-info">
 									<div class="panel-heading">
-										<h3 class="panel-title">Laboratory Results</h3>
+										<h3 class="panel-title">Laborresultate:</h3>
 									</div>
 									<div class="panel-body">
 										<table class="table table-condensed table-hover">
@@ -200,8 +251,8 @@
 												<tr>
 													<th>ID</th>
 													<th>Name</th>
-													<th>Value</th>
-													<th>Measuring size</th>
+													<th>Wert</th>
+													<th>Einheit</th>
 												</tr>
 											</thead>
 											<tbody>

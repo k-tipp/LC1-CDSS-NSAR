@@ -31,8 +31,6 @@ import ca.uhn.hl7v2.hoh.api.DecodeException;
 import ca.uhn.hl7v2.hoh.api.EncodeException;
 import ca.uhn.hl7v2.hoh.hapi.api.MessageSendable;
 import ca.uhn.hl7v2.model.Message;
-import ca.uhn.hl7v2.model.v26.datatype.CWE;
-import ca.uhn.hl7v2.model.v26.datatype.ST;
 import ca.uhn.hl7v2.model.v26.group.ORU_R01_OBSERVATION;
 import ca.uhn.hl7v2.model.v26.group.ORU_R01_PATIENT;
 import ca.uhn.hl7v2.model.v26.message.ORU_R01;
@@ -41,6 +39,7 @@ import ca.uhn.hl7v2.validation.builder.support.NoValidationBuilder;
 import ch.bfh.btx8201.cdss4nsar.democis.data.Drug;
 import ch.bfh.btx8201.cdss4nsar.democis.data.DrugDao;
 import ch.bfh.btx8201.cdss4nsar.democis.data.LabResult;
+import ch.bfh.btx8201.cdss4nsar.democis.data.LabResultDao;
 import ch.bfh.btx8201.cdss4nsar.democis.data.Medication;
 import ch.bfh.btx8201.cdss4nsar.democis.data.Patient;
 import ch.bfh.btx8201.cdss4nsar.democis.data.PatientDao;
@@ -56,30 +55,33 @@ import wyslu1.hl7.Sender;
 public class MedicationController {
 
 	@Autowired
-	DrugDao drugDao;
+	private DrugDao drugDao;
+	
+	@Autowired
+	private LabResultDao labResultDao;
 
 	@Autowired
 	private PatientDao patientDao;
 
-	@RequestMapping(value = "/druglist", method = RequestMethod.GET)
-	@ResponseBody
-	public String getDrugList(ModelMap modal) throws JsonProcessingException {
-		ObjectMapper mapper = new ObjectMapper();
-		Iterable<Drug> drugIterable = drugDao.findAll();
-		List<ICdss4NsarDrug> drugList = new ArrayList<ICdss4NsarDrug>();
-		drugIterable.forEach(drug -> drugList.add(drug));
-		return mapper.writeValueAsString(drugList);
-	}
+//	@RequestMapping(value = "/druglist", method = RequestMethod.GET)
+//	@ResponseBody
+//	public String getDrugList(ModelMap modal) throws JsonProcessingException {
+//		ObjectMapper mapper = new ObjectMapper();
+//		Iterable<Drug> drugIterable = drugDao.findAll();
+//		List<ICdss4NsarDrug> drugList = new ArrayList<ICdss4NsarDrug>();
+//		drugIterable.forEach(drug -> drugList.add(drug));
+//		return mapper.writeValueAsString(drugList);
+//	}
 
-	@RequestMapping(value = "/medication/create", method = RequestMethod.GET)
-	public String getCreateMedication(ModelMap modal) throws JsonProcessingException {
-		return "redirect:cdss";
-	}
+//	@RequestMapping(value = "/medication/create", method = RequestMethod.GET)
+//	public String getCreateMedication(ModelMap modal) throws JsonProcessingException {
+//		return "redirect:cdss";
+//	}
 
-	@RequestMapping(value = "/cdss", method = RequestMethod.GET)
-	public String getCdss(ModelMap modal) throws JsonProcessingException {
-		return "cdss";
-	}
+//	@RequestMapping(value = "/cdss", method = RequestMethod.GET)
+//	public String getCdss(ModelMap modal) throws JsonProcessingException {
+//		return "cdss";
+//	}
 
 	@RequestMapping(value = "/hl7", method = RequestMethod.POST)
 	public void getHL7(@RequestBody String s) throws HL7Exception, IOException, DecodeException, EncodeException {
@@ -113,6 +115,11 @@ public class MedicationController {
 		String units = observation.getOBX().getObx6_Units().getCwe1_Identifier().encode();
 		//*******************************************
 		
+		LabResult result = new LabResult();
+		result.setMeasuringSize(units);
+		result.setPatient(patientDao.findOne(Long.parseLong(patientID)));
+		result.setType(type);
+		result.setValue(value);
 		
 		System.out.println(patientID);
 		System.out.println(type);
@@ -149,7 +156,7 @@ public class MedicationController {
 		Set<Cdss4NsarDrug> patDrugs = new HashSet<Cdss4NsarDrug>();
 		for (Medication medication : patient.getMedications()) {
 			for (Drug drug : medication.getDrugList()) {
-				patDrugs.add(new Cdss4NsarDrug(drug.getName(), drug.isNsar(), drug.isStereoidal(), drug.isPPI()));
+				patDrugs.add(new Cdss4NsarDrug(drug.getName(), drug.isNsar(), drug.isStereoidal(), drug.isPpi()));
 			}
 		}
 
@@ -162,19 +169,24 @@ public class MedicationController {
 		request.setAge(cdssRequestForm.getPatAge());
 		request.setSex(cdssRequestForm.getPatSex().charAt(0));
 		request.setAllergies(cdssRequestForm.getAllergies());
-		request.isPregnant(!cdssRequestForm.isPregnant().isEmpty());
+		System.out.println("isPregnant qadkfjaslökfjasklfjasl" + cdssRequestForm.getPregnant());
+		request.isPregnant(cdssRequestForm.getPregnant().equals("pregnant"));
 		request.setDrugs(patDrugs);
 		request.setLabResults(patLabor);
+		
 
+		
 		System.out.println("-------------- Sending request----------");
 		System.out.println(request.getAge() + "|" + request.getSex() + "|" + request.getLabResults().size() + "|"
-				+ request.getAllergies().size() + "|" + request.getDrugs().size());
+				+ request.getAllergies().size() + "|" + request.isPregnant());
 
 		RestTemplate restTemplate = new RestTemplate();
 		// Cdss4NsarResponse response =
 		// restTemplate.postForObject("http://localhost:8080/cdss4nsar/cdss",
 		// request, Cdss4NsarResponse.class);
-
+		for(Cdss4NsarDrug d : request.getDrugs()) {
+			System.out.println("test " + d.isNsar() + d.isPpi() + d.isStereoidal());
+		}
 		String resultViewUrl = restTemplate.postForObject("http://localhost:8080/cdss4nsar/cdss", request, String.class);
 		System.out.println("-------------- Got Response----------");
 		// for(Cdss4NsarWarning w : response.getWarnings()) {

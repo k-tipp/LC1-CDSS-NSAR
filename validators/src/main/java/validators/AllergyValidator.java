@@ -3,7 +3,6 @@ package validators;
 import java.util.HashSet;
 import java.util.Set;
 
-import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarLabor;
 import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarRequest;
 import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarWarning;
 import ch.bfh.btx8201.cdss4nsar.validation.spi.ICdss4NsarDrug;

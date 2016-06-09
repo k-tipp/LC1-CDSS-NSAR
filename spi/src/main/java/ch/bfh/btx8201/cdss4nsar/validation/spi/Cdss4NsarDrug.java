@@ -3,57 +3,51 @@ package ch.bfh.btx8201.cdss4nsar.validation.spi;
 public class Cdss4NsarDrug implements ICdss4NsarDrug {
 
 	private String name;
-	private boolean isNsar;
-	private boolean isStereoidal;
-	private boolean isPPI;
+	private boolean nsar;
+	private boolean stereoidal;
+	private boolean ppi;
 	
 	public Cdss4NsarDrug() {}
 	
-	public Cdss4NsarDrug(String name, boolean isNsar, boolean isStereoidal, boolean isPPI) {
+	public Cdss4NsarDrug(String name, boolean nsar, boolean stereoidal, boolean ppi) {
 		super();
 		this.name = name;
-		this.isNsar = isNsar;
-		this.isStereoidal = isStereoidal;
-		this.isPPI = isPPI;
+		this.nsar = nsar;
+		this.stereoidal = stereoidal;
+		this.ppi = ppi;
 	}
-	
-	@Override
+
 	public String getName() {
 		return name;
 	}
-	
-	@Override
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	@Override
+
 	public boolean isNsar() {
-		return isNsar;
+		return nsar;
 	}
-	
-	@Override
-	public void setIsNsar(boolean isNsar) {
-		this.isNsar = isNsar;
+
+	public void setNsar(boolean nsar) {
+		this.nsar = nsar;
 	}
-	
-	@Override
+
 	public boolean isStereoidal() {
-		return isStereoidal;
+		return stereoidal;
+	}
+
+	public void setStereoidal(boolean stereoidal) {
+		this.stereoidal = stereoidal;
+	}
+
+	public boolean isPpi() {
+		return ppi;
+	}
+
+	public void setPpi(boolean ppi) {
+		this.ppi = ppi;
 	}
 	
-	@Override
-	public void setIsStereoidal(boolean isStereoidal) {
-		this.isStereoidal = isStereoidal;
-	}
 	
-	@Override
-	public boolean isPPI() {
-		return isPPI;
-	}
-	
-	@Override
-	public void setIsPPI(boolean isPPI) {
-		this.isPPI = isPPI;
-	}
 }

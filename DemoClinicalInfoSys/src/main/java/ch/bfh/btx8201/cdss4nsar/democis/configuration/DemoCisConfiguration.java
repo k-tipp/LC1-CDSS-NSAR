@@ -24,11 +24,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import ca.uhn.hl7v2.DefaultHapiContext;
-import ca.uhn.hl7v2.HapiContext;
-import ca.uhn.hl7v2.parser.Parser;
-import ca.uhn.hl7v2.validation.builder.support.NoValidationBuilder;
-
 @Component
 @Service
 @EnableJpaRepositories("ch.bfh.btx8201.cdss4nsar.democis.data")

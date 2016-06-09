@@ -9,13 +9,13 @@ public interface ICdss4NsarDrug {
 	
 	public boolean isNsar();
 	
-	public void setIsNsar(boolean isNsar);
+	public void setNsar(boolean nsar);
 	
 	public boolean isStereoidal();
 	
-	public void setIsStereoidal(boolean isStereoidal);
+	public void setStereoidal(boolean stereoidal);
 	
-	public boolean isPPI();
+	public boolean isPpi();
 	
-	public void setIsPPI(boolean isPPI);
+	public void setPpi(boolean ppi);
 }

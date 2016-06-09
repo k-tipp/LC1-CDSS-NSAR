@@ -15,7 +15,7 @@ public class PPIValidator implements ICdss4NsarValidator {
 	public Set<Cdss4NsarWarning> validate(Cdss4NsarRequest cdssRequest) {
 		Set<Cdss4NsarWarning> warnings = new HashSet<Cdss4NsarWarning>();
 		for (Cdss4NsarDrug drug : cdssRequest.getDrugs()) {
-			if (!drug.isPPI()) {
+			if (!drug.isPpi()) {
 				for (Cdss4NsarDrug drug2 : cdssRequest.getDrugs()) {
 					if (drug2.isStereoidal()) {
 						for (ICdss4NsarDrug drug3 : cdssRequest.getDrugs()) {

@@ -24,11 +24,11 @@ public class Drug implements ICdss4NsarDrug {
 
 	private String name;
 
-	private boolean isNsar;
+	private boolean nsar;
 
-	private boolean isStereoidal;
+	private boolean stereoidal;
 
-	private boolean isPPI;
+	private boolean ppi;
 	
 	@ManyToMany(mappedBy = "drugList", fetch = FetchType.EAGER)
 	@JsonBackReference
@@ -38,35 +38,12 @@ public class Drug implements ICdss4NsarDrug {
 
 	}
 
-	public Drug(long drugId, String name, boolean isNsar, Set<Medication> medicationList) {
+	public Drug(String name, boolean nsar, boolean stereoidal, boolean ppi, Set<Medication> medicationList) {
 		super();
-		this.drugId = drugId;
 		this.name = name;
-		this.isNsar = isNsar;
-		this.medicationList = medicationList;
-	}
-
-	public boolean isNsar() {
-		return isNsar;
-	}
-
-	public void setIsNsar(boolean isNsar) {
-		this.isNsar = isNsar;
-	}
-
-	public String getName() {
-		return this.name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Set<Medication> getMedicationList() {
-		return medicationList;
-	}
-
-	public void setMedicationList(Set<Medication> medicationList) {
+		this.nsar = nsar;
+		this.stereoidal = stereoidal;
+		this.ppi = ppi;
 		this.medicationList = medicationList;
 	}
 
@@ -78,20 +55,45 @@ public class Drug implements ICdss4NsarDrug {
 		this.drugId = drugId;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public boolean isNsar() {
+		return nsar;
+	}
+
+	public void setNsar(boolean nsar) {
+		this.nsar = nsar;
+	}
+
 	public boolean isStereoidal() {
-		return isStereoidal;
+		return stereoidal;
 	}
 
-	public boolean isPPI() {
-		return isPPI;
+	public void setStereoidal(boolean stereoidal) {
+		this.stereoidal = stereoidal;
 	}
 
-	public void setIsStereoidal(boolean isStereoidal) {
-		this.isStereoidal = isStereoidal;
-
+	public boolean isPpi() {
+		return ppi;
 	}
 
-	public void setIsPPI(boolean isPPI) {
-		this.isPPI = isPPI;
+	public void setPpi(boolean ppi) {
+		this.ppi = ppi;
 	}
+
+	public Set<Medication> getMedicationList() {
+		return medicationList;
+	}
+
+	public void setMedicationList(Set<Medication> medicationList) {
+		this.medicationList = medicationList;
+	}
+
+	
 }
