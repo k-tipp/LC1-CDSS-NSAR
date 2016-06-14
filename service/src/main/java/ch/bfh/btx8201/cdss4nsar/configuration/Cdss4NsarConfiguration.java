@@ -1,3 +1,14 @@
+/*
+ * TODO: Insert Description 
+ * 
+ * No rights are granted except not declinable rights from included
+ * projects, libraries etc.
+ *
+ * @author  Kevin Tippenhauer
+ * @author	Martin Stierlin
+ * @author	Lukas Wyss
+ * @since	SNAPSHOT-1.0.0
+ */
 package ch.bfh.btx8201.cdss4nsar.configuration;
 
 import java.io.File;
@@ -31,12 +42,21 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import ch.bfh.btx8201.cdss4nsar.validation.ValidationService;
 import ch.bfh.btx8201.cdss4nsar.validation.spi.ICdss4NsarValidator;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Cdss4NsarConfiguration.
+ */
 @Component
 @Service
 @EnableJpaRepositories("ch.bfh.btx8201.cdss4nsar.data")
 @EnableTransactionManagement
 public class Cdss4NsarConfiguration {
 
+	/**
+	 * Gets the JAXB marshaller.
+	 *
+	 * @return the JAXB marshaller
+	 */
 	@Bean
 	public Jaxb2Marshaller getJAXBMarshaller() {
 		Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
@@ -47,6 +67,13 @@ public class Cdss4NsarConfiguration {
 		return jaxb2Marshaller;
 	}
 
+	/**
+	 * Gets the config loader.
+	 *
+	 * @return the config loader
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws JAXBException the JAXB exception
+	 */
 	@Bean
 	public ConfigLoader getConfigLoader() throws IOException, JAXBException {
 
@@ -56,6 +83,13 @@ public class Cdss4NsarConfiguration {
 		return configLoader;
 	}
 
+	/**
+	 * Gets the settings.
+	 *
+	 * @return the settings
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws JAXBException the JAXB exception
+	 */
 	@Bean
 	@Scope("singleton")
 	public Settings getSettings() throws IOException, JAXBException {
@@ -64,6 +98,16 @@ public class Cdss4NsarConfiguration {
 		return configLoader.getSettings();
 	}
 
+	/**
+	 * Gets the validation service.
+	 *
+	 * @return the validation service
+	 * @throws ClassNotFoundException the class not found exception
+	 * @throws InstantiationException the instantiation exception
+	 * @throws IllegalAccessException the illegal access exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws JAXBException the JAXB exception
+	 */
 	@Bean
 	public ValidationService getValidationService()
 			throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, JAXBException {
@@ -119,7 +163,13 @@ public class Cdss4NsarConfiguration {
 //		return mapper.readValue(drugList, new TypeReference<List<Drug>>(){});
 //	}
 	
-	@Bean(destroyMethod = "close")
+	/**
+ * Data source.
+ *
+ * @return the data source
+ * @throws Exception the exception
+ */
+@Bean(destroyMethod = "close")
 	@Primary
 	public DataSource dataSource() throws Exception {
 		  JndiDataSourceLookup dataSourceLookup = new JndiDataSourceLookup();
@@ -127,6 +177,12 @@ public class Cdss4NsarConfiguration {
 		  return dataSource;
 	};
 
+	/**
+	 * Entity manager factory.
+	 *
+	 * @return the entity manager factory
+	 * @throws Exception the exception
+	 */
 	@Bean(destroyMethod = "close")
 	@Scope("singleton")
 	public EntityManagerFactory entityManagerFactory() throws Exception {
@@ -145,6 +201,12 @@ public class Cdss4NsarConfiguration {
 		return factory.getObject();
 	}
 
+    /**
+     * Transaction manager.
+     *
+     * @param emf the emf
+     * @return the jpa transaction manager
+     */
     @Bean
     public JpaTransactionManager transactionManager(final EntityManagerFactory emf) {
         final JpaTransactionManager transactionManager = new JpaTransactionManager();
@@ -152,6 +214,11 @@ public class Cdss4NsarConfiguration {
         return transactionManager;
     }
 
+	/**
+	 * Gets the additional properties.
+	 *
+	 * @return the additional properties
+	 */
 	@Bean
 	public Properties getAdditionalProperties() {
 		Properties properties = new Properties();

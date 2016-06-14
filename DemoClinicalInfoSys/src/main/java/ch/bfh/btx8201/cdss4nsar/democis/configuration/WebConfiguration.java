@@ -1,3 +1,14 @@
+/*
+ * TODO: Insert Description 
+ * 
+ * No rights are granted except not declinable rights from included
+ * projects, libraries etc.
+ *
+ * @author  Kevin Tippenhauer
+ * @author	Martin Stierlin
+ * @author	Lukas Wyss
+ * @since	SNAPSHOT-1.0.0
+ */
 package ch.bfh.btx8201.cdss4nsar.democis.configuration;
 
 import org.springframework.context.annotation.Bean;
@@ -12,6 +23,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class WebConfiguration.
+ */
 @Configuration
 @EnableWebMvc
 @EnableSpringDataWebSupport
@@ -19,17 +34,28 @@ import org.springframework.web.servlet.view.JstlView;
 public class WebConfiguration  extends WebMvcConfigurerAdapter {
 
 	
+	/* (non-Javadoc)
+	 * @see org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter#addResourceHandlers(org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry)
+	 */
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
 		registry.addResourceHandler("/controller/**").addResourceLocations("/WEB-INF/controller/");
 	}
 	
+    /* (non-Javadoc)
+     * @see org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter#configureDefaultServletHandling(org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer)
+     */
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         configurer.enable();
     }
     
+    /**
+     * View resolver.
+     *
+     * @return the view resolver
+     */
     @Bean
     public ViewResolver viewResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();

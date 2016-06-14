@@ -1,3 +1,14 @@
+/*
+ * TODO: Insert Description 
+ * 
+ * No rights are granted except not declinable rights from included
+ * projects, libraries etc.
+ *
+ * @author  Kevin Tippenhauer
+ * @author	Martin Stierlin
+ * @author	Lukas Wyss
+ * @since	SNAPSHOT-1.0.0
+ */
 package ch.bfh.btx8201.cdss4nsar.hl7server;
 
 import java.io.FileNotFoundException;
@@ -10,14 +21,33 @@ import ca.uhn.hl7v2.hoh.hapi.api.MessageSendable;
 import ca.uhn.hl7v2.model.Message;
 import ca.uhn.hl7v2.util.Hl7InputStreamMessageIterator;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class App.
+ */
 public class App {
 
+	/** The msgs. */
 	private static ArrayList<Message> msgs = new ArrayList<Message>();
+	
+	/** The user input. */
 	private static Scanner userInput = new Scanner(System.in);
+	
+	/** The sender. */
 	private static Sender sender;
+	
+	/** The receiver. */
 	private static Receiver receiver = new Receiver();
+	
+	/** The receiver server. */
 	private static ReceiverServer receiverServer = new ReceiverServer(8080, "HL7", "incoming", receiver);
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 * @throws Exception the exception
+	 */
 	public static void main(String[] args) throws Exception {
 
 		sender = new Sender("localhost", 8080, "/demoCIS/hl7");
@@ -28,12 +58,22 @@ public class App {
 
 	}
 
+	/**
+	 * Input.
+	 *
+	 * @return the string
+	 */
 	public static String input() {
 
 		String input = userInput.nextLine();
 		return input.toLowerCase();
 	}
 
+	/**
+	 * Command.
+	 *
+	 * @throws FileNotFoundException the file not found exception
+	 */
 	public static void command() throws FileNotFoundException {
 		System.out.println("please enter command:");
 		switch (input()) {

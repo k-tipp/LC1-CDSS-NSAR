@@ -1,3 +1,14 @@
+/*
+ * TODO: Insert Description 
+ * 
+ * No rights are granted except not declinable rights from included
+ * projects, libraries etc.
+ *
+ * @author  Kevin Tippenhauer
+ * @author	Martin Stierlin
+ * @author	Lukas Wyss
+ * @since	SNAPSHOT-1.0.0
+ */
 package ch.bfh.btx8201.cdss4nsar.democis.controller;
 
 import java.io.IOException;
@@ -43,25 +54,44 @@ import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarLabor;
 import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarRequest;
 import wyslu1.hl7.Sender;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class MedicationController.
+ */
 @RestController
 @RequestMapping("/")
 public class MedicationController {
 
+	/** The drug dao. */
 	@Autowired
 	private DrugDao drugDao;
 	
+	/** The lab result dao. */
 	@Autowired
 	private LabResultDao labResultDao;
 
+	/** The patient dao. */
 	@Autowired
 	private PatientDao patientDao;
 	
+	/** The settings. */
 	@Autowired
 	private Settings settings;
 	
+	/** The hl7 parser. */
 	@Autowired
 	private Parser hl7Parser;
 
+	/**
+	 * Gets the h l7.
+	 *
+	 * @param s the s
+	 * @return the h l7
+	 * @throws HL7Exception the h l7 exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws DecodeException the decode exception
+	 * @throws EncodeException the encode exception
+	 */
 	@RequestMapping(value = "/hl7", method = RequestMethod.POST)
 	public void getHL7(@RequestBody String s) throws HL7Exception, IOException, DecodeException, EncodeException {
 
@@ -104,6 +134,14 @@ public class MedicationController {
 		sender = null;
 	}
 
+	/**
+	 * Post patient4 cdss request.
+	 *
+	 * @param patientId the patient id
+	 * @param cdssRequestForm the cdss request form
+	 * @return the object node
+	 * @throws MalformedURLException the malformed url exception
+	 */
 	@RequestMapping(path = "/patient/{patientId}", method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.OK)
 	public @ResponseBody ObjectNode postPatient4CdssRequest(@PathVariable long patientId, @ModelAttribute CdssRequestForm cdssRequestForm)
@@ -153,10 +191,20 @@ public class MedicationController {
 		return objectNode1;
 	}
 
+	/**
+	 * Gets the settings.
+	 *
+	 * @return the settings
+	 */
 	public Settings getSettings() {
 		return settings;
 	}
 
+	/**
+	 * Sets the settings.
+	 *
+	 * @param settings the new settings
+	 */
 	public void setSettings(Settings settings) {
 		this.settings = settings;
 	}

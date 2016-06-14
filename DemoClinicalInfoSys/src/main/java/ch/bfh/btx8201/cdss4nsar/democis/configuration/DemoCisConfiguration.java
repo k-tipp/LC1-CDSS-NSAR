@@ -1,3 +1,14 @@
+/*
+ * TODO: Insert Description 
+ * 
+ * No rights are granted except not declinable rights from included
+ * projects, libraries etc.
+ *
+ * @author  Kevin Tippenhauer
+ * @author	Martin Stierlin
+ * @author	Lukas Wyss
+ * @since	SNAPSHOT-1.0.0
+ */
 package ch.bfh.btx8201.cdss4nsar.democis.configuration;
 
 import java.io.IOException;
@@ -27,12 +38,21 @@ import ca.uhn.hl7v2.HapiContext;
 import ca.uhn.hl7v2.parser.Parser;
 import ca.uhn.hl7v2.validation.builder.support.NoValidationBuilder;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class DemoCisConfiguration.
+ */
 @Component
 @Service
 @EnableJpaRepositories("ch.bfh.btx8201.cdss4nsar.democis.data")
 @EnableTransactionManagement
 public class DemoCisConfiguration {
 
+	/**
+	 * Gets the JAXB marshaller.
+	 *
+	 * @return the JAXB marshaller
+	 */
 	@Bean
 	public Jaxb2Marshaller getJAXBMarshaller() {
 		Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
@@ -44,6 +64,13 @@ public class DemoCisConfiguration {
 		return jaxb2Marshaller;
 	}
 
+	/**
+	 * Gets the config loader.
+	 *
+	 * @return the config loader
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws JAXBException the JAXB exception
+	 */
 	@Bean
 	@Scope("singleton")
 	public ConfigLoader getConfigLoader() throws IOException, JAXBException {
@@ -54,6 +81,13 @@ public class DemoCisConfiguration {
 		return configLoader;
 	}
 
+	/**
+	 * Gets the settings.
+	 *
+	 * @return the settings
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws JAXBException the JAXB exception
+	 */
 	@Bean
 	@Scope("singleton")
 	public Settings getSettings() throws IOException, JAXBException {
@@ -63,6 +97,12 @@ public class DemoCisConfiguration {
 		return configLoader.getSettings();
 	}
 
+	/**
+	 * Data source.
+	 *
+	 * @return the data source
+	 * @throws Exception the exception
+	 */
 	@Bean(destroyMethod = "close")
 	public DataSource dataSource() throws Exception {
 		JndiDataSourceLookup dataSourceLookup = new JndiDataSourceLookup();
@@ -70,6 +110,12 @@ public class DemoCisConfiguration {
 		return dataSource;
 	};
 
+	/**
+	 * Entity manager factory.
+	 *
+	 * @return the entity manager factory
+	 * @throws Exception the exception
+	 */
 	@Bean(destroyMethod = "close")
 	@Scope("singleton")
 	public EntityManagerFactory entityManagerFactory() throws Exception {
@@ -88,6 +134,12 @@ public class DemoCisConfiguration {
 		return factory.getObject();
 	}
 
+	/**
+	 * Transaction manager.
+	 *
+	 * @param emf the emf
+	 * @return the jpa transaction manager
+	 */
 	@Bean
 	public JpaTransactionManager transactionManager(final EntityManagerFactory emf) {
 		final JpaTransactionManager transactionManager = new JpaTransactionManager();
@@ -95,6 +147,11 @@ public class DemoCisConfiguration {
 		return transactionManager;
 	}
 
+	/**
+	 * Gets the additional properties.
+	 *
+	 * @return the additional properties
+	 */
 	@Bean
 	public Properties getAdditionalProperties() {
 		Properties properties = new Properties();
@@ -104,11 +161,22 @@ public class DemoCisConfiguration {
 		return properties;
 	}
 
+	/**
+	 * Gets the hapi context.
+	 *
+	 * @return the hapi context
+	 */
 	@Bean(destroyMethod = "close")
 	public HapiContext getHapiContext() {
 		return new DefaultHapiContext();
 	}
 
+	/**
+	 * Gets the h l7 parser.
+	 *
+	 * @param ctx the ctx
+	 * @return the h l7 parser
+	 */
 	@Bean
 	public Parser getHL7Parser(HapiContext ctx) {
 		ctx.setValidationRuleBuilder(new NoValidationBuilder());

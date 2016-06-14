@@ -1,3 +1,14 @@
+/*
+ * TODO: Insert Description 
+ * 
+ * No rights are granted except not declinable rights from included
+ * projects, libraries etc.
+ *
+ * @author  Kevin Tippenhauer
+ * @author	Martin Stierlin
+ * @author	Lukas Wyss
+ * @since	SNAPSHOT-1.0.0
+ */
 package ch.bfh.btx8201.cdss4nsar.controller;
 
 import java.net.MalformedURLException;
@@ -27,15 +38,30 @@ import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarLabor;
 import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarRequest;
 import ch.bfh.btx8201.cdss4nsar.validation.spi.Cdss4NsarWarning;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Cdss4NsarRestController.
+ */
 @RestController
 public class Cdss4NsarRestController {
 
+	/** The request dao. */
 	@Autowired
 	RequestDao requestDao;
 
+	/** The settings. */
 	@Autowired
 	Settings settings;
 
+	/**
+	 * Do cdss request.
+	 *
+	 * @param httpRequest the http request
+	 * @return the string
+	 * @throws MalformedURLException the malformed url exception
+	 * @throws JsonProcessingException the json processing exception
+	 * @throws URISyntaxException the URI syntax exception
+	 */
 	@RequestMapping(value = "/cdss", method = RequestMethod.POST, headers = "Accept=application/json")
 	public @ResponseBody String doCdssRequest(@RequestBody Cdss4NsarRequest httpRequest)
 			throws MalformedURLException, JsonProcessingException, URISyntaxException {
@@ -62,6 +88,12 @@ public class Cdss4NsarRestController {
 		return "http://" + settings.getServerIp() + ":" + settings.getServerPort() + "/cdss4nsar/result/" + token;
 	}
 
+	/**
+	 * Parses the request.
+	 *
+	 * @param req the req
+	 * @return the request
+	 */
 	private Request parseRequest(Cdss4NsarRequest req) {
 		Request request = new Request();
 		Set<Drug> drugs = new HashSet<Drug>();
