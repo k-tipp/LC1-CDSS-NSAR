@@ -155,7 +155,7 @@ public class DemoCisConfiguration {
 	@Bean
 	public Properties getAdditionalProperties() {
 		Properties properties = new Properties();
-		properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");// create-drop
+		properties.setProperty("hibernate.hbm2ddl.auto", "update");// create-drop
 		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
 		properties.setProperty("hibernate.show_sql", "false");
 		return properties;
