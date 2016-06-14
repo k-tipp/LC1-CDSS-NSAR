@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<settings>
+    <cdss_server_ip>localhost</cdss_server_ip>
+    <cdss_server_port>8080</cdss_server_port>
+    <lis_server_ip>localhost</lis_server_ip>
+    <lis_server_port>8070</lis_server_port>    
+</settings>

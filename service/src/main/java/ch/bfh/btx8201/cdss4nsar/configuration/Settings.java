@@ -10,17 +10,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name="settings")
 public class Settings {
 	
-	private String serverIp;
+	private String cdssServerIp;
 	
-	private String serverPort;
-	
-	private String driverClassName;
-	
-	private String dbUrl;
-	
-	private String user;
-	
-	private String password;
+	private String cdssServerPort;	
 	
 	private List<String> validators;
 
@@ -33,59 +25,23 @@ public class Settings {
 	public void setValidators(List<String> validators) {
 		this.validators = validators;
 	}
-
-	@XmlElement(name="dbdriverclassname")
-	public String getDriverClassName() {
-		return driverClassName;
-	}
 	
-	public void setDriverClassName(String driverClassName) {
-		this.driverClassName = driverClassName;
-	}
-	
-	@XmlElement(name="dburl")
-	public String getDbUrl() {
-		return dbUrl;
-	}
-	
-	public void setDbUrl(String dbUrl) {
-		this.dbUrl = dbUrl;
-	}
-	
-	@XmlElement(name="dbuser")
-	public String getUser() {
-		return user;
-	}
-	
-	public void setUser(String user) {
-		this.user = user;
-	}
-	
-	@XmlElement(name="dbpassword")
-	public String getPassword() {
-		return password;
-	}
-	
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	
-	@XmlElement(name="serverip", type=String.class)
+	@XmlElement(name="cdss_server_ip", type=String.class)
 	public String getServerIp() {
-		return serverIp;
+		return cdssServerIp;
 	}
 
-	public void setServerIp(String serverIp) {
-		this.serverIp = serverIp;
+	public void setServerIp(String cdssServerIp) {
+		this.cdssServerIp = cdssServerIp;
 	}
 
-	@XmlElement(name="serverport", type=String.class)
+	@XmlElement(name="cdss_server_port", type=String.class)
 	public String getServerPort() {
-		return serverPort;
+		return cdssServerPort;
 	}
 
-	public void setServerPort(String serverPort) {
-		this.serverPort = serverPort;
+	public void setServerPort(String cdssServerPort) {
+		this.cdssServerPort = cdssServerPort;
 	}	
 	
 	

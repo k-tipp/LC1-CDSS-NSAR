@@ -12,7 +12,7 @@ import org.springframework.oxm.Marshaller;
 import org.springframework.oxm.Unmarshaller;
 
 public class ConfigLoader {
-	private static final String FILE_NAME = "cdss4nsar/config.xml";
+	private static final String FILE_NAME = "cdss4nsar/cdss_config.xml";
 	private Settings settings = new Settings();
 
 	private Marshaller marshaller;

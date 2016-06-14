@@ -158,7 +158,7 @@
 														<select multiple class="form-control" id="newDrugs"
 															name="newDrugs">
 															<c:forEach items="${drugs}" var="drug">
-																<option value="${drug.name}">${drug.name}</option>
+																<option value="${drug.drugId}" class="newAddDrug">${drug.name}</option>
 															</c:forEach>
 														</select>
 													</div>

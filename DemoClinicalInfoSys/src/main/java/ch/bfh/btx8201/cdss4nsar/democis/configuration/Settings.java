@@ -7,48 +7,49 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name="settings")
 public class Settings {
 	
-	private String driverClassName;
+	private String cdssServerIp;
 	
-	private String dbUrl;
+	private String cdssServerPort;
+	
+	private String lisServerIp;
+	
+	private String lisServerPort;
+
+	@XmlElement(name="cdss_server_ip")
+	public String getCdssServerIp() {
+		return cdssServerIp;
+	}
+
+	public void setCdssServerIp(String cdssServerIp) {
+		this.cdssServerIp = cdssServerIp;
+	}
+
+	@XmlElement(name="cdss_server_port")
+	public String getCdssServerPort() {
+		return cdssServerPort;
+	}
+
+	public void setCdssServerPort(String cdssPort) {
+		this.cdssServerPort = cdssPort;
+	}
+
+	@XmlElement(name="lis_server_ip")
+	public String getLisServerIp() {
+		return lisServerIp;
+	}
+
+	public void setLisServerIp(String lisServerIp) {
+		this.lisServerIp = lisServerIp;
+	}
+
+	@XmlElement(name="lis_server_port")
+	public String getLisServerPort() {
+		return lisServerPort;
+	}
+
+	public void setLisServerPort(String lisServerPort) {
+		this.lisServerPort = lisServerPort;
+	}
 	
 
-	private String user;
-	
-	private String password;
-	
-	@XmlElement(name="dbdriverclassname")
-	public String getDriverClassName() {
-		return driverClassName;
-	}
-	
-	public void setDriverClassName(String driverClassName) {
-		this.driverClassName = driverClassName;
-	}
-	
-	@XmlElement(name="dburl")
-	public String getDbUrl() {
-		return dbUrl;
-	}
-	
-	public void setDbUrl(String dbUrl) {
-		this.dbUrl = dbUrl;
-	}
-	
-	@XmlElement(name="dbuser")
-	public String getUser() {
-		return user;
-	}
-	
-	public void setUser(String user) {
-		this.user = user;
-	}
-	
-	@XmlElement(name="dbpassword")
-	public String getPassword() {
-		return password;
-	}
-	
-	public void setPassword(String password) {
-		this.password = password;
-	}	
 }

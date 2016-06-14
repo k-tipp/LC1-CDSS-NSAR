@@ -3,11 +3,11 @@ $(document).ready(function() {
 	var checkMedication = function() {
 		var request = $("#cdssRequest").serialize();
 		// something like
-		if(additionalMeds != null) {
-			request.add(additionalMeds);
-		}
+		//if(additionalMeds != null) {
+		//	request.add(additionalMeds);
+		//}
 		
-		alert(request);
+		//alert(request);
 	    $.ajax({
 	    	crossDomain:true,  
 	    	dataType: 'json',
@@ -21,9 +21,9 @@ $(document).ready(function() {
         	$('#cdssResultView').css("height", $('#cdssResultModal').height());
         	$('#cdssResultModal').modal('show');
 	        }).done(function(data) {
-	        	alert('done');
+	        	//alert('done');
 	        }).fail(function(data) {
-	        	alert('fail ');
+	        //	alert('fail ');
 	        });
 	};
 	
@@ -39,13 +39,15 @@ $(document).ready(function() {
 	});
 	
 	$('#newDrugsSave').click(function(e) {
-		additionalMeds = $('#newDrugs').value(); // get selected values.
-		$('#newDrugModal').toggle();
+		//additionalMeds = $('#newDrugs').value(); // get selected values.
+		
+		$('#newDrugModal').modal('hide');
 	});
 	
 	$('#newDrugsAbort').click(function(e) {
-		additionalMeds = null;
-		$('#newDrugModal').toggle();
+		$('#newDrugs').prop('selectedIndex', -1);
+		$('#newDrugModal').modal('hide');
+		
 	});
 	
 	

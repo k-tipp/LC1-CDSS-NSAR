@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <settings>
-	<serverip>localhost</serverip>
-	<serverport>8080</serverport>
-    <dbdriverclassname>com.mysql.jdbc.Driver</dbdriverclassname>
-    <dburl>jdbc:mysql://localhost/cdss</dburl>
-    <dbuser>cis_user</dbuser>
-    <dbpassword>password</dbpassword>
+	<cdss_server_ip>localhost</cdss_server_ip>
+	<cdss_server_port>8080</cdss_server_port>
     <validators>
         <validator>validators.AgeValidator</validator>
         <validator>validators.BloodPlateValidator</validator>

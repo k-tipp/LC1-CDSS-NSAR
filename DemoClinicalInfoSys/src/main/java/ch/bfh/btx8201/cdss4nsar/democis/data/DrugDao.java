@@ -10,4 +10,5 @@ public interface DrugDao extends CrudRepository<Drug, Long> {
 
 	public List<Drug> findByName(String name);
 	public List<Drug> findAllByOrderByDrugIdAsc();
+	public Drug findTop1ByName(String name);
 }

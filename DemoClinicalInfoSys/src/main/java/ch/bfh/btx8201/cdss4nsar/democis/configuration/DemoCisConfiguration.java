@@ -42,6 +42,7 @@ public class DemoCisConfiguration {
 	}
 
 	@Bean
+	@Scope("singleton")
 	public ConfigLoader getConfigLoader() throws IOException, JAXBException {
 
 		ConfigLoader configLoader = new ConfigLoader();
@@ -51,6 +52,7 @@ public class DemoCisConfiguration {
 	}
 
 	@Bean
+	@Scope("singleton")
 	public Settings getSettings() throws IOException, JAXBException {
 		ConfigLoader configLoader = getConfigLoader();
 		configLoader.loadSettings();

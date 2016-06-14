@@ -10,16 +10,19 @@ public class CdssRequestForm {
 	private String patSex = "";
 	private String pregnant = "";
 	private List<String> allergies = new ArrayList<String>();
+	private List<String> addDrug = new ArrayList<String>();
 	
 	public CdssRequestForm() {}
 	
-	public CdssRequestForm(int patientId, int patAge, String patSex, String pregnant, List<String> allergies) {
+	public CdssRequestForm(int patientId, int patAge, String patSex, String pregnant, List<String> allergies,
+			List<String> addDrug) {
 		super();
 		this.patientId = patientId;
 		this.patAge = patAge;
 		this.patSex = patSex;
 		this.pregnant = pregnant;
 		this.allergies = allergies;
+		this.addDrug = addDrug;
 	}
 	public int getPatientId() {
 		return patientId;
@@ -50,6 +53,14 @@ public class CdssRequestForm {
 	}
 	public void setAllergies(List<String> allergies) {
 		this.allergies = allergies;
+	}
+
+	public List<String> getAddDrug() {
+		return addDrug;
+	}
+
+	public void setAddDrug(List<String> addDrug) {
+		this.addDrug = addDrug;
 	}
 
 	

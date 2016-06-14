@@ -18,7 +18,7 @@ $(document).ready(function() {
 	  // create an array with edges
 	  var edges = new vis.DataSet([
 	    {from: 1, to: 8, color:{color:'red'}, width: 5},
-		{from: 1, to: 8, color:{color:'blue'}, width: 5},
+		{from: 1, to: 8, color:{color:'orange'}, width: 5},
 	    {from: 1, to: 3, color:{color:'red'}, width: 5},
 	    {from: 1, to: 2, color:{color:'red'}, width: 5},
 	    {from: 2, to: 4, color:{color:'red'}, width: 5},
