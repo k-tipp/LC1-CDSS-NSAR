@@ -62,8 +62,4 @@ public class CdssRequestForm {
 	public void setAddDrug(List<String> addDrug) {
 		this.addDrug = addDrug;
 	}
-
-	
-	
-	
 }

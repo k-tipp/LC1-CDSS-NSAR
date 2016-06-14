@@ -12,39 +12,35 @@ import ch.bfh.btx8201.cdss4nsar.validation.spi.ICdss4NsarAllergy;
 @Table(name = "allergy")
 public class Allergy implements ICdss4NsarAllergy {
 
-@Id
-@GeneratedValue(strategy = GenerationType.AUTO)
-private long allergyId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long allergyId;
 
-private String name;
+	private String name;
 
-public Allergy() {
+	public Allergy() {
 
+	}
+
+	public Allergy(long allergyId, String name) {
+		super();
+		this.allergyId = allergyId;
+		this.name = name;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public long getAllergyId() {
+		return allergyId;
+	}
+
+	public void setAllergyId(long allergyId) {
+		this.allergyId = allergyId;
+	}
 }
-
-public Allergy(long allergyId, String name) {
-	super();
-	this.allergyId = allergyId;
-	this.name = name;
-}
-
-public String getName() {
-	return this.name;
-}
-
-public void setName(String name) {
-	this.name = name;
-}
-
-public long getAllergyId() {
-	return allergyId;
-}
-
-public void setAllergyId(long allergyId) {
-	this.allergyId = allergyId;
-}
-
-}
-
-
-

@@ -19,16 +19,9 @@ public class PatientController {
 	@Autowired
 	private DrugDao drugDao;
 	
-//	@RequestMapping(value="patient/create", method = RequestMethod.POST)
-//	public String createPatient(Patient patient) {
-//        patientDao.save(patient);
-//        return "redirect:patient";
-//	}
-	
 	@RequestMapping(value="/patient", method = RequestMethod.GET)
 	public String getPatient(ModelMap model) {
 		model.addAttribute("patients", patientDao.findAll());
-		
         return "patient";
 	}
 	
@@ -39,8 +32,4 @@ public class PatientController {
 		model.addAttribute("drugs", drugDao.findAllByOrderByDrugIdAsc());
         return "patient";
 	}
-	
-
-	
-
 }

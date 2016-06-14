@@ -40,19 +40,12 @@ public class Cdss4NsarRestController {
 	public @ResponseBody String doCdssRequest(@RequestBody Cdss4NsarRequest httpRequest)
 			throws MalformedURLException, JsonProcessingException, URISyntaxException {
 
-		for(Cdss4NsarDrug d : httpRequest.getDrugs()) {
-			System.out.println("test2 " + d.isNsar() + d.isPpi() + d.isStereoidal());
-		}
-		
 		ValidationService service = ValidationService.getInstance();
-		System.out.println("Age: " + httpRequest.getAge());
 		System.out.println(httpRequest.getAge() + "|" + httpRequest.getSex() + "|" + httpRequest.getLabResults().size()
 				+ "|" + httpRequest.getAllergies().size() + "|" + httpRequest.getDrugs().size());
 		System.out.println("-------Send response--------");
 
 		Request request = parseRequest(httpRequest);
-		System.out.println(httpRequest.isPregnant());
-		System.out.println(request.isPregnant());
 		Set<Warning> warnings = new HashSet<Warning>();
 		for (Cdss4NsarWarning warn : service.validateRequest(httpRequest)) {
 			Warning tmpWarn = new Warning(warn.getName(), warn.getDescription(), warn.getMeasurementValue(),
@@ -63,12 +56,7 @@ public class Cdss4NsarRestController {
 		
 		request.setWarnings(warnings);
 
-		System.out.println(request.toString());
 		Request savedRequest = requestDao.save(request);
-		System.out.println("SAVED " + savedRequest.toString());
-		for(Drug d: savedRequest.getDrugs()) {
-			System.out.println(d.toString());
-		}
 		String token = Long.toString(savedRequest.getRequestId());
 
 		return "http://" + settings.getServerIp() + ":" + settings.getServerPort() + "/cdss4nsar/result/" + token;
@@ -97,21 +85,8 @@ public class Cdss4NsarRestController {
 		request.setAllergies(allergies);
 		request.setAge(req.getAge());
 		request.setSex(req.getSex());
-		System.out.println("qwerwerwerwqerqwer");
 		request.setPregnant(req.isPregnant());
 
 		return request;
 	}
-
-	// @RequestMapping(value="cdss/drugs", method = RequestMethod.GET)
-	// public String test() throws MalformedURLException {
-	// ValidationService s = ValidationService.getInstance();
-	//
-	// String response = "<ul>";
-	// for(Cdss4NsarDrug drug : s.getDrugList()) {
-	// response += "<li>" + drug.getName() + "</li>";
-	// }
-	// response += "</ul>";
-	// return response;
-	// }
 }

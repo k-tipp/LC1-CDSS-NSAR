@@ -7,9 +7,6 @@
         <dependent-module archiveName="cdss4nsar.spi-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/spi/spi">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="HL7Server-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/LaborInformationSystem/LaborInformationSystem">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <property name="java-output-path" value="/DemoClinicalInfoSys/target/classes"/>
         <property name="context-root" value="demoCIS"/>
     </wb-module>

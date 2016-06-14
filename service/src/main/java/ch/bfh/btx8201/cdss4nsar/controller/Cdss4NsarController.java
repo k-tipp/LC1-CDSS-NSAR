@@ -20,22 +20,8 @@ public class Cdss4NsarController {
     @RequestMapping(method = RequestMethod.GET)
     public String sayHello(ModelMap model) {
         model.addAttribute("greeting", "Hello World");
-        model.addAttribute("cdss", "cdss");
         return "welcome";
     }
-// 
-//    @RequestMapping(value = "/helloagain", method = RequestMethod.GET)
-//    public String sayHelloAgain(ModelMap model) {
-//        model.addAttribute("greeting", "Hello World Again");
-//        model.addAttribute("cdss", "cdss");
-//        return "welcome";
-//    }
-    
-//	@RequestMapping(value = "/cdss", method = RequestMethod.GET)
-//	public String getCdssPage(ModelMap model) {
-//		
-//		return "cdss";
-//	}
 	
 	@RequestMapping(value = "/result/{token}", method = RequestMethod.GET)
 	public String getCdssResult(@PathVariable String token, ModelMap model) {

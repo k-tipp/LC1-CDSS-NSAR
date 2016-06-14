@@ -1,12 +1,10 @@
 package ch.bfh.btx8201.cdss4nsar.democis.configuration;
 
 import java.io.IOException;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import javax.annotation.PreDestroy;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import javax.xml.bind.JAXBException;
@@ -23,6 +21,11 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import ca.uhn.hl7v2.DefaultHapiContext;
+import ca.uhn.hl7v2.HapiContext;
+import ca.uhn.hl7v2.parser.Parser;
+import ca.uhn.hl7v2.validation.builder.support.NoValidationBuilder;
 
 @Component
 @Service
@@ -101,41 +104,15 @@ public class DemoCisConfiguration {
 		return properties;
 	}
 
-//	@Bean(destroyMethod = "close")
-//	public HapiContext getHapiContext() {
-//		return new DefaultHapiContext();
-//	}
-//
-//	@Bean
-//	public Parser getHL7Parser(HapiContext ctx) {
-//		ctx.setValidationRuleBuilder(new NoValidationBuilder());
-//		return ctx.getGenericParser();
-//
-//	}
+	@Bean(destroyMethod = "close")
+	public HapiContext getHapiContext() {
+		return new DefaultHapiContext();
+	}
 
-	/*
-	 * https://techblog.ralph-schuster.eu/2014/07/09/solution-to-tomcat-cant-
-	 * stop-an-abandoned-connection-cleanup-thread/
-	 */
-	@PreDestroy
-	public void cleanUpJDBCConnections() {
-		try {
-			com.mysql.jdbc.AbandonedConnectionCleanupThread.shutdown();
-		} catch (Throwable t) {
-		}
-		// This manually deregisters JDBC driver, which prevents Tomcat 7 from
-		// complaining about memory leaks
-		Enumeration<java.sql.Driver> drivers = java.sql.DriverManager.getDrivers();
-		while (drivers.hasMoreElements()) {
-			java.sql.Driver driver = drivers.nextElement();
-			try {
-				java.sql.DriverManager.deregisterDriver(driver);
-			} catch (Throwable t) {
-			}
-		}
-		try {
-			Thread.sleep(2000L);
-		} catch (Exception e) {
-		}
+	@Bean
+	public Parser getHL7Parser(HapiContext ctx) {
+		ctx.setValidationRuleBuilder(new NoValidationBuilder());
+		return ctx.getGenericParser();
+
 	}
 }

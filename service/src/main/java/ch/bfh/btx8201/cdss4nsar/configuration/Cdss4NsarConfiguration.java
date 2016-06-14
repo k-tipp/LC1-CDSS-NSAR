@@ -145,14 +145,6 @@ public class Cdss4NsarConfiguration {
 		return factory.getObject();
 	}
 
-//	@Bean
-//	public PlatformTransactionManager transactionManager() throws Exception {
-//
-//		JpaTransactionManager txManager = new JpaTransactionManager();
-//		txManager.setEntityManagerFactory(entityManagerFactory());
-//		return txManager;
-//	}
-	
     @Bean
     public JpaTransactionManager transactionManager(final EntityManagerFactory emf) {
         final JpaTransactionManager transactionManager = new JpaTransactionManager();
@@ -163,35 +155,9 @@ public class Cdss4NsarConfiguration {
 	@Bean
 	public Properties getAdditionalProperties() {
 		Properties properties = new Properties();
-		properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");//create-drop
+		properties.setProperty("hibernate.hbm2ddl.auto", "update");//create-drop
 		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
 		properties.setProperty("hibernate.show_sql", "false");
 		return properties;
 	}
-
-	/*
-	 * https://techblog.ralph-schuster.eu/2014/07/09/solution-to-tomcat-cant-
-	 * stop-an-abandoned-connection-cleanup-thread/
-	 */
-//	@PreDestroy
-//	public void cleanUpJDBCConnections() {
-//		try {
-//			com.mysql.jdbc.AbandonedConnectionCleanupThread.shutdown();
-//		} catch (Throwable t) {
-//		}
-//		// This manually deregisters JDBC driver, which prevents Tomcat 7 from
-//		// complaining about memory leaks
-//		Enumeration<java.sql.Driver> drivers = java.sql.DriverManager.getDrivers();
-//		while (drivers.hasMoreElements()) {
-//			java.sql.Driver driver = drivers.nextElement();
-//			try {
-//				java.sql.DriverManager.deregisterDriver(driver);
-//			} catch (Throwable t) {
-//			}
-//		}
-//		try {
-//			Thread.sleep(2000L);
-//		} catch (Exception e) {
-//		}
-//	}
 }
